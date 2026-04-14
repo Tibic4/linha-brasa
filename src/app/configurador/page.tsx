@@ -386,47 +386,7 @@ export default function Configurador() {
                 </div>
               </section>
 
-              {/* === STEP 3: Color === */}
-              <section>
-                <h2 className="font-bebas text-3xl mb-6">
-                  <span className="text-brasa-orange mr-2">03.</span> ESCOLHA A COR
-                </h2>
-                <div className="flex flex-wrap gap-4">
-                  {colors.map((color) => (
-                    <motion.button
-                      key={color.id}
-                      onClick={() => setSelectedColor(color.id)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`flex items-center gap-3 glass-card rounded-xl px-4 py-3 transition-all duration-300 ${
-                        selectedColor === color.id
-                          ? "border-brasa-orange glow-orange-sm"
-                          : "hover:border-brasa-orange/30"
-                      }`}
-                    >
-                      <motion.div
-                        animate={
-                          selectedColor === color.id
-                            ? { scale: 1.2, boxShadow: `0 0 16px ${color.hex}80` }
-                            : { scale: 1, boxShadow: "none" }
-                        }
-                        className="w-8 h-8 rounded-full border-2"
-                        style={{
-                          backgroundColor: color.hex,
-                          borderColor: selectedColor === color.id ? "#FF4F00" : "#1E293B",
-                        }}
-                      />
-                      <span
-                        className={`font-mono text-xs ${
-                          selectedColor === color.id ? "text-brasa-orange" : "text-brasa-gray"
-                        }`}
-                      >
-                        {color.name}
-                      </span>
-                    </motion.button>
-                  ))}
-                </div>
-              </section>
+              {/* Color selector moved to sidebar for proximity to product image */}
             </div>
 
             {/* === RIGHT: Sticky Sidebar === */}
@@ -439,6 +399,47 @@ export default function Configurador() {
                   className="glass-card rounded-2xl p-6"
                 >
                   <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
+
+                  {/* Product Preview with Color */}
+                  <div className="relative w-full h-40 rounded-xl mb-4 overflow-hidden" style={{ background: products[selectedModel].gradient }}>
+                    <ProductImage model={products[selectedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
+                    <motion.div
+                      className="absolute inset-0 mix-blend-multiply rounded-xl"
+                      animate={{ backgroundColor: colors.find((c) => c.id === selectedColor)?.hex || "transparent" }}
+                      transition={{ duration: 0.6 }}
+                      style={{ opacity: selectedColor === "preto-fosco" ? 0 : 0.35 }}
+                    />
+                    <div className="absolute bottom-2 left-2">
+                      <span className="font-mono text-[10px] text-white/80 bg-black/50 px-2 py-0.5 rounded">
+                        {colors.find((c) => c.id === selectedColor)?.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Color Swatches — inline in sidebar */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {colors.map((color) => (
+                      <button
+                        key={color.id}
+                        onClick={() => setSelectedColor(color.id)}
+                        title={color.name}
+                        className="relative"
+                      >
+                        <motion.div
+                          animate={
+                            selectedColor === color.id
+                              ? { scale: 1.2, boxShadow: `0 0 12px ${color.hex}80` }
+                              : { scale: 1, boxShadow: "none" }
+                          }
+                          className="w-7 h-7 rounded-full border-2"
+                          style={{
+                            backgroundColor: color.hex,
+                            borderColor: selectedColor === color.id ? "#FF4F00" : "#1E293B",
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
 
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center">
