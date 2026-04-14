@@ -400,55 +400,96 @@ export default function Configurador() {
                 >
                   <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
 
-                  {/* Product Preview with Color */}
-                  <motion.div
-                    className="relative w-full h-40 rounded-xl mb-4 overflow-hidden border-2"
-                    animate={{
-                      borderColor: colors.find((c) => c.id === selectedColor)?.hex || "#1E2430",
-                      boxShadow: selectedColor !== "preto-fosco" ? `0 0 20px ${colors.find((c) => c.id === selectedColor)?.hex}40` : "none",
-                    }}
-                    transition={{ duration: 0.5 }}
-                    style={{ background: products[selectedModel].gradient }}>
-                    <ProductImage model={products[selectedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
-                    <motion.div
-                      key={selectedColor}
-                      className="absolute inset-0 rounded-xl"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: selectedColor === "preto-fosco" ? 0 : 0.55 }}
-                      transition={{ duration: 0.5 }}
-                      style={{
-                        background: `radial-gradient(circle at center, ${colors.find((c) => c.id === selectedColor)?.hex || "transparent"}CC 0%, ${colors.find((c) => c.id === selectedColor)?.hex || "transparent"}66 60%, transparent 100%)`,
-                        mixBlendMode: "color",
-                      }}
-                    />
-                    <div className="absolute bottom-2 left-2">
-                      <span className="font-mono text-[10px] text-white/80 bg-black/50 px-2 py-0.5 rounded">
-                        {colors.find((c) => c.id === selectedColor)?.name}
-                      </span>
-                    </div>
-                  </motion.div>
+                  {/* Product Preview with Color — the product tints visually */}
+                  {(() => {
+                    const colorFilters: Record<string, string> = {
+                      "preto-fosco": "brightness(0.7) saturate(0.3)",
+                      "cinza-grafite": "brightness(0.85) saturate(0.3) contrast(1.1)",
+                      "terracota": "brightness(0.9) sepia(0.6) saturate(1.8) hue-rotate(-10deg)",
+                      "verde-musgo": "brightness(0.85) sepia(0.5) saturate(1.5) hue-rotate(70deg)",
+                      "azul-petroleo": "brightness(0.85) sepia(0.5) saturate(1.6) hue-rotate(170deg)",
+                      "branco-gelo": "brightness(1.3) saturate(0.2) contrast(0.9)",
+                    };
+                    const activeColor = colors.find((c) => c.id === selectedColor);
+                    return (
+                      <div className="relative w-full h-48 rounded-xl mb-4 overflow-hidden border-2 transition-all duration-500"
+                        style={{
+                          borderColor: activeColor?.hex || "#1E2430",
+                          boxShadow: `0 0 24px ${activeColor?.hex || "#000"}30`,
+                          background: `linear-gradient(135deg, ${activeColor?.hex}22 0%, #0D1117 50%, ${activeColor?.hex}15 100%)`,
+                        }}
+                      >
+                        {/* Product image with CSS color filter */}
+                        <div
+                          className="absolute inset-0 flex items-center justify-center transition-all duration-700"
+                          style={{ filter: colorFilters[selectedColor] || "none" }}
+                        >
+                          <ProductImage
+                            model={products[selectedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"}
+                            size="md"
+                            className="w-full h-full"
+                          />
+                        </div>
 
-                  {/* Color Swatches — inline in sidebar */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                        {/* Subtle color wash overlay */}
+                        <div
+                          className="absolute inset-0 transition-all duration-700 pointer-events-none"
+                          style={{
+                            background: `radial-gradient(ellipse at center, ${activeColor?.hex || "transparent"}35 0%, transparent 70%)`,
+                          }}
+                        />
+
+                        {/* Color name badge */}
+                        <div className="absolute bottom-2 left-2 flex items-center gap-1.5">
+                          <div
+                            className="w-3 h-3 rounded-full border border-white/30"
+                            style={{ backgroundColor: activeColor?.hex }}
+                          />
+                          <span className="font-mono text-[10px] text-white/90 bg-black/60 px-2 py-0.5 rounded">
+                            {activeColor?.name}
+                          </span>
+                        </div>
+
+                        {/* Model name */}
+                        <div className="absolute top-2 right-2">
+                          <span className="font-bebas text-sm text-white/60">
+                            {products[selectedModel].name}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Color Swatches — below product preview */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="font-mono text-[10px] text-brasa-gray uppercase tracking-wider">Cor:</span>
                     {colors.map((color) => (
                       <button
                         key={color.id}
                         onClick={() => setSelectedColor(color.id)}
                         title={color.name}
-                        className="relative"
+                        className="relative group"
                       >
                         <motion.div
                           animate={
                             selectedColor === color.id
-                              ? { scale: 1.2, boxShadow: `0 0 12px ${color.hex}80` }
+                              ? { scale: 1.25, boxShadow: `0 0 14px ${color.hex}90` }
                               : { scale: 1, boxShadow: "none" }
                           }
-                          className="w-7 h-7 rounded-full border-2"
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                          className="w-7 h-7 rounded-full border-2 transition-colors"
                           style={{
                             backgroundColor: color.hex,
                             borderColor: selectedColor === color.id ? "#FF4F00" : "#1E293B",
                           }}
                         />
+                        {selectedColor === color.id && (
+                          <motion.div
+                            layoutId="color-ring"
+                            className="absolute -inset-1 rounded-full border-2 border-brasa-orange"
+                            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                          />
+                        )}
                       </button>
                     ))}
                   </div>
