@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="body35" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#333"/>
+      <stop offset="100%" stop-color="#1e1e1e"/>
+    </linearGradient>
+    <radialGradient id="fire35" cx="0.5" cy="0.55" r="0.5">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="30%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#8B1A00" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow35" cx="0.5" cy="0.6" r="0.6">
+      <stop offset="0%" stop-color="#FF3D00" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF3D00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metalRim35" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#777"/>
+      <stop offset="50%" stop-color="#444"/>
+      <stop offset="100%" stop-color="#2a2a2a"/>
+    </linearGradient>
+    <linearGradient id="premium35" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#444"/>
+      <stop offset="50%" stop-color="#666"/>
+      <stop offset="100%" stop-color="#444"/>
+    </linearGradient>
+    <filter id="fireGlow35">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#111827"/>
+  <!-- Ambient glow -->
+  <ellipse cx="200" cy="410" rx="150" ry="35" fill="#FF3D00" opacity="0.07"/>
+  <!-- Chimney -->
+  <rect x="175" y="38" width="50" height="95" rx="5" fill="#2e2e2e" stroke="#444" stroke-width="1.5"/>
+  <rect x="164" y="30" width="72" height="18" rx="5" fill="url(#metalRim35)"/>
+  <rect x="170" y="32" width="60" height="3" rx="1" fill="url(#premium35)" opacity="0.5"/>
+  <!-- Main body -->
+  <rect x="100" y="132" width="200" height="270" rx="16" fill="url(#body35)" stroke="#444" stroke-width="2"/>
+  <!-- Premium brushed metal effect lines -->
+  <line x1="105" y1="180" x2="295" y2="180" stroke="#3a3a3a" stroke-width="0.5" opacity="0.3"/>
+  <line x1="105" y1="200" x2="295" y2="200" stroke="#3a3a3a" stroke-width="0.5" opacity="0.2"/>
+  <line x1="105" y1="350" x2="295" y2="350" stroke="#3a3a3a" stroke-width="0.5" opacity="0.2"/>
+  <!-- Top cap -->
+  <ellipse cx="200" cy="132" rx="100" ry="22" fill="#363636" stroke="#555" stroke-width="1"/>
+  <!-- Bottom cap -->
+  <ellipse cx="200" cy="402" rx="100" ry="22" fill="#1e1e1e" stroke="#3a3a3a" stroke-width="1"/>
+  <!-- Decorative bands -->
+  <rect x="98" y="165" width="204" height="8" rx="2" fill="url(#metalRim35)" opacity="0.8"/>
+  <rect x="98" y="250" width="204" height="5" rx="1.5" fill="url(#metalRim35)" opacity="0.4"/>
+  <rect x="98" y="360" width="204" height="8" rx="2" fill="url(#metalRim35)" opacity="0.8"/>
+  <!-- Door frame with premium border -->
+  <rect x="140" y="200" width="120" height="130" rx="12" fill="#0a0a0a" stroke="#555" stroke-width="2.5"/>
+  <rect x="142" y="202" width="116" height="126" rx="11" fill="none" stroke="#3a3a3a" stroke-width="0.5"/>
+  <!-- Inner fire area -->
+  <rect x="148" y="208" width="104" height="114" rx="8" fill="#180600"/>
+  <!-- Intense fire -->
+  <ellipse cx="200" cy="295" rx="45" ry="35" fill="url(#fire35)" filter="url(#fireGlow35)"/>
+  <path d="M172 290 Q177 258 186 274 Q190 245 200 268 Q208 242 214 270 Q220 252 228 288" fill="#FF3D00" opacity="0.95"/>
+  <path d="M180 294 Q186 268 194 280 Q200 258 206 278 Q212 264 220 292" fill="#FF8A65" opacity="0.7"/>
+  <path d="M188 298 Q193 278 200 288 Q206 274 212 296" fill="#FFF8E1" opacity="0.5"/>
+  <!-- Sparks -->
+  <circle cx="182" cy="250" r="1" fill="#FF3D00" opacity="0.7"/>
+  <circle cx="218" cy="245" r="1.2" fill="#FF3D00" opacity="0.5"/>
+  <circle cx="196" cy="240" r="0.8" fill="#FFAB91" opacity="0.6"/>
+  <!-- Embers -->
+  <circle cx="180" cy="315" r="3" fill="#BF360C" opacity="0.8"/>
+  <circle cx="215" cy="318" r="2" fill="#FF3D00" opacity="0.6"/>
+  <circle cx="195" cy="316" r="2.5" fill="#FF3D00" opacity="0.7"/>
+  <!-- Door handle - premium -->
+  <rect x="250" y="258" width="4" height="20" rx="2" fill="#666"/>
+  <circle cx="252" cy="258" r="4" fill="none" stroke="#777" stroke-width="1.5"/>
+  <!-- Glow overlay -->
+  <rect x="140" y="200" width="120" height="130" rx="12" fill="url(#glow35)" opacity="0.4"/>
+  <!-- Legs - sturdier -->
+  <rect x="124" y="415" width="18" height="44" rx="4" fill="#2e2e2e" stroke="#444" stroke-width="1"/>
+  <rect x="258" y="415" width="18" height="44" rx="4" fill="#2e2e2e" stroke="#444" stroke-width="1"/>
+  <!-- Cross brace -->
+  <rect x="140" y="440" width="120" height="5" rx="2" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="0.5"/>
+  <!-- Floor shadow -->
+  <ellipse cx="200" cy="462" rx="100" ry="10" fill="#000" opacity="0.35"/>
+  <!-- Label -->
+  <text x="200" y="486" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FF3D00" letter-spacing="3">BRASA 35</text>
+</svg>

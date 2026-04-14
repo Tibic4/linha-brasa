@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #07090C;
+  --foreground: #F8FAFC;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07090C;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF4F00;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CC3F00;
+}
+
+/* ===== SELECTIONS ===== */
+::selection {
+  background: rgba(255, 79, 0, 0.3);
+  color: #F8FAFC;
+}
+
+/* ===== BODY ===== */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  overflow-x: hidden;
+}
+
+/* ===== SMOOTH SCROLL ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== COLOR MORPHING =====
+ * Color Morphing is handled by the ColorMorph component (fluid blobs technique).
+ * CSS cannot interpolate between radial-gradient() values — that's why we use
+ * absolutely-positioned blobs with filter:blur, animated via Framer Motion.
+ * Each model has a unique 3-blob color profile that morphs fluidly on switch.
+ */
+
+/* ===== WATERMARK TYPOGRAPHY ===== */
+.watermark {
+  font-size: clamp(100px, 15vw, 200px);
+  opacity: 0.04;
+  position: absolute;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== GLOW EFFECTS ===== */
+.glow-orange {
+  box-shadow: 0 0 30px rgba(255, 79, 0, 0.4), 0 0 60px rgba(255, 79, 0, 0.1);
+}
+
+.glow-orange-sm {
+  box-shadow: 0 0 15px rgba(255, 79, 0, 0.3);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(255, 79, 0, 0.5);
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.5);
+}
+
+/* ===== SVG STROKE ANIMATION ===== */
+.svg-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 2s ease-in-out;
+}
+
+.svg-draw.active {
+  stroke-dashoffset: 0;
+}
+
+/* ===== MARQUEE ===== */
+.marquee-container {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+/* ===== CTA BUTTON ===== */
+.btn-brasa {
+  @apply relative inline-flex items-center justify-center px-8 py-4 font-bebas text-lg tracking-wider text-white
+    bg-brasa-orange rounded-lg overflow-hidden transition-all duration-300
+    hover:shadow-[0_0_30px_rgba(255,79,0,0.5)] active:scale-95;
+}
+
+.btn-brasa::before {
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent
+    -translate-x-full transition-transform duration-700;
+}
+
+.btn-brasa:hover::before {
+  @apply translate-x-full;
+}
+
+/* ===== SECTION SPACING ===== */
+.section-padding {
+  @apply py-20 md:py-28 lg:py-32 px-4 md:px-8;
+}
+
+/* ===== NUMBER COUNTER ===== */
+.counter-value {
+  @apply font-bebas text-brasa-gold text-5xl md:text-7xl tabular-nums;
+}
+
+/* ===== SWIPER OVERRIDES ===== */
+.swiper-pagination-bullet {
+  background: #475569 !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #FF4F00 !important;
+  box-shadow: 0 0 10px rgba(255, 79, 0, 0.5);
+}

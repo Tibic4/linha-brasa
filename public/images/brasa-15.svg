@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="body15" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <radialGradient id="fire15" cx="0.5" cy="0.6" r="0.5">
+      <stop offset="0%" stop-color="#FFE0B2"/>
+      <stop offset="40%" stop-color="#FF4F00"/>
+      <stop offset="100%" stop-color="#BF360C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow15" cx="0.5" cy="0.65" r="0.6">
+      <stop offset="0%" stop-color="#FF4F00" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FF4F00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metalRim15" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#555"/>
+      <stop offset="50%" stop-color="#333"/>
+      <stop offset="100%" stop-color="#222"/>
+    </linearGradient>
+    <filter id="fireGlow15">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="500" fill="#111827"/>
+  <!-- Ambient glow on floor -->
+  <ellipse cx="200" cy="430" rx="120" ry="20" fill="#FF4F00" opacity="0.08"/>
+  <!-- Chimney -->
+  <rect x="180" y="60" width="40" height="80" rx="4" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+  <rect x="172" y="55" width="56" height="14" rx="3" fill="url(#metalRim15)"/>
+  <!-- Chimney smoke hint -->
+  <circle cx="200" cy="40" r="8" fill="#555" opacity="0.15"/>
+  <circle cx="208" cy="28" r="6" fill="#555" opacity="0.1"/>
+  <!-- Main body - cylinder -->
+  <rect x="120" y="140" width="160" height="240" rx="12" fill="url(#body15)" stroke="#333" stroke-width="1.5"/>
+  <!-- Top ellipse (cylinder top) -->
+  <ellipse cx="200" cy="140" rx="80" ry="18" fill="#2e2e2e" stroke="#444" stroke-width="1"/>
+  <!-- Bottom ellipse -->
+  <ellipse cx="200" cy="380" rx="80" ry="18" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <!-- Metal bands -->
+  <rect x="118" y="175" width="164" height="6" rx="2" fill="url(#metalRim15)" opacity="0.7"/>
+  <rect x="118" y="340" width="164" height="6" rx="2" fill="url(#metalRim15)" opacity="0.7"/>
+  <!-- Door frame -->
+  <rect x="155" y="220" width="90" height="100" rx="8" fill="#111" stroke="#444" stroke-width="2"/>
+  <!-- Fire inside -->
+  <rect x="160" y="225" width="80" height="90" rx="6" fill="#1a0800"/>
+  <ellipse cx="200" cy="290" rx="35" ry="25" fill="url(#fire15)" filter="url(#fireGlow15)"/>
+  <!-- Fire tongues -->
+  <path d="M185 280 Q188 260 195 270 Q198 255 205 268 Q210 258 215 275 Q218 265 220 280" fill="#FF4F00" opacity="0.9"/>
+  <path d="M190 285 Q195 270 200 278 Q205 268 210 282" fill="#FFE0B2" opacity="0.6"/>
+  <!-- Door handle -->
+  <circle cx="237" cy="270" r="5" fill="none" stroke="#555" stroke-width="2"/>
+  <!-- Glow overlay -->
+  <rect x="155" y="220" width="90" height="100" rx="8" fill="url(#glow15)" opacity="0.5"/>
+  <!-- Legs -->
+  <rect x="140" y="395" width="14" height="40" rx="3" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+  <rect x="246" y="395" width="14" height="40" rx="3" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+  <!-- Base shadow -->
+  <ellipse cx="200" cy="438" rx="80" ry="8" fill="#000" opacity="0.3"/>
+  <!-- Label -->
+  <text x="200" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FF4F00" letter-spacing="3">BRASA 15</text>
+</svg>
