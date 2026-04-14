@@ -401,20 +401,32 @@ export default function Configurador() {
                   <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
 
                   {/* Product Preview with Color */}
-                  <div className="relative w-full h-40 rounded-xl mb-4 overflow-hidden" style={{ background: products[selectedModel].gradient }}>
+                  <motion.div
+                    className="relative w-full h-40 rounded-xl mb-4 overflow-hidden border-2"
+                    animate={{
+                      borderColor: colors.find((c) => c.id === selectedColor)?.hex || "#1E2430",
+                      boxShadow: selectedColor !== "preto-fosco" ? `0 0 20px ${colors.find((c) => c.id === selectedColor)?.hex}40` : "none",
+                    }}
+                    transition={{ duration: 0.5 }}
+                    style={{ background: products[selectedModel].gradient }}>
                     <ProductImage model={products[selectedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
                     <motion.div
-                      className="absolute inset-0 mix-blend-multiply rounded-xl"
-                      animate={{ backgroundColor: colors.find((c) => c.id === selectedColor)?.hex || "transparent" }}
-                      transition={{ duration: 0.6 }}
-                      style={{ opacity: selectedColor === "preto-fosco" ? 0 : 0.35 }}
+                      key={selectedColor}
+                      className="absolute inset-0 rounded-xl"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: selectedColor === "preto-fosco" ? 0 : 0.55 }}
+                      transition={{ duration: 0.5 }}
+                      style={{
+                        background: `radial-gradient(circle at center, ${colors.find((c) => c.id === selectedColor)?.hex || "transparent"}CC 0%, ${colors.find((c) => c.id === selectedColor)?.hex || "transparent"}66 60%, transparent 100%)`,
+                        mixBlendMode: "color",
+                      }}
                     />
                     <div className="absolute bottom-2 left-2">
                       <span className="font-mono text-[10px] text-white/80 bg-black/50 px-2 py-0.5 rounded">
                         {colors.find((c) => c.id === selectedColor)?.name}
                       </span>
                     </div>
-                  </div>
+                  </motion.div>
 
                   {/* Color Swatches — inline in sidebar */}
                   <div className="flex flex-wrap gap-2 mb-4">
