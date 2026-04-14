@@ -683,6 +683,12 @@ export default function Configurador() {
                       <p className="text-brasa-gray-dark text-xs font-mono mt-4">
                         O checkout do Mercado Pago será renderizado aqui com as credenciais de produção.
                       </p>
+                      <a
+                        href="/obrigado"
+                        className="btn-brasa inline-block mt-6 text-lg"
+                      >
+                        FINALIZAR PEDIDO
+                      </a>
                     </div>
                   </div>
                 </motion.div>
