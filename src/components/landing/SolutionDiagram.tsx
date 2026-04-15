@@ -79,7 +79,7 @@ export default function SolutionDiagram() {
           <p className="text-brasa-green font-mono text-sm tracking-[0.3em] uppercase mb-4">
             A Solução
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             COMO A <span className="text-brasa-orange">LINHA BRASA</span> FUNCIONA
           </h2>
         </motion.div>
@@ -148,7 +148,7 @@ export default function SolutionDiagram() {
         </div>
 
         {/* Benefits Grid — GSAP stagger with bounce */}
-        <div ref={benefitsRef} className="grid md:grid-cols-4 gap-6">
+        <div ref={benefitsRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[
             { value: "80%", label: "Economia vs gás", icon: "💰" },
             { value: "4h", label: "Tempo de aquecimento", icon: "⏱️" },

@@ -105,7 +105,7 @@ export default function ModelsSection() {
         </motion.div>
 
         {/* Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {products.map((product, i) => (
             <TiltCard
               key={product.id}
@@ -119,7 +119,7 @@ export default function ModelsSection() {
               >
                 {/* Product Image */}
                 <div
-                  className="w-full h-48 rounded-xl mb-6 relative overflow-hidden"
+                  className="w-full h-32 sm:h-48 rounded-xl mb-4 sm:mb-6 relative overflow-hidden"
                   style={{ background: product.gradient }}
                 >
                   <ProductImage model={product.id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
@@ -176,7 +176,7 @@ export default function ModelsSection() {
               >
                 <motion.div
                   layoutId={`card-${selectedId}`}
-                  className="bg-brasa-bg-card border border-brasa-border rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+                  className="bg-brasa-bg-card border border-brasa-border rounded-2xl p-4 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div
@@ -188,7 +188,7 @@ export default function ModelsSection() {
                   </div>
 
                   <motion.div layoutId={`title-${selectedId}`}>
-                    <h3 className="font-bebas text-5xl text-brasa-orange mb-2">
+                    <h3 className="font-bebas text-3xl sm:text-5xl text-brasa-orange mb-2">
                       {selectedProduct.name}
                     </h3>
                   </motion.div>

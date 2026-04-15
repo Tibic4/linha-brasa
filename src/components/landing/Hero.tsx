@@ -114,7 +114,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-bebas text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
+          className="font-bebas text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
         >
           AQUEÇA SUA
           <br />
@@ -143,7 +143,7 @@ export default function Hero() {
             <button
               key={product.id}
               onClick={() => setActiveModel(i)}
-              className={`relative px-3 md:px-5 py-2 rounded-full font-mono text-xs tracking-wider transition-all duration-500 overflow-hidden ${
+              className={`relative px-4 md:px-5 py-2.5 min-h-[44px] rounded-full font-mono text-xs tracking-wider transition-all duration-500 overflow-hidden ${
                 activeModel === i
                   ? "text-white"
                   : "bg-brasa-bg-card/80 text-brasa-gray border border-brasa-border hover:border-brasa-orange/50"
@@ -191,12 +191,12 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
         >
-          <a href="/configurador" className="btn-brasa text-xl">
+          <a href="/configurador" className="btn-brasa text-base sm:text-xl w-full sm:w-auto text-center">
             CONFIGURAR MINHA CALDEIRA
           </a>
           <a
             href="#calculadora"
-            className="px-8 py-4 font-bebas text-lg tracking-wider text-brasa-orange border-2 border-brasa-orange/50 rounded-lg hover:bg-brasa-orange/10 hover:border-brasa-orange transition-all duration-300 text-center backdrop-blur-sm"
+            className="px-8 py-4 font-bebas text-lg tracking-wider text-brasa-orange border-2 border-brasa-orange/50 rounded-lg hover:bg-brasa-orange/10 hover:border-brasa-orange transition-all duration-300 text-center backdrop-blur-sm w-full sm:w-auto"
           >
             CALCULAR ECONOMIA
           </a>

@@ -55,7 +55,7 @@ export default function CTASection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Fale Conosco
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             PRONTO PARA <span className="text-brasa-orange">ECONOMIZAR</span>?
           </h2>
           <p className="text-brasa-gray mt-4 max-w-xl mx-auto">
@@ -78,7 +78,7 @@ export default function CTASection() {
                 <p className="text-brasa-gray">Retornaremos em até 24h.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 space-y-4">
+              <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-4 sm:p-8 space-y-4">
                 <input
                   type="text"
                   placeholder="Seu nome"
@@ -141,7 +141,7 @@ export default function CTASection() {
               href={`https://wa.me/5543999999999?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-card rounded-2xl p-8 flex items-center gap-6 hover:border-brasa-green/50 transition-colors group"
+              className="glass-card rounded-2xl p-4 sm:p-8 flex items-center gap-4 sm:gap-6 hover:border-brasa-green/50 transition-colors group"
               onClick={() => trackWhatsAppClick("cta_section")}
             >
               <div className="w-16 h-16 rounded-full bg-brasa-green/20 flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">

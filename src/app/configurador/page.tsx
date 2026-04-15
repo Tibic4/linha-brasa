@@ -86,6 +86,7 @@ export default function Configurador() {
 
   const [showCheckout, setShowCheckout] = useState(false);
   const addonsRef = useRef<HTMLDivElement>(null);
+  const resumoRef = useRef<HTMLDivElement>(null);
 
   // GSAP stagger entrance for addon cards
   useEffect(() => {
@@ -130,14 +131,25 @@ export default function Configurador() {
   const expandedRef = useRef<HTMLDivElement>(null);
 
   const handleModelClick = (i: number) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
+    if (isMobile) {
+      // Mobile: seleciona direto e rola para o resumo
+      setSelectedModel(i);
+      setExpandedModel(null);
+      trackAddToCart(products[i].name, products[i].price);
+      setTimeout(() => {
+        resumoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+      return;
+    }
+
+    // Desktop: mantém expand/preview
     if (expandedModel === i) {
-      // Click on already expanded → select it and collapse
       setSelectedModel(i);
       setExpandedModel(null);
     } else {
-      // Expand to preview
       setExpandedModel(i);
-      // Scroll expanded card into view after animation starts
       setTimeout(() => {
         expandedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 150);
@@ -167,17 +179,17 @@ export default function Configurador() {
       <Navbar />
       <main className="pt-20 min-h-screen relative">
         <ColorMorph activeModel={selectedModel} variant="page" className="fixed" />
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12 pb-28 lg:pb-12 relative z-10">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="text-center mb-6 md:mb-12"
           >
             <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
               Configurador Interativo
             </p>
-            <h1 className="font-bebas text-5xl md:text-7xl">
+            <h1 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
               MONTE SUA <span className="text-brasa-orange">CALDEIRA</span>
             </h1>
             <p className="text-brasa-gray mt-3 max-w-lg mx-auto">
@@ -185,21 +197,22 @@ export default function Configurador() {
             </p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left: Config */}
-            <div className="flex-1 space-y-10">
-              {/* === STEP 1: Models with REAL Shared Layout Animation === */}
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
-                <h2 className="font-bebas text-3xl mb-6">
+          {/* CSS Grid: mobile = 1 col with order; desktop = 2 cols, sidebar spans 2 rows */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 lg:gap-8">
+
+            {/* === STEP 1: Models — order 1 always === */}
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="order-1"
+            >
+                <h2 className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6">
                   <span className="text-brasa-orange mr-2">01.</span> ESCOLHA O MODELO
                 </h2>
 
                 <LayoutGroup>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                     {products.map((product, i) => (
                       <TiltCard
                         key={product.id}
@@ -336,17 +349,17 @@ export default function Configurador() {
                     )}
                   </AnimatePresence>
                 </LayoutGroup>
-              </motion.section>
+            </motion.section>
 
-              {/* === STEP 2: Addons with GSAP stagger === */}
-              <section>
-                <h2 className="font-bebas text-3xl mb-2">
+            {/* === STEP 2: Addons — order 3 on mobile, appears below sidebar === */}
+            <section className="order-3">
+                <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
                   <span className="text-brasa-orange mr-2">02.</span> ADITIVOS OPCIONAIS
                 </h2>
                 <p className="text-brasa-gray text-sm mb-6 font-mono">
                   {selectedAddons.size} de {addons.length} selecionados
                 </p>
-                <div ref={addonsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div ref={addonsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                   {addons.map((addon) => {
                     const isSelected = selectedAddons.has(addon.id);
                     return (
@@ -391,13 +404,10 @@ export default function Configurador() {
                     );
                   })}
                 </div>
-              </section>
+            </section>
 
-              {/* Color selector moved to sidebar for proximity to product image */}
-            </div>
-
-            {/* === RIGHT: Sticky Sidebar === */}
-            <div className="lg:w-96 shrink-0">
+            {/* === SIDEBAR: order 2 on mobile, spans 2 rows on desktop === */}
+            <div ref={resumoRef} className="order-2 lg:row-span-2 lg:row-start-1 lg:col-start-2 scroll-mt-20">
               <div className="lg:sticky lg:top-24 space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
@@ -553,7 +563,7 @@ export default function Configurador() {
 
                   <div className="mb-8">
                     <h3 className="font-bebas text-xl text-brasa-orange mb-4">ENDEREÇO DE ENTREGA</h3>
-                    <div className="grid grid-cols-2 gap-4" id="address-form">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" id="address-form">
                       <div className="col-span-2 md:col-span-1">
                         <label className="font-mono text-xs text-brasa-gray block mb-1">CEP</label>
                         <input
@@ -668,6 +678,25 @@ export default function Configurador() {
               </>
             )}
           </AnimatePresence>
+
+          {/* === MOBILE STICKY CTA BAR === */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-brasa-bg-card/95 backdrop-blur-lg border-t border-brasa-border px-4 py-3 flex items-center justify-between safe-bottom">
+            <div>
+              <p className="text-brasa-gray text-[10px] font-mono uppercase tracking-wider">Total</p>
+              <p className="font-bebas text-2xl text-brasa-orange leading-none">
+                R$ {total.toLocaleString("pt-BR")}
+              </p>
+              <p className="text-brasa-gray text-[10px] font-mono">
+                12x R$ {Math.ceil(total / 12).toLocaleString("pt-BR")}
+              </p>
+            </div>
+            <button
+              onClick={() => setShowCheckout(true)}
+              className="btn-brasa !py-3 !px-6 !text-base"
+            >
+              FINALIZAR COMPRA
+            </button>
+          </div>
         </div>
       </main>
       <Footer />

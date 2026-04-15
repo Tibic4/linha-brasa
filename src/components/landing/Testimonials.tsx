@@ -22,7 +22,7 @@ export default function Testimonials() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Depoimentos
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             QUEM USA, <span className="text-brasa-orange">RECOMENDA</span>
           </h2>
         </motion.div>
@@ -46,7 +46,7 @@ export default function Testimonials() {
           className="pb-16"
         >
           {testimonials.map((t) => (
-            <SwiperSlide key={t.id} className="!w-[340px] md:!w-[400px]">
+            <SwiperSlide key={t.id} className="!w-[300px] md:!w-[400px]">
               <div className="glass-card rounded-2xl p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-brasa-orange/20 flex items-center justify-center text-brasa-orange font-bebas text-xl">

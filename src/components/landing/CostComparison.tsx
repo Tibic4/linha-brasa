@@ -82,7 +82,7 @@ export default function CostComparison() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Comparativo
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             CUSTO MENSAL <span className="text-brasa-gold">REAL</span>
           </h2>
           <p className="text-brasa-gray mt-4 max-w-xl mx-auto">
@@ -96,7 +96,7 @@ export default function CostComparison() {
               key={item.method}
               className={`flex items-center gap-4 ${item.highlight ? "scale-105 origin-left" : ""}`}
             >
-              <div className="w-36 md:w-44 text-right shrink-0" data-bar-label>
+              <div className="w-24 md:w-44 text-right shrink-0" data-bar-label>
                 <p
                   className={`font-mono text-sm ${
                     item.highlight ? "text-brasa-green font-bold" : "text-brasa-gray"

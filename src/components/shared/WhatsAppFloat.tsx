@@ -11,7 +11,7 @@ export default function WhatsAppFloat() {
       href={`https://wa.me/5543999999999?text=${msg}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform"
+      className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-50 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ delay: 2, type: "spring" }}

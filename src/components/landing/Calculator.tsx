@@ -55,7 +55,7 @@ export default function Calculator() {
           <p className="text-brasa-green font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Calculadora
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             QUANTO VOCÊ <span className="text-brasa-green">ECONOMIZA</span>?
           </h2>
         </motion.div>
@@ -65,10 +65,10 @@ export default function Calculator() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass-card rounded-2xl p-8"
+          className="glass-card rounded-2xl p-4 sm:p-8"
         >
           {/* Inputs */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
             <div>
               <label className="font-mono text-xs text-brasa-gray block mb-2">
                 VOLUME DA PISCINA

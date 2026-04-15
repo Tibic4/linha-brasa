@@ -95,7 +95,7 @@ export default function ProblemSection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             O Problema
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
             AQUECER PISCINA NO BRASIL
             <br />
             <span className="text-brasa-gray">É ABSURDAMENTE CARO</span>

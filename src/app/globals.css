@@ -136,3 +136,8 @@ html {
   background: #FF4F00 !important;
   box-shadow: 0 0 10px rgba(255, 79, 0, 0.5);
 }
+
+/* ===== SAFE AREA (Mobile sticky bar) ===== */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
