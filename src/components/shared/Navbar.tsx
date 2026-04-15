@@ -62,7 +62,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2"
+            className="md:hidden flex flex-col gap-1.5 p-3 -mr-2 min-w-[44px] min-h-[44px] items-center justify-center"
           >
             <motion.span
               animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -87,15 +87,15 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 bg-brasa-bg/95 backdrop-blur-lg z-40 pt-16 sm:pt-20 px-4 sm:px-8"
+            className="fixed inset-0 bg-brasa-bg/95 backdrop-blur-lg z-40 pt-20 px-6 sm:px-8"
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-bebas text-2xl sm:text-3xl md:text-4xl text-brasa-white hover:text-brasa-orange transition-colors"
+                  className="font-bebas text-3xl text-brasa-white hover:text-brasa-orange transition-colors py-2 min-h-[48px] flex items-center"
                 >
                   {link.label}
                 </a>

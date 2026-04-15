@@ -3,22 +3,9 @@
 import Image from "next/image";
 
 /**
- * Product image component — maps model IDs to available image files.
- * New model IDs (brasa-30/60/120/200) map to existing photos.
+ * Product image component — model ID maps directly to filename.
+ * e.g. "brasa-60" → /images/brasa-60.png
  */
-
-// Map new model IDs to existing image files
-const imageMap: Record<string, string> = {
-  "brasa-30": "/images/brasa-15.png",
-  "brasa-60": "/images/brasa-25.png",
-  "brasa-120": "/images/brasa-35.png",
-  "brasa-200": "/images/brasa-50.png",
-  // Keep old IDs working
-  "brasa-15": "/images/brasa-15.png",
-  "brasa-25": "/images/brasa-25.png",
-  "brasa-35": "/images/brasa-35.png",
-  "brasa-50": "/images/brasa-50.png",
-};
 
 interface ProductImageProps {
   model: string;
@@ -35,7 +22,7 @@ export default function ProductImage({ model, className = "", size = "md", color
   };
 
   const { width, height } = sizes[size];
-  const src = imageMap[model] || `/images/${model}.png`;
+  const src = `/images/${model}.png`;
 
   return (
     <Image

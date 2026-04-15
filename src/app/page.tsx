@@ -11,6 +11,7 @@ import Calculator from "@/components/landing/Calculator";
 import Testimonials from "@/components/landing/Testimonials";
 import FAQ from "@/components/landing/FAQ";
 import GarantiaSection from "@/components/landing/GarantiaSection";
+import GallerySection from "@/components/landing/GallerySection";
 import CTASection from "@/components/landing/CTASection";
 import Footer from "@/components/shared/Footer";
 import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
@@ -39,6 +40,7 @@ export default function Home() {
         <section id="depoimentos">
           <Testimonials />
         </section>
+        <GallerySection />
         <GarantiaSection />
         <section id="faq">
           <FAQ />

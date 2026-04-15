@@ -133,13 +133,13 @@ export default function ModelsSection() {
                   style={{ borderRadius: 16 }}
                 >
                   {/* Product Image — layout="position" avoids aspect ratio distortion */}
-                  <div className="relative mb-4 sm:mb-6">
+                  <div className="relative mb-4 sm:mb-6 perspective-container">
                     <motion.div
                       layout="position"
                       className="w-full h-24 sm:h-32 md:h-48 relative overflow-hidden"
                       style={{ borderRadius: 12, background: product.gradient }}
                     >
-                      <ProductImage model={product.id} className="absolute inset-0" />
+                      <ProductImage model={product.id} className="absolute inset-0 depth-layer depth-shadow" />
                       <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg-card/60 to-transparent" />
                       <motion.div layout="position" className="absolute bottom-3 left-3">
                         <span className="font-mono text-xs text-white/80 bg-black/40 px-2 py-1 rounded">
@@ -192,7 +192,7 @@ export default function ModelsSection() {
                 />
                 <motion.div
                   layoutRoot
-                  className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                  className="fixed inset-0 top-16 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
                   style={{ position: "fixed" }}
                   onClick={() => setSelectedId(null)}
                 >
@@ -203,84 +203,85 @@ export default function ModelsSection() {
                       layout: layoutTransition,
                       opacity: { duration: 0.2 },
                     }}
-                    className="bg-brasa-bg-card border border-brasa-border p-4 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+                    className="bg-brasa-bg-card border border-brasa-border w-full max-h-[100vh] sm:max-h-[85vh] sm:max-w-4xl overflow-y-auto relative"
                     style={{ borderRadius: 16 }}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {/* Image — layout="position" keeps aspect ratio clean */}
-                    <motion.div
-                      layout="position"
-                      className="w-full h-40 sm:h-56 md:h-64 mb-4 sm:mb-6 relative overflow-hidden"
-                      style={{ borderRadius: 12, background: selectedProduct.gradient }}
-                    >
-                      <ProductImage model={selectedProduct.id} className="absolute inset-0" size="lg" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg-card/40 to-transparent" />
-                    </motion.div>
+                    <div className="flex flex-col md:flex-row">
+                      {/* Left — Image */}
+                      <motion.div
+                        layout="position"
+                        className="w-full md:w-[320px] shrink-0 relative overflow-hidden flex items-center justify-center p-6 md:p-8 max-h-[35vh] md:max-h-none"
+                        style={{ borderRadius: "16px 16px 0 0", background: selectedProduct.gradient }}
+                      >
+                        <ProductImage model={selectedProduct.id} size="md" className="relative z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </motion.div>
 
-                    {/* Title — animates from card position */}
-                    <motion.div layout="position" layoutId={`title-${selectedId}`}>
-                      <h3 className="font-bebas text-3xl sm:text-5xl text-brasa-orange mb-2">
-                        {selectedProduct.name}
-                      </h3>
-                    </motion.div>
+                      {/* Right — Info */}
+                      <div className="flex-1 p-6 md:p-8">
+                        {/* Title */}
+                        <motion.div layout="position" layoutId={`title-${selectedId}`}>
+                          <h3 className="font-bebas text-4xl sm:text-5xl text-brasa-orange mb-1">
+                            {selectedProduct.name}
+                          </h3>
+                          <p className="font-mono text-xs text-brasa-gray mb-4">{selectedProduct.subtitle}</p>
+                        </motion.div>
 
-                    {/* Content fades in after layout settles */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15, duration: 0.3 }}
-                    >
-                      <p className="text-brasa-gray text-lg mb-4">{selectedProduct.description}</p>
+                        {/* Content */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.15, duration: 0.3 }}
+                        >
+                          <p className="text-brasa-gray text-sm leading-relaxed mb-5">{selectedProduct.description}</p>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
-                        <div className="glass-card rounded-lg p-4">
-                          <p className="font-mono text-xs text-brasa-gray">Capacidade</p>
-                          <p className="font-bebas text-2xl text-brasa-gold">
-                            {selectedProduct.poolSize}
-                          </p>
-                        </div>
-                        <div className="glass-card rounded-lg p-4">
-                          <p className="font-mono text-xs text-brasa-gray">Potência</p>
-                          <p className="font-bebas text-2xl text-brasa-gold">
-                            {selectedProduct.power}
-                          </p>
-                        </div>
+                          <div className="flex gap-4 mb-5">
+                            <div className="glass-card rounded-lg px-4 py-3">
+                              <p className="font-mono text-[10px] text-brasa-gray uppercase">Capacidade</p>
+                              <p className="font-bebas text-xl text-brasa-gold">{selectedProduct.poolSize}</p>
+                            </div>
+                            <div className="glass-card rounded-lg px-4 py-3">
+                              <p className="font-mono text-[10px] text-brasa-gray uppercase">Potência</p>
+                              <p className="font-bebas text-xl text-brasa-gold">{selectedProduct.power}</p>
+                            </div>
+                          </div>
+
+                          <ul className="grid grid-cols-2 gap-x-4 gap-y-2 mb-6">
+                            {selectedProduct.features.map((f, idx) => (
+                              <motion.li
+                                key={idx}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.2 + idx * 0.05 }}
+                                className="flex items-start gap-2 text-brasa-gray text-xs"
+                              >
+                                <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full mt-1 shrink-0" />
+                                {f}
+                              </motion.li>
+                            ))}
+                          </ul>
+
+                          <div className="flex items-center justify-between border-t border-brasa-border pt-5">
+                            <div>
+                              <p className="font-bebas text-3xl text-brasa-white">
+                                R$ {selectedProduct.price.toLocaleString("pt-BR")}
+                              </p>
+                              <p className="text-brasa-gray text-xs font-mono">
+                                12x R$ {Math.ceil(selectedProduct.price / 12).toLocaleString("pt-BR")}
+                              </p>
+                            </div>
+                            <a href="/configurador" className="btn-brasa">
+                              CONFIGURAR AGORA
+                            </a>
+                          </div>
+                        </motion.div>
                       </div>
-
-                      <h4 className="font-bebas text-xl mb-3 text-brasa-white">Características</h4>
-                      <ul className="space-y-2 mb-6">
-                        {selectedProduct.features.map((f, idx) => (
-                          <motion.li
-                            key={idx}
-                            initial={{ opacity: 0, x: -15 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.2 + idx * 0.06 }}
-                            className="flex items-center gap-2 text-brasa-gray text-sm"
-                          >
-                            <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full" />
-                            {f}
-                          </motion.li>
-                        ))}
-                      </ul>
-
-                      <div className="flex items-center justify-between border-t border-brasa-border pt-6">
-                        <div>
-                          <p className="font-bebas text-4xl text-brasa-white">
-                            R$ {selectedProduct.price.toLocaleString("pt-BR")}
-                          </p>
-                          <p className="text-brasa-gray text-sm font-mono">
-                            12x R$ {Math.ceil(selectedProduct.price / 12).toLocaleString("pt-BR")}
-                          </p>
-                        </div>
-                        <a href="/configurador" className="btn-brasa">
-                          CONFIGURAR AGORA
-                        </a>
-                      </div>
-                    </motion.div>
+                    </div>
 
                     <button
                       onClick={() => setSelectedId(null)}
-                      className="absolute top-4 right-4 w-10 h-10 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors"
+                      className="absolute top-3 right-3 w-11 h-11 rounded-full bg-brasa-bg/80 border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors z-10"
                     >
                       ✕
                     </button>

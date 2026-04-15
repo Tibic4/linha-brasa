@@ -46,7 +46,7 @@ export default function ProductColorPhoto({ model, colorHex, colorId, className 
     <div className={`relative overflow-hidden ${className}`}>
       {/* Layer 1: Original photo — everything untouched */}
       <Image
-        src={`/images/${model.replace("brasa-30","brasa-15").replace("brasa-60","brasa-25").replace("brasa-120","brasa-35").replace("brasa-200","brasa-50")}.png`}
+        src={`/images/${model}.png`}
         alt={`Caldeira ${model.toUpperCase()}`}
         width={400}
         height={500}
@@ -60,7 +60,7 @@ export default function ProductColorPhoto({ model, colorHex, colorId, className 
           style={{ clipPath }}
         >
           <Image
-            src={`/images/${model.replace("brasa-30","brasa-15").replace("brasa-60","brasa-25").replace("brasa-120","brasa-35").replace("brasa-200","brasa-50")}.png`}
+            src={`/images/${model}.png`}
             alt=""
             width={400}
             height={500}

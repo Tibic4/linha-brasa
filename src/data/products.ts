@@ -45,7 +45,7 @@ export const products: Product[] = [
       "Pintura eletrostática resistente",
     ],
     gradient: "linear-gradient(135deg, #1B3A5C 0%, #2B5D8C 100%)",
-    image: "/images/brasa-15.png",
+    image: "/images/brasa-30.png",
   },
   {
     id: "brasa-60",
@@ -63,7 +63,7 @@ export const products: Product[] = [
       "Cinzeiro removível de fácil limpeza",
     ],
     gradient: "linear-gradient(135deg, #CC8400 0%, #FFD166 100%)",
-    image: "/images/brasa-25.png",
+    image: "/images/brasa-60.png",
   },
   {
     id: "brasa-120",
@@ -81,7 +81,7 @@ export const products: Product[] = [
       "Grelha em ferro fundido",
     ],
     gradient: "linear-gradient(135deg, #FF4F00 0%, #FF7043 100%)",
-    image: "/images/brasa-35.png",
+    image: "/images/brasa-120.png",
   },
   {
     id: "brasa-200",
@@ -99,7 +99,7 @@ export const products: Product[] = [
       "Painel de controle de temperatura",
     ],
     gradient: "linear-gradient(135deg, #BF360C 0%, #D84315 100%)",
-    image: "/images/brasa-50.png",
+    image: "/images/brasa-200.png",
   },
 ];
 
@@ -192,6 +192,15 @@ export const addons: Addon[] = [
     name: "Embalagem Transporte Longa Distância",
     description: "Caixote madeira + espuma para Norte/Nordeste ou exportação.",
     price: 380,
+    models: "todos",
+  },
+  {
+    id: "capa-termica",
+    emoji: "🧊",
+    name: "Capa Térmica para Piscina",
+    description: "Reduz perda de calor em até 70%. Essencial para manter temperatura.",
+    badge: "Recomendado",
+    price: 950,
     models: "todos",
   },
 ];

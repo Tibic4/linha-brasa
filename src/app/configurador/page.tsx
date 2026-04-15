@@ -13,6 +13,7 @@ import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/Analytic
 import ColorMorph from "@/components/shared/ColorMorph";
 import ProductImage from "@/components/shared/ProductImage";
 import { products, addons, productColors, testimonials } from "@/data/products";
+import ProductColorPreview from "@/components/shared/ProductColorPreview";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -86,6 +87,7 @@ export default function Configurador() {
 
   const [showCheckout, setShowCheckout] = useState(false);
   const addonsRef = useRef<HTMLDivElement>(null);
+  const colorSectionRef = useRef<HTMLElement>(null);
   const resumoRef = useRef<HTMLDivElement>(null);
 
   // GSAP stagger entrance for addon cards
@@ -123,6 +125,12 @@ export default function Configurador() {
         next.add(id);
         const addon = addons.find((a) => a.id === id);
         if (addon) trackAddToCart(addon.name, addon.price);
+        // On mobile, scroll to order summary so user sees the item added
+        if (typeof window !== "undefined" && window.innerWidth < 1024) {
+          setTimeout(() => {
+            resumoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 300);
+        }
       }
       return next;
     });
@@ -131,33 +139,20 @@ export default function Configurador() {
   const expandedRef = useRef<HTMLDivElement>(null);
 
   const handleModelClick = (i: number) => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
-
-    if (isMobile) {
-      setSelectedModel(i);
-      setExpandedModel(null);
-      trackAddToCart(products[i].name, products[i].price);
-      setTimeout(() => {
-        resumoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
+    if (expandedModel === i) {
+      selectAndCollapse(i);
       return;
     }
-
-    if (expandedModel === i) {
-      setSelectedModel(i);
-      setExpandedModel(null);
-    } else {
-      setExpandedModel(i);
-      setTimeout(() => {
-        expandedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 150);
-    }
+    setExpandedModel(i);
   };
 
   const selectAndCollapse = (i: number) => {
     setSelectedModel(i);
     setExpandedModel(null);
     trackAddToCart(products[i].name, products[i].price);
+    setTimeout(() => {
+      colorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
   };
 
   const colorPrice = productColors.find((c) => c.id === selectedColor)?.price || 0;
@@ -181,7 +176,7 @@ export default function Configurador() {
     <>
       <ScrollProgress />
       <Navbar />
-      <motion.main layoutScroll className="pt-20 min-h-screen relative" style={{ overflow: "auto" }}>
+      <motion.main layoutScroll className="pt-20 min-h-screen relative">
         <ColorMorph activeModel={selectedModel} variant="page" className="fixed" />
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12 pb-28 lg:pb-12 relative z-10">
           {/* Header */}
@@ -201,18 +196,20 @@ export default function Configurador() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 lg:gap-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6"
+          >
+            <span className="text-brasa-orange mr-2">01.</span> ESCOLHA O MODELO
+          </motion.h2>
+
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+            <div className="flex-1 min-w-0 space-y-6">
 
             {/* === STEP 1: Models === */}
-            <motion.section
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="order-1"
-            >
-                <h2 className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6">
-                  <span className="text-brasa-orange mr-2">01.</span> ESCOLHA O MODELO
-                </h2>
+            <section>
 
                 <LayoutGroup>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -268,118 +265,236 @@ export default function Configurador() {
                     ))}
                   </div>
 
-                  {/* === EXPANDED CARD — Shared Layout (Juicy Expand) === */}
+                  {/* === EXPANDED CARD — Centered Modal with Backdrop === */}
                   <AnimatePresence>
                     {expandedModel !== null && (
-                      <motion.div
-                        ref={expandedRef}
-                        layout
-                        layoutId={`cfg-model-${products[expandedModel].id}`}
-                        transition={{
-                          layout: { type: "spring", stiffness: 350, damping: 30 },
-                          opacity: { duration: 0.2 },
-                        }}
-                        className="glass-card p-6 mt-4 overflow-hidden"
-                        style={{ borderRadius: 16, originY: 0 }}
-                      >
-                        <div className="flex flex-col md:flex-row gap-6">
+                      <>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[55]"
+                          onClick={() => setExpandedModel(null)}
+                        />
+                        <div
+                          className="fixed inset-x-0 top-[72px] bottom-0 z-[60] flex items-end sm:items-center justify-center px-3 pb-3 sm:p-4"
+                          onClick={() => setExpandedModel(null)}
+                        >
                           <motion.div
-                            layout="position"
-                            layoutId={`cfg-img-${products[expandedModel].id}`}
-                            className="w-full md:w-64 h-56 shrink-0 relative overflow-hidden"
-                            style={{ borderRadius: 12, background: products[expandedModel].gradient }}
+                            ref={expandedRef}
+                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 28,
+                              opacity: { duration: 0.2 },
+                            }}
+                            className="bg-brasa-bg-card border-0 sm:border border-brasa-border w-full sm:max-w-2xl max-h-[calc(100vh-90px)] sm:max-h-[85vh] overflow-y-auto relative rounded-t-2xl sm:rounded-2xl"
+                            style={{ borderRadius: 16 }}
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            <ProductImage model={products[expandedModel].id} size="lg" />
-                          </motion.div>
-
-                          <motion.div
-                            className="flex-1"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.12, duration: 0.3 }}
-                          >
-                            <motion.h3
-                              layout="position"
-                              layoutId={`cfg-title-${products[expandedModel].id}`}
-                              className="font-bebas text-4xl text-brasa-orange mb-1"
+                            <button
+                              onClick={() => setExpandedModel(null)}
+                              className="absolute top-3 right-3 w-11 h-11 rounded-full bg-brasa-bg/80 border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors z-10"
                             >
-                              {products[expandedModel].name}
-                            </motion.h3>
-                            <p className="text-brasa-gray text-sm mb-3">
-                              {products[expandedModel].description}
-                            </p>
+                              ✕
+                            </button>
 
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              <span className="font-mono text-xs text-brasa-gold bg-brasa-gold/10 px-3 py-1 rounded-full">
-                                {products[expandedModel].poolSize}
-                              </span>
-                              <span className="font-mono text-xs text-brasa-gold bg-brasa-gold/10 px-3 py-1 rounded-full">
-                                {products[expandedModel].power}
-                              </span>
-                            </div>
-
-                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 mb-4">
-                              {products[expandedModel].features.map((f, idx) => (
-                                <motion.li
-                                  key={idx}
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.15 + idx * 0.05 }}
-                                  className="flex items-center gap-2 text-brasa-gray text-xs"
-                                >
-                                  <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full shrink-0" />
-                                  {f}
-                                </motion.li>
-                              ))}
-                            </ul>
-
-                            <div className="flex items-center justify-between border-t border-brasa-border pt-4">
-                              <motion.p
-                                layout="position"
-                                layoutId={`cfg-price-${products[expandedModel].id}`}
-                                className="font-bebas text-3xl text-brasa-white"
+                            <div className="flex flex-col sm:flex-row">
+                              {/* Image */}
+                              <div
+                                className="w-full sm:w-56 shrink-0 relative overflow-hidden flex items-center justify-center p-6 max-h-[30vh] sm:max-h-none"
+                                style={{ background: products[expandedModel].gradient }}
                               >
-                                R$ {products[expandedModel].price.toLocaleString("pt-BR")}
-                              </motion.p>
-                              <div className="flex gap-2">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setExpandedModel(null);
-                                  }}
-                                  className="px-4 py-2 font-mono text-xs text-brasa-gray border border-brasa-border rounded-lg hover:border-brasa-gray transition-colors"
-                                >
-                                  Fechar
-                                </button>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    selectAndCollapse(expandedModel);
-                                  }}
-                                  className="btn-brasa !py-2 !px-6 !text-sm"
-                                >
-                                  {selectedModel === expandedModel ? "SELECIONADO ✓" : "SELECIONAR"}
-                                </button>
+                                <ProductImage model={products[expandedModel].id} size="md" className="max-h-[25vh] sm:max-h-none" />
+                              </div>
+
+                              {/* Info */}
+                              <div className="flex-1 p-5 sm:p-6">
+                                <h3 className="font-bebas text-3xl text-brasa-orange mb-0.5">
+                                  {products[expandedModel].name}
+                                </h3>
+                                <p className="font-mono text-[10px] text-brasa-gray mb-3">{products[expandedModel].subtitle}</p>
+                                <p className="text-brasa-gray text-sm leading-relaxed mb-4">
+                                  {products[expandedModel].description}
+                                </p>
+
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                  <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
+                                    {products[expandedModel].poolSize}
+                                  </span>
+                                  <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
+                                    {products[expandedModel].power}
+                                  </span>
+                                </div>
+
+                                <ul className="grid grid-cols-1 gap-1.5 mb-5">
+                                  {products[expandedModel].features.map((f, idx) => (
+                                    <motion.li
+                                      key={idx}
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: 0.1 + idx * 0.05 }}
+                                      className="flex items-start gap-2 text-brasa-gray text-xs"
+                                    >
+                                      <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full shrink-0 mt-1" />
+                                      {f}
+                                    </motion.li>
+                                  ))}
+                                </ul>
+
+                                <div className="flex items-center justify-between border-t border-brasa-border pt-4">
+                                  <div>
+                                    <p className="font-bebas text-2xl sm:text-3xl text-brasa-white">
+                                      R$ {products[expandedModel].price.toLocaleString("pt-BR")}
+                                    </p>
+                                    <p className="text-brasa-gray text-[10px] font-mono">
+                                      12x R$ {Math.ceil(products[expandedModel].price / 12).toLocaleString("pt-BR")}
+                                    </p>
+                                  </div>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      selectAndCollapse(expandedModel);
+                                    }}
+                                    className="btn-brasa !py-2.5 !px-5 !text-sm"
+                                  >
+                                    {selectedModel === expandedModel ? "SELECIONADO ✓" : "SELECIONAR"}
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </motion.div>
                         </div>
-                      </motion.div>
+                      </>
                     )}
                   </AnimatePresence>
                 </LayoutGroup>
-            </motion.section>
+            </section>
 
-            {/* === STEP 2: Addons === */}
-            <section className="order-3">
+            {/* === STEP 2: Color === */}
+            <section ref={colorSectionRef} className="scroll-mt-24">
+                <h2 className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6">
+                  <span className="text-brasa-orange mr-2">02.</span> ESCOLHA A COR
+                </h2>
+                <div className="flex flex-row sm:flex-row gap-4 sm:gap-6 items-center sm:items-start">
+                  {/* Color Preview */}
+                  <div className="relative w-32 sm:w-64 rounded-xl overflow-hidden flex items-center justify-center py-2 sm:py-4 shrink-0"
+                    style={{ background: products[selectedModel].gradient }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`${products[selectedModel].id}-${selectedColor}`}
+                        initial={{ opacity: 0, scale: 0.88, y: 15 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.92, y: -10 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 22,
+                          opacity: { duration: 0.3 },
+                        }}
+                      >
+                        <ProductColorPreview
+                          colorHex={productColors.find(c => c.id === selectedColor)?.hex || "#1A1A1A"}
+                          modelName={products[selectedModel].name}
+                          className="w-24 h-32 sm:w-48 sm:h-56"
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                    <div className="absolute top-2 right-2">
+                      <span className="font-bebas text-sm text-white/70 bg-black/40 px-2 py-0.5 rounded">
+                        {products[selectedModel].name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Color Swatches — compact circles on mobile, cards on desktop */}
+                  <div className="flex-1">
+                    {/* Mobile: horizontal circles */}
+                    <div className="sm:hidden">
+                      <div className="flex gap-3 justify-center mb-3">
+                        {productColors.map((color) => (
+                          <button
+                            key={color.id}
+                            onClick={() => setSelectedColor(color.id)}
+                          >
+                            <motion.div
+                              whileTap={{ scale: 0.9 }}
+                              className={`w-10 h-10 rounded-full border-2 transition-all duration-300 ${
+                                selectedColor === color.id
+                                  ? "border-brasa-orange ring-2 ring-brasa-orange/40 ring-offset-2 ring-offset-brasa-bg"
+                                  : "border-brasa-border"
+                              }`}
+                              style={{ backgroundColor: color.hex }}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-center font-mono text-sm">
+                        <span className="text-brasa-white">{productColors.find(c => c.id === selectedColor)?.name}</span>
+                        <span className={`ml-2 text-xs ${(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? "text-brasa-gold" : "text-brasa-green"}`}>
+                          {(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? `+R$ ${productColors.find(c => c.id === selectedColor)?.price}` : "Incluso"}
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Desktop: cards with name + price */}
+                    <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-3">
+                      {productColors.map((color) => (
+                        <button
+                          key={color.id}
+                          onClick={() => setSelectedColor(color.id)}
+                          className={`group flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 ${
+                            selectedColor === color.id
+                              ? "border-brasa-orange bg-brasa-orange/10"
+                              : "border-brasa-border hover:border-brasa-orange/30 bg-brasa-bg-card/50"
+                          }`}
+                        >
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className={`w-8 h-8 rounded-full border-2 shrink-0 ${
+                              selectedColor === color.id
+                                ? "border-brasa-orange"
+                                : "border-brasa-border"
+                            }`}
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <div className="text-left">
+                            <p className={`font-mono text-xs leading-tight ${
+                              selectedColor === color.id ? "text-brasa-orange" : "text-brasa-white"
+                            }`}>{color.name}</p>
+                            <p className={`font-mono text-[10px] ${
+                              color.price > 0 ? "text-brasa-gold" : "text-brasa-green"
+                            }`}>
+                              {color.price > 0 ? `+R$ ${color.price}` : "Incluso"}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            {/* === STEP 3: Addons === */}
+            <section className="">
                 <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
-                  <span className="text-brasa-orange mr-2">02.</span> ADITIVOS OPCIONAIS
+                  <span className="text-brasa-orange mr-2">03.</span> ADITIVOS OPCIONAIS
                 </h2>
                 <p className="text-brasa-gray text-sm mb-6 font-mono">
-                  {selectedAddons.size} de {addons.length} selecionados
+                  {selectedAddons.size} selecionados
                 </p>
-                <div ref={addonsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-3">
-                  {addons.map((addon) => {
+                <div ref={addonsRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-3">
+                  {addons.filter((addon) => {
+                    if (addon.models === "todos" || addon.models === "sul-sudeste") return true;
+                    const modelNumber = products[selectedModel].id.replace("brasa-", "");
+                    return addon.models.split(",").includes(modelNumber);
+                  }).map((addon) => {
                     const isSelected = selectedAddons.has(addon.id);
                     return (
                       <TiltCard key={addon.id} className="cursor-pointer" onClick={() => toggleAddon(addon.id)}>
@@ -431,50 +546,7 @@ export default function Configurador() {
                   })}
                 </div>
 
-                {/* === STEP 3: Color Selector === */}
-                <div className="mt-8">
-                  <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
-                    <span className="text-brasa-orange mr-2">03.</span> ESCOLHA A COR
-                  </h2>
-                  <p className="text-brasa-gray text-sm mb-4 font-mono">
-                    Preto Satin incluso. Outras cores com adicional.
-                  </p>
-                  <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start">
-                    {productColors.map((color) => (
-                      <button
-                        key={color.id}
-                        onClick={() => setSelectedColor(color.id)}
-                        className="group flex flex-col items-center gap-1.5 sm:gap-2"
-                      >
-                        <motion.div
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 ${
-                            selectedColor === color.id
-                              ? "border-brasa-orange scale-110 ring-2 ring-brasa-orange/30 ring-offset-2 ring-offset-brasa-bg"
-                              : "border-brasa-border group-hover:border-brasa-gray"
-                          }`}
-                          style={{ backgroundColor: color.hex }}
-                        />
-                        <span className={`font-mono text-[10px] text-center leading-tight max-w-[60px] ${
-                          selectedColor === color.id ? "text-brasa-orange" : "text-brasa-gray"
-                        }`}>
-                          {color.name}
-                        </span>
-                        {color.price > 0 && (
-                          <span className="font-mono text-[9px] text-brasa-gold">
-                            +R$ {color.price}
-                          </span>
-                        )}
-                        {color.price === 0 && (
-                          <span className="font-mono text-[9px] text-brasa-green">
-                            Incluso
-                          </span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {/* Color selector moved to sidebar for visual proximity with product */}
 
                 {/* === INLINE TESTIMONIALS === */}
                 {modelTestimonials.length > 0 && (
@@ -516,158 +588,130 @@ export default function Configurador() {
                   </div>
                 )}
             </section>
+            </div>
 
             {/* === SIDEBAR === */}
-            <div ref={resumoRef} className="order-2 lg:row-span-2 lg:row-start-1 lg:col-start-2 scroll-mt-20">
+            <div ref={resumoRef} className="order-2 lg:w-96 lg:shrink-0 scroll-mt-20 lg:self-stretch">
               <div className="lg:sticky lg:top-24 space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="glass-card rounded-2xl p-6"
+                  className="glass-card rounded-2xl flex flex-col max-h-[calc(100vh-120px)]"
                 >
-                  <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
+                  {/* === TOP: Items (scrollable area) === */}
+                  <div className="flex-1 overflow-y-auto p-6 pb-0 min-h-0">
+                    <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
 
-                  {/* Product Photo */}
-                  <div className="relative w-full h-44 rounded-xl overflow-hidden mb-4"
-                    style={{ background: products[selectedModel].gradient }}
-                  >
-                    <img
-                      src={products[selectedModel].image}
-                      alt={`Caldeira ${products[selectedModel].name}`}
-                      className="absolute inset-0 w-full h-full object-contain p-2"
-                    />
-                    <div className="absolute top-2 right-2">
-                      <span className="font-bebas text-sm text-white/70 bg-black/40 px-2 py-0.5 rounded">
-                        {products[selectedModel].name}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 mb-6">
-                    <div className="flex justify-between items-center">
-                      <span className="text-brasa-gray text-sm">{products[selectedModel].name}</span>
-                      <span className="font-mono text-sm text-brasa-white">
-                        R$ {products[selectedModel].price.toLocaleString("pt-BR")}
-                      </span>
-                    </div>
-
-                    {/* Color line */}
-                    {colorPrice > 0 && (
+                    <div className="space-y-3 mb-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-brasa-gray text-xs flex items-center gap-2">
-                          <span
-                            className="w-3 h-3 rounded-full border border-brasa-border inline-block"
-                            style={{ backgroundColor: productColors.find(c => c.id === selectedColor)?.hex }}
-                          />
-                          {productColors.find(c => c.id === selectedColor)?.name}
-                        </span>
-                        <span className="font-mono text-xs text-brasa-gray">
-                          + R$ {colorPrice.toLocaleString("pt-BR")}
+                        <span className="text-brasa-gray text-sm">{products[selectedModel].name}</span>
+                        <span className="font-mono text-sm text-brasa-white">
+                          R$ {products[selectedModel].price.toLocaleString("pt-BR")}
                         </span>
                       </div>
-                    )}
 
-                    <AnimatePresence>
-                      {addons
-                        .filter((a) => selectedAddons.has(a.id))
-                        .map((addon) => (
-                          <motion.div
-                            key={addon.id}
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="flex justify-between items-center overflow-hidden"
-                          >
-                            <span className="text-brasa-gray text-xs">{addon.emoji} {addon.name}</span>
-                            <span className="font-mono text-xs text-brasa-gray">
-                              + R$ {addon.price.toLocaleString("pt-BR")}
-                            </span>
-                          </motion.div>
-                        ))}
-                    </AnimatePresence>
-                  </div>
+                      {/* Color line */}
+                      {colorPrice > 0 && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-brasa-gray text-xs flex items-center gap-2">
+                            <span
+                              className="w-3 h-3 rounded-full border border-brasa-border inline-block"
+                              style={{ backgroundColor: productColors.find(c => c.id === selectedColor)?.hex }}
+                            />
+                            {productColors.find(c => c.id === selectedColor)?.name}
+                          </span>
+                          <span className="font-mono text-xs text-brasa-gray">
+                            + R$ {colorPrice.toLocaleString("pt-BR")}
+                          </span>
+                        </div>
+                      )}
 
-                  <div className="border-t border-brasa-border pt-4">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-bebas text-xl">TOTAL</span>
-                      <AnimatedTotal value={total} />
+                      <AnimatePresence>
+                        {addons
+                          .filter((a) => selectedAddons.has(a.id))
+                          .map((addon) => (
+                            <motion.div
+                              key={addon.id}
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="flex justify-between items-center overflow-hidden"
+                            >
+                              <span className="text-brasa-gray text-xs">{addon.emoji} {addon.name}</span>
+                              <span className="font-mono text-xs text-brasa-gray">
+                                + R$ {addon.price.toLocaleString("pt-BR")}
+                              </span>
+                            </motion.div>
+                          ))}
+                      </AnimatePresence>
                     </div>
-                    <p className="text-brasa-gray text-xs font-mono text-right">
-                      ou 12x de R$ {Math.ceil(total / 12).toLocaleString("pt-BR")} no cartão
-                    </p>
                   </div>
 
-                  <button
-                    onClick={() => setShowCheckout(true)}
-                    className="btn-brasa w-full text-xl mt-6"
-                  >
-                    FINALIZAR COMPRA
-                  </button>
+                  {/* === BOTTOM: Total + CTA (always visible, pinned) === */}
+                  <div className="shrink-0 p-6 pt-0">
+                    <div className="border-t border-brasa-border pt-4">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="font-bebas text-xl">TOTAL</span>
+                        <AnimatedTotal value={total} />
+                      </div>
+                      <p className="text-brasa-gray text-xs font-mono text-right">
+                        ou 12x de R$ {Math.ceil(total / 12).toLocaleString("pt-BR")} no cartão
+                      </p>
+                    </div>
 
-                  <a
-                    href={`https://wa.me/5543999999999?text=${encodeURIComponent(
-                      `Olá! Quero comprar: ${products[selectedModel].name}${selectedColor !== "preto-satin" ? ` (cor: ${productColors.find(c => c.id === selectedColor)?.name})` : ""}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-center mt-3 text-brasa-green font-mono text-sm hover:underline"
-                    onClick={() => trackWhatsAppClick("configurador_sidebar")}
-                  >
-                    Ou compre pelo WhatsApp →
-                  </a>
+                    <button
+                      onClick={() => setShowCheckout(true)}
+                      className="btn-brasa w-full text-xl mt-4"
+                    >
+                      FINALIZAR COMPRA
+                    </button>
+
+                    <a
+                      href={`https://wa.me/5543999999999?text=${encodeURIComponent(
+                        `Olá! Quero comprar: ${products[selectedModel].name}${selectedColor !== "preto-satin" ? ` (cor: ${productColors.find(c => c.id === selectedColor)?.name})` : ""}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center mt-3 text-brasa-green font-mono text-sm hover:underline"
+                      onClick={() => trackWhatsAppClick("configurador_sidebar")}
+                    >
+                      Ou compre pelo WhatsApp →
+                    </a>
+                  </div>
                 </motion.div>
 
                 {/* Economy Card */}
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="glass-card rounded-2xl p-6"
-                >
-                  <h4 className="font-bebas text-lg text-brasa-green mb-3">ECONOMIA ESTIMADA</h4>
-                  <div className="space-y-3">
+                <div className="hidden lg:block glass-card rounded-2xl p-4">
+                  <h4 className="font-bebas text-base text-brasa-green mb-2">ECONOMIA ESTIMADA</h4>
+                  <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-brasa-gray text-xs">Economia mensal vs gás</span>
-                      <span className="font-mono text-sm text-brasa-green">
-                        ~R$ {monthlySavings.toLocaleString("pt-BR")}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-brasa-gray text-xs">Economia anual</span>
-                      <span className="font-mono text-sm text-brasa-green">
-                        ~R$ {(monthlySavings * 10).toLocaleString("pt-BR")}
-                      </span>
+                      <span className="font-mono text-xs text-brasa-green">~R$ {monthlySavings.toLocaleString("pt-BR")}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-brasa-gray text-xs">Retorno do investimento</span>
-                      <span className="font-mono text-sm text-brasa-gold">
-                        ~{Math.ceil(total / monthlySavings)} meses
-                      </span>
+                      <span className="font-mono text-xs text-brasa-gold">~{Math.ceil(total / monthlySavings)} meses</span>
                     </div>
-                    <div className="mt-3 pt-3 border-t border-brasa-border">
-                      <div className="flex justify-between">
-                        <span className="text-brasa-gray text-xs">Economia em 5 anos</span>
-                        <span className="font-mono text-sm text-brasa-green font-bold">
-                          R$ {(monthlySavings * 60 - total).toLocaleString("pt-BR")}
-                        </span>
-                      </div>
+                    <div className="pt-2 border-t border-brasa-border flex justify-between">
+                      <span className="text-brasa-gray text-xs">Economia em 5 anos</span>
+                      <span className="font-mono text-xs text-brasa-green font-bold">R$ {(monthlySavings * 60 - total).toLocaleString("pt-BR")}</span>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Guarantees */}
-                <div className="grid grid-cols-2 gap-2">
+                {/* Guarantees — compact inline */}
+                <div className="hidden lg:flex flex-wrap gap-x-4 gap-y-1 justify-center">
                   {[
                     { icon: "🛡️", text: "2 anos garantia" },
                     { icon: "🚚", text: "Frete grátis Sul/SE" },
                     { icon: "🇧🇷", text: "Fabricado no Brasil" },
                     { icon: "🔬", text: "Teste 8 bar" },
                   ].map((g) => (
-                    <div key={g.text} className="flex items-center gap-2 text-brasa-gray text-[10px] font-mono">
+                    <span key={g.text} className="flex items-center gap-1 text-brasa-gray text-[10px] font-mono">
                       <span>{g.icon}</span>
                       <span>{g.text}</span>
-                    </div>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -682,7 +726,7 @@ export default function Configurador() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+                  className="fixed inset-0 bg-black/80 backdrop-blur-md z-40"
                   onClick={() => setShowCheckout(false)}
                 />
                 <motion.div
@@ -690,138 +734,183 @@ export default function Configurador() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 50, scale: 0.95 }}
                   transition={{ type: "spring", bounce: 0.15 }}
-                  className="fixed inset-0 sm:inset-4 md:inset-x-auto md:inset-y-8 md:max-w-2xl md:mx-auto bg-brasa-bg-card border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto px-3 sm:px-4 pt-16 sm:pt-20 pb-3 sm:pb-4 sm:p-6 md:p-8"
+                  className="fixed inset-0 sm:top-16 sm:inset-x-4 sm:bottom-4 lg:top-16 lg:inset-x-8 lg:bottom-8 lg:max-w-5xl lg:mx-auto bg-brasa-bg-card border-0 sm:border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto"
                 >
-                  <button
-                    onClick={() => setShowCheckout(false)}
-                    className="absolute top-20 sm:top-4 right-4 w-10 h-10 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white"
-                  >
-                    ✕
-                  </button>
+                  {/* Header */}
+                  <div className="sticky top-0 bg-brasa-bg-card/95 backdrop-blur-lg border-b border-brasa-border px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between z-10">
+                    <h2 className="font-bebas text-2xl sm:text-3xl">CHECKOUT</h2>
+                    <button
+                      onClick={() => setShowCheckout(false)}
+                      className="w-11 h-11 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
 
-                  <h2 className="font-bebas text-3xl sm:text-4xl mb-4 sm:mb-6 pr-12">CHECKOUT</h2>
-
-                  <div className="mb-6 sm:mb-8">
-                    <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">ENDEREÇO DE ENTREGA</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4" id="address-form">
-                      <div>
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">CEP</label>
-                        <input
-                          type="text"
-                          placeholder="00000-000"
-                          maxLength={9}
-                          className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none"
-                          onChange={async (e) => {
-                            const cep = e.target.value.replace(/\D/g, "");
-                            if (cep.length === 8) {
-                              try {
-                                const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                                const data = await res.json();
-                                if (!data.erro) {
-                                  const form = document.getElementById("address-form");
-                                  if (form) {
-                                    const rua = form.querySelector<HTMLInputElement>("[data-field='rua']");
-                                    const bairro = form.querySelector<HTMLInputElement>("[data-field='bairro']");
-                                    const cidade = form.querySelector<HTMLInputElement>("[data-field='cidade']");
-                                    const uf = form.querySelector<HTMLInputElement>("[data-field='uf']");
-                                    if (rua) rua.value = data.logradouro || "";
-                                    if (bairro) bairro.value = data.bairro || "";
-                                    if (cidade) cidade.value = data.localidade || "";
-                                    if (uf) uf.value = data.uf || "";
-                                  }
+                  <div className="flex flex-col lg:flex-row">
+                    {/* Left Column — Form */}
+                    <div className="flex-1 p-4 sm:p-6 lg:p-8">
+                      <div className="mb-6 sm:mb-8">
+                        <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">ENDEREÇO DE ENTREGA</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" id="address-form">
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">CEP</label>
+                            <input
+                              type="text"
+                              placeholder="00000-000"
+                              maxLength={9}
+                              className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors"
+                              onChange={async (e) => {
+                                const cep = e.target.value.replace(/\D/g, "");
+                                if (cep.length === 8) {
+                                  try {
+                                    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                                    const data = await res.json();
+                                    if (!data.erro) {
+                                      const form = document.getElementById("address-form");
+                                      if (form) {
+                                        const rua = form.querySelector<HTMLInputElement>("[data-field='rua']");
+                                        const bairro = form.querySelector<HTMLInputElement>("[data-field='bairro']");
+                                        const cidade = form.querySelector<HTMLInputElement>("[data-field='cidade']");
+                                        const uf = form.querySelector<HTMLInputElement>("[data-field='uf']");
+                                        if (rua) rua.value = data.logradouro || "";
+                                        if (bairro) bairro.value = data.bairro || "";
+                                        if (cidade) cidade.value = data.localidade || "";
+                                        if (uf) uf.value = data.uf || "";
+                                      }
+                                    }
+                                  } catch { /* ignore */ }
                                 }
-                              } catch { /* ignore */ }
-                            }
-                          }}
-                        />
+                              }}
+                            />
+                          </div>
+                          <div /> {/* spacer */}
+                          <div className="sm:col-span-2">
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Rua</label>
+                            <input data-field="rua" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Número</label>
+                            <input type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Bairro</label>
+                            <input data-field="bairro" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Cidade</label>
+                            <input data-field="cidade" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">UF</label>
+                            <input data-field="uf" type="text" maxLength={2} className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors uppercase" />
+                          </div>
+                        </div>
                       </div>
-                      <div className="sm:col-span-2">
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">Rua</label>
-                        <input data-field="rua" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
-                      </div>
+
                       <div>
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">Bairro</label>
-                        <input data-field="bairro" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
-                      </div>
-                      <div>
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">Cidade</label>
-                        <input data-field="cidade" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
-                      </div>
-                      <div>
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">UF</label>
-                        <input data-field="uf" type="text" maxLength={2} className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
-                      </div>
-                      <div>
-                        <label className="font-mono text-xs text-brasa-gray block mb-1">Número</label>
-                        <input type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
+                        <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">PAGAMENTO</h3>
+                        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
+                          {[
+                            { label: "PIX", desc: "5% desconto", highlight: true },
+                            { label: "Cartão", desc: "Até 12x", highlight: false },
+                            { label: "Boleto", desc: "Venc. 3 dias", highlight: false },
+                          ].map((method) => (
+                            <div
+                              key={method.label}
+                              className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-brasa-bg border-2 text-center cursor-pointer transition-all hover:scale-[1.02] ${
+                                method.highlight ? "border-brasa-green bg-brasa-green/5" : "border-brasa-border hover:border-brasa-orange/30"
+                              }`}
+                            >
+                              <span className="font-mono text-sm text-brasa-white block">{method.label}</span>
+                              <span className={`font-mono text-[10px] ${
+                                method.highlight ? "text-brasa-green" : "text-brasa-gray-dark"
+                              }`}>{method.desc}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div id="mercadopago-bricks-container" className="min-h-[100px] rounded-xl border border-dashed border-brasa-border flex items-center justify-center">
+                          <p className="text-brasa-gray-dark text-xs font-mono p-6 text-center">
+                            Mercado Pago Checkout Bricks será renderizado aqui.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="glass-card rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
-                    <h3 className="font-bebas text-xl mb-3">RESUMO</h3>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-brasa-gray">{products[selectedModel].name}</span>
-                        <span className="font-mono">R$ {products[selectedModel].price.toLocaleString("pt-BR")}</span>
-                      </div>
-                      {colorPrice > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-brasa-gray text-xs">Cor: {productColors.find(c => c.id === selectedColor)?.name}</span>
-                          <span className="font-mono text-xs">R$ {colorPrice.toLocaleString("pt-BR")}</span>
+                    {/* Right Column — Order Summary */}
+                    <div className="lg:w-80 lg:border-l border-t lg:border-t-0 border-brasa-border bg-brasa-bg/30 p-4 sm:p-6 lg:p-8">
+                      <h3 className="font-bebas text-xl mb-4">SEU PEDIDO</h3>
+
+                      <div className="space-y-3 mb-6">
+                        <div className="flex justify-between items-center">
+                          <span className="text-brasa-white text-sm font-medium">{products[selectedModel].name}</span>
+                          <span className="font-mono text-sm">R$ {products[selectedModel].price.toLocaleString("pt-BR")}</span>
                         </div>
-                      )}
-                      {addons.filter((a) => selectedAddons.has(a.id)).map((a) => (
-                        <div key={a.id} className="flex justify-between">
-                          <span className="text-brasa-gray text-xs">{a.emoji} {a.name}</span>
-                          <span className="font-mono text-xs">R$ {a.price.toLocaleString("pt-BR")}</span>
-                        </div>
-                      ))}
 
-                      <div className="border-t border-brasa-border pt-2 flex justify-between">
-                        <span className="font-bebas text-xl">TOTAL</span>
-                        <span className="font-bebas text-2xl text-brasa-orange">
-                          R$ {total.toLocaleString("pt-BR")}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                        {colorPrice > 0 && (
+                          <div className="flex justify-between items-center">
+                            <span className="text-brasa-gray text-xs flex items-center gap-2">
+                              <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: productColors.find(c => c.id === selectedColor)?.hex }} />
+                              {productColors.find(c => c.id === selectedColor)?.name}
+                            </span>
+                            <span className="font-mono text-xs text-brasa-gray">+R$ {colorPrice.toLocaleString("pt-BR")}</span>
+                          </div>
+                        )}
 
-                  <div className="mb-6">
-                    <h3 className="font-bebas text-xl text-brasa-orange mb-4">PAGAMENTO</h3>
-                    <div className="glass-card rounded-xl p-4 sm:p-8 text-center">
-                      <p className="text-brasa-gray font-mono text-sm mb-4">
-                        Mercado Pago Checkout Bricks
-                      </p>
-                      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
-                        {[
-                          { label: "PIX", desc: "5% desconto", highlight: true },
-                          { label: "Cartão", desc: "Até 12x" },
-                          { label: "Boleto", desc: "Venc. 3 dias" },
-                        ].map((method) => (
-                          <div
-                            key={method.label}
-                            className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-brasa-bg border text-center ${
-                              (method as { highlight?: boolean }).highlight ? "border-brasa-green" : "border-brasa-border"
-                            }`}
-                          >
-                            <span className="font-mono text-xs text-brasa-white block">{method.label}</span>
-                            <span className={`font-mono text-[10px] ${
-                              (method as { highlight?: boolean }).highlight ? "text-brasa-green" : "text-brasa-gray-dark"
-                            }`}>{method.desc}</span>
+                        {addons.filter((a) => selectedAddons.has(a.id)).map((a) => (
+                          <div key={a.id} className="flex justify-between items-center">
+                            <span className="text-brasa-gray text-xs">{a.emoji} {a.name}</span>
+                            <span className="font-mono text-xs text-brasa-gray">+R$ {a.price.toLocaleString("pt-BR")}</span>
                           </div>
                         ))}
                       </div>
-                      <div id="mercadopago-bricks-container" />
-                      <p className="text-brasa-gray-dark text-xs font-mono mt-4">
-                        O checkout do Mercado Pago será renderizado aqui com as credenciais de produção.
-                      </p>
+
+                      <div className="border-t border-brasa-border pt-4 mb-6">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-bebas text-xl">TOTAL</span>
+                          <span className="font-bebas text-2xl text-brasa-orange">
+                            R$ {total.toLocaleString("pt-BR")}
+                          </span>
+                        </div>
+                        <p className="text-brasa-gray text-xs font-mono text-right">
+                          ou 12x de R$ {Math.ceil(total / 12).toLocaleString("pt-BR")}
+                        </p>
+                        <p className="text-brasa-green text-xs font-mono text-right mt-1">
+                          PIX: R$ {Math.floor(total * 0.95).toLocaleString("pt-BR")} (5% off)
+                        </p>
+                      </div>
+
                       <a
                         href="/obrigado"
-                        className="btn-brasa inline-block mt-6 text-lg"
+                        className="btn-brasa w-full text-lg text-center block"
                       >
                         FINALIZAR PEDIDO
                       </a>
+
+                      <a
+                        href={`https://wa.me/5543999999999?text=${encodeURIComponent(
+                          `Olá! Quero comprar: ${products[selectedModel].name}${selectedColor !== "preto-satin" ? ` (cor: ${productColors.find(c => c.id === selectedColor)?.name})` : ""}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-center mt-4 text-brasa-green font-mono text-sm hover:underline"
+                      >
+                        Ou finalize pelo WhatsApp
+                      </a>
+
+                      <div className="mt-6 pt-4 border-t border-brasa-border grid grid-cols-2 gap-2">
+                        {[
+                          { icon: "🛡️", text: "2 anos garantia" },
+                          { icon: "🔒", text: "Pagamento seguro" },
+                          { icon: "🚚", text: "Frete grátis Sul/SE" },
+                          { icon: "🇧🇷", text: "Fabricado no Brasil" },
+                        ].map((g) => (
+                          <span key={g.text} className="flex items-center gap-1.5 text-brasa-gray text-[10px] font-mono">
+                            <span>{g.icon}</span>
+                            <span>{g.text}</span>
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>

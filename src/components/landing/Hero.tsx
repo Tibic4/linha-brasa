@@ -93,7 +93,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-10 md:pt-20"
+      className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-28 md:pt-20"
     >
       {/* Layer 0: Video / Animated Placeholder */}
       {!videoError ? (
@@ -146,13 +146,20 @@ export default function Hero() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModel}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.15, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.8 }}
-            className="w-[65vw] h-[30vh] sm:w-[40vw] sm:h-[60vh] max-w-[500px] max-h-[600px] relative"
+            initial={{ opacity: 0, scale: 0.85, y: 40, rotate: -3 }}
+            animate={{ opacity: 0.3, scale: 1, y: 0, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -30, rotate: 3 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              mass: 1.2,
+              opacity: { duration: 0.4 },
+            }}
+            className="w-[65vw] h-[30vh] sm:w-[40vw] sm:h-[60vh] max-w-[500px] max-h-[600px] relative isolate perspective-container"
+            style={{ background: "radial-gradient(ellipse at center, rgba(20,20,20,0.8) 0%, transparent 70%)" }}
           >
-            <ProductImage model={products[activeModel].id} size="lg" className="w-full h-full opacity-60" />
+            <ProductImage model={products[activeModel].id} size="lg" className="w-full h-full depth-layer depth-shadow" />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -175,11 +182,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-bebas text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
+          className="font-bebas text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
         >
           AQUEÇA SUA
           <br />
           <span className="text-brasa-orange glow-text">PISCINA</span>
+          <br />
+          <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-brasa-gray leading-tight">
+            POR <span className="text-brasa-gold">R$ 84</span>. COM LENHA. QUALQUER CLIMA.
+          </span>
         </motion.h1>
 
         <motion.p
@@ -226,10 +237,15 @@ export default function Hero() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModel}
-            initial={{ opacity: 0, y: 15, scale: 0.97 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -15, scale: 0.97 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+              opacity: { duration: 0.25 },
+            }}
             className="glass-card rounded-2xl p-5 max-w-md mx-auto"
           >
             <div className="flex items-center justify-between">
@@ -238,10 +254,10 @@ export default function Hero() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`name-${activeModel}`}
-                    initial={{ y: 20, opacity: 0 }}
+                    initial={{ y: 25, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ y: -25, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30, opacity: { duration: 0.2 } }}
                     className="font-bebas text-2xl text-brasa-orange"
                   >
                     {products[activeModel].name}
@@ -255,10 +271,10 @@ export default function Hero() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`price-${activeModel}`}
-                    initial={{ y: 15, opacity: 0 }}
+                    initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -15, opacity: 0 }}
-                    transition={{ duration: 0.3, delay: 0.05 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30, delay: 0.05, opacity: { duration: 0.2 } }}
                     className="font-bebas text-2xl"
                   >
                     R$ {products[activeModel].price.toLocaleString("pt-BR")}

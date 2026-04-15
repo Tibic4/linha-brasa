@@ -46,6 +46,25 @@ export default function CostComparison() {
         );
       });
 
+      // Thermometer fill animation
+      const thermo = sectionRef.current?.querySelector("[data-thermometer]");
+      if (thermo) {
+        gsap.fromTo(
+          thermo,
+          { height: "0%" },
+          {
+            height: "85%",
+            duration: 2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: thermo,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
       labels.forEach((label, i) => {
         gsap.fromTo(
           label,
@@ -90,39 +109,58 @@ export default function CostComparison() {
           </p>
         </motion.div>
 
-        <div className="space-y-6">
-          {comparisons.map((item) => (
-            <div
-              key={item.method}
-              className={`flex items-center gap-4 ${item.highlight ? "scale-105 origin-left" : ""}`}
-            >
-              <div className="w-24 md:w-44 text-right shrink-0" data-bar-label>
-                <p
-                  className={`font-mono text-sm ${
-                    item.highlight ? "text-brasa-green font-bold" : "text-brasa-gray"
-                  }`}
-                >
-                  {item.method}
-                </p>
-              </div>
-              <div className="flex-1 h-10 bg-brasa-bg rounded-lg overflow-hidden relative">
-                <div
-                  data-bar={item.percent}
-                  className="h-full rounded-lg flex items-center justify-end pr-3"
-                  style={{ backgroundColor: item.color, width: 0 }}
-                >
-                  <span className="font-mono text-sm text-white font-bold whitespace-nowrap">
-                    R$ {item.monthly}/mês
-                  </span>
-                </div>
-                {item.highlight && (
-                  <div className="absolute -right-2 -top-2 bg-brasa-green text-white text-xs font-mono px-2 py-0.5 rounded-full animate-pulse">
-                    MENOR CUSTO
-                  </div>
-                )}
-              </div>
+        <div className="flex gap-6 md:gap-10">
+          {/* Thermometer Visual — GSAP scaleY animated */}
+          <div className="hidden sm:flex flex-col items-center shrink-0 py-2">
+            <span className="font-mono text-[10px] text-brasa-gray mb-2">R$/mês</span>
+            <div className="relative w-8 h-full min-h-[260px] bg-brasa-bg rounded-full overflow-hidden border border-brasa-border">
+              <div
+                data-thermometer
+                className="absolute bottom-0 left-0 right-0 rounded-full"
+                style={{ height: 0, background: "linear-gradient(to top, #22C55E 0%, #EAB308 40%, #F97316 70%, #EF4444 100%)" }}
+              />
             </div>
-          ))}
+            <div className="w-10 h-10 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center -mt-1">
+              <span className="text-sm">🌡️</span>
+            </div>
+            <span className="font-mono text-[10px] text-brasa-gray mt-1">CUSTO</span>
+          </div>
+
+          {/* Bars */}
+          <div className="flex-1 space-y-4 sm:space-y-6">
+            {comparisons.map((item) => (
+              <div
+                key={item.method}
+                className={`flex items-center gap-3 sm:gap-4 ${item.highlight ? "scale-105 origin-left" : ""}`}
+              >
+                <div className="w-20 sm:w-24 md:w-44 text-right shrink-0" data-bar-label>
+                  <p
+                    className={`font-mono text-xs sm:text-sm ${
+                      item.highlight ? "text-brasa-green font-bold" : "text-brasa-gray"
+                    }`}
+                  >
+                    {item.method}
+                  </p>
+                </div>
+                <div className="flex-1 h-8 sm:h-10 bg-brasa-bg rounded-lg overflow-hidden relative">
+                  <div
+                    data-bar={item.percent}
+                    className="h-full rounded-lg flex items-center justify-end pr-2 sm:pr-3"
+                    style={{ backgroundColor: item.color, width: 0 }}
+                  >
+                    <span className="font-mono text-xs sm:text-sm text-white font-bold whitespace-nowrap">
+                      R$ {item.monthly}/mês
+                    </span>
+                  </div>
+                  {item.highlight && (
+                    <div className="absolute -right-2 -top-2 bg-brasa-green text-white text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 rounded-full animate-pulse">
+                      MENOR CUSTO
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <motion.div

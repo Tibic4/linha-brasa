@@ -118,6 +118,38 @@ export default function SchemaMarkup() {
               text: "Sim, nossas caldeiras são compatíveis com todos os tipos de piscina: vinil, fibra, alvenaria e concreto armado.",
             },
           },
+          {
+            "@type": "Question",
+            name: "Funciona sem energia elétrica?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "A caldeira em si funciona 100% sem energia elétrica — a combustão é natural. Porém, a bomba de circulação precisa de energia para movimentar a água.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Qual o prazo de entrega?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "O prazo médio de fabricação e entrega é de 15 a 25 dias úteis para a região Sul e Sudeste. Para demais regiões, consulte o prazo específico.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Como é feita a instalação?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "A instalação envolve: posicionar a caldeira em base firme, conectar a tubulação de entrada e saída à filtragem da piscina, instalar a chaminé e fazer a queima de cura.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "A piscina precisa ter casa de máquinas?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Não necessariamente. A caldeira pode ser instalada em área externa coberta, próxima à piscina. Recomendamos distância máxima de 15 metros para melhor eficiência.",
+            },
+          },
         ],
       },
     ],

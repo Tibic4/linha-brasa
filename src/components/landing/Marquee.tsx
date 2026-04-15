@@ -15,13 +15,13 @@ export default function Marquee() {
   const doubled = [...items, ...items];
 
   return (
-    <section className="py-4 bg-brasa-bg-light border-y border-brasa-border overflow-hidden">
+    <section className="py-4 bg-brasa-bg-light border-y border-brasa-border overflow-hidden group">
       <div className="marquee-container">
-        <div className="flex animate-marquee whitespace-nowrap">
+        <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
           {doubled.map((item, i) => (
             <span
               key={i}
-              className="mx-8 font-mono text-sm text-brasa-gray tracking-wider"
+              className="mx-6 sm:mx-8 font-mono text-xs sm:text-sm text-brasa-gray tracking-wider"
             >
               {item}
             </span>
