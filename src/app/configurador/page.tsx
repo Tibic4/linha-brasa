@@ -552,7 +552,7 @@ export default function Configurador() {
                 >
                   <button
                     onClick={() => setShowCheckout(false)}
-                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white"
+                    className="absolute top-20 sm:top-4 right-4 w-10 h-10 rounded-full bg-brasa-bg border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white"
                   >
                     ✕
                   </button>
