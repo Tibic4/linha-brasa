@@ -51,7 +51,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
+      className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-10 md:pt-20"
     >
       {/* Video or Animated Placeholder */}
       {!videoError ? (

@@ -39,7 +39,7 @@ export default function Obrigado() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex items-center justify-center bg-brasa-bg px-4">
+      <main className="min-h-screen flex items-center justify-center bg-brasa-bg px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

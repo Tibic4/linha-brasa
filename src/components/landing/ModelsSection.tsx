@@ -118,22 +118,24 @@ export default function ModelsSection() {
                 className="glass-card rounded-2xl p-6 hover:border-brasa-orange/50 transition-colors duration-300 group h-full"
               >
                 {/* Product Image */}
-                <div
-                  className="w-full h-32 sm:h-48 rounded-xl mb-4 sm:mb-6 relative overflow-hidden"
-                  style={{ background: product.gradient }}
-                >
-                  <ProductImage model={product.id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg-card/60 to-transparent" />
-                  <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center">
-                    <span className="font-mono text-xs text-white/80 bg-black/40 px-2 py-1 rounded">
-                      {product.power}
-                    </span>
-                    {i === 1 && (
-                      <span className="font-mono text-xs text-brasa-bg bg-brasa-gold px-2 py-1 rounded font-bold">
-                        MAIS VENDIDA
+                <div className="relative mb-4 sm:mb-6">
+                  <div
+                    className="w-full h-32 sm:h-48 rounded-xl relative overflow-hidden"
+                    style={{ background: product.gradient }}
+                  >
+                    <ProductImage model={product.id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} className="absolute inset-0" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg-card/60 to-transparent" />
+                    <div className="absolute bottom-3 left-3">
+                      <span className="font-mono text-xs text-white/80 bg-black/40 px-2 py-1 rounded">
+                        {product.power}
                       </span>
-                    )}
+                    </div>
                   </div>
+                  {i === 1 && (
+                    <span className="absolute -top-2 -right-2 font-mono text-[10px] sm:text-xs text-brasa-bg bg-brasa-gold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded font-bold whitespace-nowrap z-10">
+                      MAIS VENDIDA
+                    </span>
+                  )}
                 </div>
 
                 <motion.div layoutId={`title-${product.id}`}>
