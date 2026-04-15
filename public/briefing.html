@@ -1070,5 +1070,138 @@
   </div>
 </div>
 
+<!-- ==================== PÁGINA 8 — CHANGELOG / STATUS ==================== -->
+<div class="page">
+  <span class="watermark watermark-1">STATUS</span>
+
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+    <h2 style="margin-bottom:0; border:none;">8. CHANGELOG — O QUE FOI ENTREGUE</h2>
+    <span class="badge badge-green" style="font-size:10px; padding:6px 14px;">ABRIL 2026</span>
+  </div>
+  <p>Registro técnico das funcionalidades implementadas e refinamentos realizados após a especificação original. Usado como referência de portfólio.</p>
+
+  <!-- Bloco de Status Geral -->
+  <div class="grid-4" style="margin: 14px 0;">
+    <div class="card" style="text-align:center; border-color:rgba(34,197,94,0.3);">
+      <div class="stat-number" style="color:var(--green);">5/6</div>
+      <div class="stat-label">Etapas entregues</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="stat-number">11</div>
+      <div class="stat-label">Seções da landing</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="stat-number" style="color:var(--orange);">8</div>
+      <div class="stat-label">Componentes mobile-fix</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="stat-number" style="color:var(--gold);">29</div>
+      <div class="stat-label">Dias de prazo original</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- LANDING PAGE -->
+  <h3>✅ LANDING PAGE — 100% ENTREGUE</h3>
+  <div class="grid-2" style="margin-bottom:10px;">
+    <div>
+      <ul class="checklist">
+        <li>Hero fullscreen com vídeo + parallax GSAP</li>
+        <li>Color Morphing (3 fluid blobs, 4 perfis)</li>
+        <li>Marquee de credibilidade CSS infinito</li>
+        <li>Seção de Problema com 4 contadores GSAP</li>
+        <li>Diagrama SVG animado com stroke-dashoffset</li>
+        <li>4 Modelos com Shared Layout (layoutId)</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Modal de expansão de produto (Framer Motion)</li>
+        <li>Comparativo de custos com barras GSAP</li>
+        <li>Calculadora de economia interativa (real-time)</li>
+        <li>Carrossel 3D Swiper (EffectCoverflow)</li>
+        <li>FAQ Accordion com AnimatePresence</li>
+        <li>CTA final com formulário EmailJS + WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONFIGURADOR -->
+  <h3>✅ CONFIGURADOR — 100% ENTREGUE + MELHORIAS MOBILE</h3>
+  <div class="grid-2" style="margin-bottom:10px;">
+    <div>
+      <ul class="checklist">
+        <li>Seletor de 4 modelos com LayoutGroup</li>
+        <li>Color Morphing variant="page" (position fixed)</li>
+        <li>Grid de 12 aditivos opcionais com estado</li>
+        <li>Sidebar sticky com total em tempo real (CountUp)</li>
+        <li>Calculadora de economia inline no sidebar</li>
+        <li>Modal de checkout com endereço + ViaCEP</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>WhatsApp Float reposicionado (bottom-20 mobile)</li>
+        <li>Sticky CTA bar mobile (preço + botão finalizar)</li>
+        <li>Tap-to-select direto no mobile (sem expand)</li>
+        <li>Auto-scroll para Resumo após seleção mobile</li>
+        <li>Reordenação de seções mobile (CSS Grid order)</li>
+        <li>Safe area iOS (env(safe-area-inset-bottom))</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MOBILE OPTIMIZATION HIGHLIGHT -->
+  <div class="highlight-box" style="margin-bottom: 12px;">
+    <h3 style="margin-top:0; color:var(--gold);">⚡ MOBILE-FIRST REFACTOR — ALÉM DO ESCOPO ORIGINAL</h3>
+    <p style="margin-bottom:8px;">Otimização completa de 8 componentes para garantir experiência mobile de nível e-commerce premium:</p>
+    <div style="columns:2; font-size:9px; color:var(--gray);">
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">Hero.tsx</strong> — H1 responsivo, pills touch-friendly (min-h:44px), CTAs full-width</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">ModelsSection.tsx</strong> — grid-cols-2 mobile, modal compacto</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">ProblemSection.tsx</strong> — tipografia escalonada 3xl→5xl→7xl</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">SolutionDiagram.tsx</strong> — benefits grid-cols-2 mobile</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">Calculator.tsx</strong> — inputs empilhados, padding reduzido</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">CostComparison.tsx</strong> — label-width compacto, barras legíveis</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">CTASection.tsx</strong> — formulário e cards com padding adaptado</p>
+      <p style="margin:3px 0;">• <strong style="color:var(--white);">Testimonials.tsx</strong> — slides menores, sem overflow</p>
+    </div>
+  </div>
+
+  <!-- SEO + INFRA -->
+  <div class="grid-2">
+    <div>
+      <h3>✅ SEO + ANALYTICS — ENTREGUE</h3>
+      <ul class="checklist" style="font-size:10px;">
+        <li>Meta tags completas (title, description, OG)</li>
+        <li>Schema Markup: Product, FAQPage, Organization</li>
+        <li>sitemap.xml + robots.txt configurados</li>
+        <li>GA4: page_view, scroll, add_to_cart, lead, purchase</li>
+        <li>Meta Pixel: PageView, AddToCart, Purchase</li>
+        <li>trackWhatsAppClick() implementado</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--gold);">🔜 PENDENTE — CHECKOUT MERCADO PAGO</h3>
+      <ul style="font-size:10px;">
+        <li>Mercado Pago Checkout Bricks (inline)</li>
+        <li>Pix QR Code dinâmico</li>
+        <li>Cartão de crédito até 12x sem juros</li>
+        <li>Boleto bancário (venc. 3 dias)</li>
+        <li>Auto-preenchimento de endereço via ViaCEP</li>
+      </ul>
+      <div class="card" style="margin-top:8px; text-align:center; border-color:rgba(255,209,102,0.3); background:rgba(255,209,102,0.03);">
+        <p class="mono text-gold" style="margin:0; font-size:10px;">Etapa disponível para integração</p>
+        <p style="font-family:'Bebas Neue'; font-size:22px; margin:4px 0; color:var(--white);">R$ 1.440</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
+    <span>PÁGINA 8 / 8</span>
+  </div>
+</div>
+
 </body>
 </html>
