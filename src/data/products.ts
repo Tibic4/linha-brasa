@@ -14,181 +14,199 @@ export interface Product {
 export interface Addon {
   id: string;
   name: string;
+  emoji: string;
   description: string;
+  badge?: string;
   price: number;
-  image: string;
+  models: string; // "todos" | "60,120,200" | "sul-sudeste"
+}
+
+export interface ProductColor {
+  id: string;
+  name: string;
+  hex: string;
+  price: number; // 0 = incluso
 }
 
 export const products: Product[] = [
   {
-    id: "brasa-15",
-    name: "BRASA 15",
+    id: "brasa-30",
+    name: "BRASA 30",
     subtitle: "Compacta & Eficiente",
-    poolSize: "Até 15.000L",
-    power: "15.000 kcal/h",
-    price: 11500,
+    poolSize: "Até 20.000L",
+    power: "30.000 kcal/h",
+    price: 9800,
     description:
-      "Ideal para piscinas pequenas e spas. Aquecimento rápido com consumo mínimo de lenha.",
+      "Ideal para piscinas pequenas e spas. Aquecimento rápido com consumo mínimo de lenha. Perfeita para quem quer começar a economizar.",
     features: [
       "Corpo em aço carbono 4.75mm",
       "Serpentina em cobre de alta eficiência",
       "Porta com vedação hermética",
       "Pintura eletrostática resistente",
     ],
-    gradient: "linear-gradient(135deg, #FF4F00 0%, #FF8C42 100%)",
+    gradient: "linear-gradient(135deg, #1B3A5C 0%, #2B5D8C 100%)",
     image: "/images/brasa-15.png",
   },
   {
-    id: "brasa-25",
-    name: "BRASA 25",
+    id: "brasa-60",
+    name: "BRASA 60",
     subtitle: "A Mais Vendida",
-    poolSize: "Até 25.000L",
-    power: "25.000 kcal/h",
-    price: 13500,
+    poolSize: "Até 40.000L",
+    power: "60.000 kcal/h",
+    price: 14500,
     description:
-      "Nosso modelo mais vendido. Equilíbrio perfeito entre potência e economia para piscinas residenciais.",
+      "Nosso modelo mais vendido. Equilíbrio perfeito entre potência e economia para piscinas residenciais. Aquece 60.000L por R$ 84.",
     features: [
       "Corpo em aço carbono 4.75mm",
       "Serpentina dupla em cobre",
       "Sistema de tiragem otimizado",
-      "Cinzeiro removível",
+      "Cinzeiro removível de fácil limpeza",
     ],
-    gradient: "linear-gradient(135deg, #FF6B00 0%, #FFD166 100%)",
+    gradient: "linear-gradient(135deg, #CC8400 0%, #FFD166 100%)",
     image: "/images/brasa-25.png",
   },
   {
-    id: "brasa-35",
-    name: "BRASA 35",
+    id: "brasa-120",
+    name: "BRASA 120",
     subtitle: "Potência Premium",
-    poolSize: "Até 35.000L",
-    power: "35.000 kcal/h",
-    price: 15500,
+    poolSize: "Até 80.000L",
+    power: "120.000 kcal/h",
+    price: 21000,
     description:
-      "Para piscinas maiores que exigem alto desempenho. Aquece rapidamente mesmo em dias frios.",
+      "Para piscinas maiores que exigem alto desempenho. Aquece rapidamente mesmo em dias frios. Ticket médio da linha BRASA.",
     features: [
       "Corpo reforçado em aço carbono 6.3mm",
       "Serpentina tripla em cobre",
       "Câmara de combustão ampliada",
       "Grelha em ferro fundido",
     ],
-    gradient: "linear-gradient(135deg, #FF3D00 0%, #FF7043 100%)",
+    gradient: "linear-gradient(135deg, #FF4F00 0%, #FF7043 100%)",
     image: "/images/brasa-35.png",
   },
   {
-    id: "brasa-50",
-    name: "BRASA 50",
+    id: "brasa-200",
+    name: "BRASA 200",
     subtitle: "Industrial & Comercial",
-    poolSize: "Até 50.000L",
-    power: "50.000 kcal/h",
-    price: 17500,
+    poolSize: "Até 150.000L",
+    power: "200.000 kcal/h",
+    price: 32000,
     description:
-      "Potência máxima para piscinas comerciais, clubes e academias. Robustez incomparável.",
+      "Potência máxima para piscinas comerciais, clubes e academias. Robustez incomparável. A solução definitiva para grandes volumes.",
     features: [
       "Corpo em aço carbono 6.3mm reforçado",
       "Serpentina quádrupla em cobre",
       "Sistema de combustão turbo",
       "Painel de controle de temperatura",
     ],
-    gradient: "linear-gradient(135deg, #BF360C 0%, #FF4F00 100%)",
+    gradient: "linear-gradient(135deg, #BF360C 0%, #D84315 100%)",
     image: "/images/brasa-50.png",
   },
 ];
 
 export const addons: Addon[] = [
   {
-    id: "capa-termica",
-    name: "Capa Térmica",
-    description: "Reduz a perda de calor em até 75%",
+    id: "serpentina-316l",
+    emoji: "🔥",
+    name: "Serpentina Inox 316L",
+    description: "Para piscinas salinizadas. Resistência superior à corrosão.",
+    badge: "Ideal para piscina com sal",
+    price: 680,
+    models: "todos",
+  },
+  {
+    id: "vidro-ceramico",
+    emoji: "🪟",
+    name: "Vidro Cerâmico Premium",
+    description: "Janela maior 200×200mm Schott Robax. Visão plena do fogo.",
+    badge: "Diferencial visual",
     price: 890,
-    image: "/images/addons/capa-termica.png",
+    models: "todos",
   },
   {
-    id: "termometro-digital",
-    name: "Termômetro Digital",
-    description: "Monitore a temperatura em tempo real",
-    price: 290,
-    image: "/images/addons/termometro.png",
-  },
-  {
-    id: "kit-instalacao",
-    name: "Kit Instalação",
-    description: "Tubulação, conexões e abraçadeiras inclusos",
-    price: 650,
-    image: "/images/addons/kit-instalacao.png",
-  },
-  {
-    id: "bomba-recirculacao",
-    name: "Bomba de Recirculação",
-    description: "Bomba 1/2cv para circulação forçada",
+    id: "bomba-dedicada",
+    emoji: "⚡",
+    name: "Bomba Dedicada 1CV",
+    description: "Bomba exclusiva da caldeira. Não interfere na filtragem.",
     price: 1290,
-    image: "/images/addons/bomba.png",
+    models: "todos",
   },
   {
-    id: "chamine-inox",
-    name: "Chaminé Inox 3m",
-    description: "Chaminé em aço inox 304 com chapéu",
-    price: 790,
-    image: "/images/addons/chamine.png",
+    id: "chamine-estendida",
+    emoji: "🏗️",
+    name: "Chaminé Estendida +500mm",
+    description: "Seção adicional para instalação próxima a paredes ou telhados.",
+    price: 590,
+    models: "todos",
   },
   {
-    id: "base-concreto",
-    name: "Base de Concreto",
-    description: "Base pré-moldada para instalação",
-    price: 450,
-    image: "/images/addons/base.png",
+    id: "cobertura-antigranizo",
+    emoji: "⛈️",
+    name: "Cobertura Antigranizo",
+    description: "Estrutura alumínio + telha sanduíche. Proteção a céu aberto.",
+    price: 780,
+    models: "todos",
   },
   {
-    id: "controlador-temp",
-    name: "Controlador de Temperatura",
-    description: "Automação com liga/desliga por temperatura",
-    price: 890,
-    image: "/images/addons/controlador.png",
+    id: "termostato-digital",
+    emoji: "🌡️",
+    name: "Termostato Digital com Display",
+    description: "Controlador LCD com sonda PT100. Monitora entrada e saída.",
+    price: 1190,
+    models: "60,120,200",
   },
   {
-    id: "trocador-calor",
-    name: "Trocador de Calor",
-    description: "Aumenta eficiência em até 30%",
-    price: 1490,
-    image: "/images/addons/trocador.png",
+    id: "kit-conexoes",
+    emoji: "🔧",
+    name: "Kit Conexões Hidráulicas",
+    description: "Registros, adaptadores, tubos flex. Instalação plug-and-play.",
+    price: 420,
+    models: "todos",
   },
   {
-    id: "lenha-eucalipto",
-    name: "Lenha de Eucalipto (1m³)",
-    description: "Lenha seca pronta para uso",
-    price: 280,
-    image: "/images/addons/lenha.png",
+    id: "grelha-inox",
+    emoji: "⚙️",
+    name: "Grelha Inox 316L",
+    description: "Substituição da grelha de ferro fundido. Maior durabilidade.",
+    price: 680,
+    models: "todos",
   },
   {
-    id: "suporte-lenha",
-    name: "Suporte para Lenha",
-    description: "Rack em aço para armazenamento",
-    price: 390,
-    image: "/images/addons/suporte.png",
+    id: "instalacao-comissionamento",
+    emoji: "🛠️",
+    name: "Instalação + Comissionamento",
+    description: "Visita técnica, teste hidráulico, queima de cura, treinamento.",
+    price: 1800,
+    models: "sul-sudeste",
   },
   {
     id: "garantia-estendida",
-    name: "Garantia Estendida +2 anos",
-    description: "Extensão de garantia total para 5 anos",
-    price: 990,
-    image: "/images/addons/garantia.png",
+    emoji: "🛡️",
+    name: "Garantia Estendida 5 anos",
+    description: "Estende de 2 para 5 anos. Cobre serpentina e estrutura.",
+    price: 1500,
+    models: "todos",
   },
   {
-    id: "instalacao-profissional",
-    name: "Instalação Profissional",
-    description: "Instalação por técnico certificado",
-    price: 1200,
-    image: "/images/addons/instalacao.png",
+    id: "embalagem-longa-distancia",
+    emoji: "📦",
+    name: "Embalagem Transporte Longa Distância",
+    description: "Caixote madeira + espuma para Norte/Nordeste ou exportação.",
+    price: 380,
+    models: "todos",
   },
 ];
 
-export const colors = [
-  { id: "preto-fosco", name: "Preto Fosco", hex: "#1A1A1A", image: "/images/colors/preto.png" },
-  { id: "cinza-grafite", name: "Cinza Grafite", hex: "#4A4A4A", image: "/images/colors/grafite.png" },
-  { id: "terracota", name: "Terracota", hex: "#C75B39", image: "/images/colors/terracota.png" },
-  { id: "verde-musgo", name: "Verde Musgo", hex: "#4A5D3A", image: "/images/colors/verde.png" },
-  { id: "azul-petroleo", name: "Azul Petróleo", hex: "#1B4F72", image: "/images/colors/azul.png" },
-  { id: "branco-gelo", name: "Branco Gelo", hex: "#E8E8E8", image: "/images/colors/branco.png" },
+export const productColors: ProductColor[] = [
+  { id: "preto-satin", name: "Preto Satin", hex: "#1A1A1A", price: 0 },
+  { id: "cinza-grafite", name: "Cinza Grafite", hex: "#4A4A4A", price: 480 },
+  { id: "verde-militar", name: "Verde Militar", hex: "#4A5D3A", price: 480 },
+  { id: "bege-rustico", name: "Bege Rústico", hex: "#C4A77D", price: 480 },
+  { id: "bronze", name: "Bronze", hex: "#8B6914", price: 680 },
+  { id: "inox-escovado", name: "Inox Escovado", hex: "#C0C0C0", price: 980 },
 ];
+
+// Keep old colors export for backwards compat
+export const colors = productColors;
 
 export const testimonials = [
   {
@@ -198,6 +216,9 @@ export const testimonials = [
     rating: 5,
     text: "Economizo mais de R$ 400/mês comparado ao aquecimento a gás. Em 6 meses a caldeira já se pagou.",
     image: "/images/testimonials/ricardo.jpg",
+    model: "brasa-60",
+    poolSize: "35.000L",
+    result: "Aqueci em 8h por R$ 76",
   },
   {
     id: 2,
@@ -206,6 +227,9 @@ export const testimonials = [
     rating: 5,
     text: "A piscina fica na temperatura perfeita mesmo no inverno. Meus filhos adoram! Recomendo demais.",
     image: "/images/testimonials/fernanda.jpg",
+    model: "brasa-30",
+    poolSize: "18.000L",
+    result: "Aqueceu em 4h por R$ 42",
   },
   {
     id: 3,
@@ -214,6 +238,9 @@ export const testimonials = [
     rating: 5,
     text: "Produto robusto, acabamento impecável. A equipe da Linha Brasa deu todo suporte na instalação.",
     image: "/images/testimonials/carlos.jpg",
+    model: "brasa-120",
+    poolSize: "60.000L",
+    result: "Aqueceu em 11h por R$ 84",
   },
   {
     id: 4,
@@ -222,14 +249,20 @@ export const testimonials = [
     rating: 5,
     text: "Tinha receio de caldeira a lenha, mas a praticidade me surpreendeu. Acendo e em 2h a piscina está quente.",
     image: "/images/testimonials/mariana.jpg",
+    model: "brasa-60",
+    poolSize: "25.000L",
+    result: "Aqueceu em 5h por R$ 58",
   },
   {
     id: 5,
     name: "João P.",
     location: "Porto Alegre, RS",
     rating: 5,
-    text: "Tenho uma academia com piscina e a BRASA 50 dá conta perfeita. Economia absurda no gás.",
+    text: "Tenho uma academia com piscina e a BRASA 200 dá conta perfeita. Economia absurda no gás.",
     image: "/images/testimonials/joao.jpg",
+    model: "brasa-200",
+    poolSize: "120.000L",
+    result: "Economizo R$ 2.800/mês vs GLP",
   },
 ];
 
@@ -237,7 +270,7 @@ export const faqItems = [
   {
     question: "Quanto tempo leva para aquecer a piscina?",
     answer:
-      "Depende do volume da piscina e da temperatura inicial. Em média, uma piscina de 20.000L sobe de 18°C para 28°C em 4 a 6 horas com a BRASA 25. Depois de aquecida, a manutenção da temperatura consome muito menos lenha.",
+      "Depende do volume da piscina e da temperatura inicial. Em média, uma piscina de 40.000L sobe de 18°C para 28°C em 6 a 8 horas com a BRASA 60. Depois de aquecida, a manutenção da temperatura consome muito menos lenha.",
   },
   {
     question: "Qual o consumo de lenha por dia?",
@@ -252,12 +285,12 @@ export const faqItems = [
   {
     question: "Precisa de instalação profissional?",
     answer:
-      "Recomendamos instalação por profissional qualificado, mas o processo é simples: conexão na tubulação da piscina, posicionamento da caldeira e instalação da chaminé. Oferecemos o serviço de instalação como aditivo opcional.",
+      "Recomendamos instalação por profissional qualificado, mas o processo é simples: conexão na tubulação da piscina, posicionamento da caldeira e instalação da chaminé. Oferecemos o serviço de instalação + comissionamento como aditivo opcional (Sul/Sudeste).",
   },
   {
     question: "Qual a garantia do produto?",
     answer:
-      "Todos os modelos possuem 3 anos de garantia de fábrica contra defeitos de fabricação. Oferecemos garantia estendida de +2 anos (total 5 anos) como aditivo opcional.",
+      "Todos os modelos possuem 2 anos de garantia de fábrica contra defeitos de fabricação. Oferecemos garantia estendida para 5 anos (cobre serpentina e estrutura) como aditivo opcional.",
   },
   {
     question: "A caldeira esquenta o ano todo, mesmo no inverno?",
@@ -272,6 +305,26 @@ export const faqItems = [
   {
     question: "Quanto economizo comparado ao aquecimento a gás?",
     answer:
-      "Em média, a economia é de 60% a 80% comparado ao gás natural e até 90% comparado ao GLP (gás de botijão). Use nossa calculadora de economia para ver o valor exato para sua piscina.",
+      "Em média, a economia é de 60% a 80% comparado ao gás natural e até 90% comparado ao GLP (gás de botijão). Uma piscina de 60.000L custa apenas R$ 84 para aquecer com lenha. Use nossa calculadora de economia para ver o valor exato para sua piscina.",
+  },
+  {
+    question: "Funciona sem energia elétrica?",
+    answer:
+      "A caldeira em si funciona 100% sem energia elétrica — a combustão é natural. Porém, a bomba de circulação (que movimenta a água) precisa de energia. Isso significa que em caso de queda de luz, a caldeira mantém o calor, mas a circulação para até a energia voltar.",
+  },
+  {
+    question: "Qual o prazo de entrega?",
+    answer:
+      "O prazo médio de fabricação e entrega é de 15 a 25 dias úteis para a região Sul e Sudeste. Para demais regiões, consulte o prazo específico. Fabricamos sob demanda em Londrina/PR.",
+  },
+  {
+    question: "Como é feita a instalação?",
+    answer:
+      "A instalação envolve: posicionar a caldeira em base firme, conectar a tubulação de entrada e saída à filtragem da piscina, instalar a chaminé e fazer a queima de cura. Oferecemos serviço completo de instalação + comissionamento para Sul/Sudeste.",
+  },
+  {
+    question: "A piscina precisa ter casa de máquinas?",
+    answer:
+      "Não necessariamente. A caldeira pode ser instalada em área externa coberta, próxima à piscina. Recomendamos distância máxima de 15 metros da piscina para melhor eficiência. Oferecemos cobertura antigranizo como aditivo para instalações a céu aberto.",
   },
 ];

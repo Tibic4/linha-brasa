@@ -49,13 +49,22 @@ html {
 
 /* ===== WATERMARK TYPOGRAPHY ===== */
 .watermark {
-  font-size: clamp(100px, 15vw, 200px);
+  font-size: clamp(50px, 14vw, 200px);
   opacity: 0.04;
   position: absolute;
   white-space: nowrap;
   user-select: none;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Slow pulsing scale for watermark — pure CSS, no JS */
+@keyframes watermark-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.02); }
+}
+.animate-watermark-pulse {
+  animation: watermark-pulse 8s ease-in-out infinite;
 }
 
 /* ===== GLOW EFFECTS ===== */

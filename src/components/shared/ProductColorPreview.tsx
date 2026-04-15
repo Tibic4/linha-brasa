@@ -38,10 +38,10 @@ export default function ProductColorPreview({ colorHex, modelName, className = "
 
   // Scale factor based on model
   const scaleMap: Record<string, number> = {
-    "BRASA 15": 0.8,
-    "BRASA 25": 0.88,
-    "BRASA 35": 0.95,
-    "BRASA 50": 1,
+    "BRASA 30": 0.8,
+    "BRASA 60": 0.88,
+    "BRASA 120": 0.95,
+    "BRASA 200": 1,
   };
   const scale = scaleMap[modelName] || 0.9;
 

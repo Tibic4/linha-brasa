@@ -5,14 +5,8 @@ import { motion } from "framer-motion";
 /**
  * COLOR MORPHING — Técnica Ice Cream Fluid
  *
- * CSS NÃO transiciona entre gradients (background: radial-gradient...).
- * A solução é usar blobs absolutos com cores sólidas + filter:blur gigante.
- * Framer Motion anima posição, cor, scale e opacity dos blobs individualmente,
- * criando o efeito de "tinta fluida" se misturando.
- *
  * Cada modelo tem um "color profile" com 3 blobs em posições e cores únicas.
- * A transição entre modelos é suave porque Framer Motion interpola
- * cada propriedade CSS individualmente (x, y, backgroundColor, opacity).
+ * 30=azul escuro, 60=âmbar dourado, 120=laranja fogo, 200=brasa vermelha
  */
 
 interface ColorProfile {
@@ -22,29 +16,29 @@ interface ColorProfile {
 }
 
 const modelProfiles: ColorProfile[] = [
-  // BRASA 15 — Laranja quente concentrado
+  // BRASA 30 — Azul escuro frio (entrada, compacta)
   {
-    blob1: { x: "30%", y: "60%", color: "#FF4F00", scale: 1, opacity: 0.25 },
-    blob2: { x: "70%", y: "40%", color: "#FF8C42", scale: 0.8, opacity: 0.15 },
-    blob3: { x: "50%", y: "80%", color: "#CC3F00", scale: 0.6, opacity: 0.1 },
+    blob1: { x: "30%", y: "60%", color: "#1B3A5C", scale: 1, opacity: 0.25 },
+    blob2: { x: "70%", y: "40%", color: "#2B5D8C", scale: 0.8, opacity: 0.15 },
+    blob3: { x: "50%", y: "80%", color: "#0D2B45", scale: 0.6, opacity: 0.1 },
   },
-  // BRASA 25 — Laranja dourado amplo (mais vendida)
+  // BRASA 60 — Âmbar dourado (mais vendida)
   {
-    blob1: { x: "50%", y: "50%", color: "#FF6B00", scale: 1.3, opacity: 0.3 },
+    blob1: { x: "50%", y: "50%", color: "#CC8400", scale: 1.3, opacity: 0.3 },
     blob2: { x: "25%", y: "70%", color: "#FFD166", scale: 1, opacity: 0.2 },
-    blob3: { x: "75%", y: "30%", color: "#FF4F00", scale: 0.7, opacity: 0.15 },
+    blob3: { x: "75%", y: "30%", color: "#E6A800", scale: 0.7, opacity: 0.15 },
   },
-  // BRASA 35 — Vermelho intenso premium
+  // BRASA 120 — Laranja fogo (premium)
   {
-    blob1: { x: "60%", y: "55%", color: "#FF3D00", scale: 1.1, opacity: 0.28 },
+    blob1: { x: "60%", y: "55%", color: "#FF4F00", scale: 1.1, opacity: 0.28 },
     blob2: { x: "30%", y: "35%", color: "#FF7043", scale: 0.9, opacity: 0.18 },
-    blob3: { x: "70%", y: "75%", color: "#BF360C", scale: 0.8, opacity: 0.12 },
+    blob3: { x: "70%", y: "75%", color: "#FF8C42", scale: 0.8, opacity: 0.12 },
   },
-  // BRASA 50 — Brasa profunda, poder máximo
+  // BRASA 200 — Brasa vermelha profunda (poder máximo)
   {
     blob1: { x: "45%", y: "65%", color: "#BF360C", scale: 1.2, opacity: 0.3 },
-    blob2: { x: "65%", y: "30%", color: "#FF4F00", scale: 1, opacity: 0.22 },
-    blob3: { x: "20%", y: "50%", color: "#D84315", scale: 0.9, opacity: 0.15 },
+    blob2: { x: "65%", y: "30%", color: "#D84315", scale: 1, opacity: 0.22 },
+    blob3: { x: "20%", y: "50%", color: "#8B1A04", scale: 0.9, opacity: 0.15 },
   },
 ];
 
@@ -55,7 +49,6 @@ const blobTransition = {
 
 interface ColorMorphProps {
   activeModel: number;
-  /** "hero" uses larger blobs, "page" uses subtler blobs */
   variant?: "hero" | "page";
   className?: string;
 }
@@ -76,7 +69,6 @@ export default function ColorMorph({
       className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
       aria-hidden="true"
     >
-      {/* Blob 1 — Primary */}
       <motion.div
         className="absolute rounded-full"
         animate={{
@@ -95,8 +87,6 @@ export default function ColorMorph({
           willChange: "left, top, background-color, opacity, transform",
         }}
       />
-
-      {/* Blob 2 — Secondary */}
       <motion.div
         className="absolute rounded-full"
         animate={{
@@ -115,8 +105,6 @@ export default function ColorMorph({
           willChange: "left, top, background-color, opacity, transform",
         }}
       />
-
-      {/* Blob 3 — Accent */}
       <motion.div
         className="absolute rounded-full"
         animate={{

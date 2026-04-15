@@ -11,7 +11,7 @@ import Image from "next/image";
  */
 
 interface ProductColorPhotoProps {
-  model: "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50";
+  model: string;
   colorHex: string;
   colorId: string;
   className?: string;
@@ -21,32 +21,32 @@ interface ProductColorPhotoProps {
 // Adjust these percentages after seeing the actual product photos.
 // Format: polygon(x% y%, x% y%, ...) — clockwise from top-left of body.
 const bodyClipPaths: Record<string, string> = {
-  "brasa-15": "polygon(20% 10%, 80% 10%, 82% 15%, 82% 75%, 78% 80%, 22% 80%, 18% 75%, 18% 15%)",
-  "brasa-25": "polygon(18% 8%, 82% 8%, 84% 14%, 84% 76%, 80% 82%, 20% 82%, 16% 76%, 16% 14%)",
-  "brasa-35": "polygon(16% 6%, 84% 6%, 86% 12%, 86% 78%, 82% 84%, 18% 84%, 14% 78%, 14% 12%)",
-  "brasa-50": "polygon(14% 5%, 86% 5%, 88% 11%, 88% 78%, 84% 84%, 16% 84%, 12% 78%, 12% 11%)",
+  "brasa-30": "polygon(20% 10%, 80% 10%, 82% 15%, 82% 75%, 78% 80%, 22% 80%, 18% 75%, 18% 15%)",
+  "brasa-60": "polygon(18% 8%, 82% 8%, 84% 14%, 84% 76%, 80% 82%, 20% 82%, 16% 76%, 16% 14%)",
+  "brasa-120": "polygon(16% 6%, 84% 6%, 86% 12%, 86% 78%, 82% 84%, 18% 84%, 14% 78%, 14% 12%)",
+  "brasa-200": "polygon(14% 5%, 86% 5%, 88% 11%, 88% 78%, 84% 84%, 16% 84%, 12% 78%, 12% 11%)",
 };
 
 // Color filters calibrated per color — only applied to the clipped body layer
 const colorFilters: Record<string, string> = {
-  "preto-fosco":   "brightness(0.5) saturate(0.2)",
+  "preto-satin":   "brightness(0.5) saturate(0.2)",
   "cinza-grafite": "brightness(0.8) saturate(0.25) contrast(1.1)",
-  "terracota":     "sepia(0.8) saturate(2.5) hue-rotate(-10deg) brightness(0.85)",
-  "verde-musgo":   "sepia(0.7) saturate(2) hue-rotate(70deg) brightness(0.8)",
-  "azul-petroleo": "sepia(0.7) saturate(2.5) hue-rotate(170deg) brightness(0.8)",
-  "branco-gelo":   "brightness(1.5) saturate(0.1) contrast(0.8)",
+  "verde-militar": "sepia(0.7) saturate(2) hue-rotate(70deg) brightness(0.8)",
+  "bege-rustico":  "sepia(0.6) saturate(1.5) hue-rotate(-15deg) brightness(1.0)",
+  "bronze":        "sepia(0.8) saturate(2.5) hue-rotate(-10deg) brightness(0.85)",
+  "inox-escovado": "brightness(1.5) saturate(0.1) contrast(0.8)",
 };
 
 export default function ProductColorPhoto({ model, colorHex, colorId, className = "" }: ProductColorPhotoProps) {
-  const clipPath = bodyClipPaths[model] || bodyClipPaths["brasa-25"];
+  const clipPath = bodyClipPaths[model] || bodyClipPaths["brasa-60"];
   const filter = colorFilters[colorId] || "none";
-  const isDefault = colorId === "preto-fosco";
+  const isDefault = colorId === "preto-satin";
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {/* Layer 1: Original photo — everything untouched */}
       <Image
-        src={`/images/${model}.png`}
+        src={`/images/${model.replace("brasa-30","brasa-15").replace("brasa-60","brasa-25").replace("brasa-120","brasa-35").replace("brasa-200","brasa-50")}.png`}
         alt={`Caldeira ${model.toUpperCase()}`}
         width={400}
         height={500}
@@ -60,7 +60,7 @@ export default function ProductColorPhoto({ model, colorHex, colorId, className 
           style={{ clipPath }}
         >
           <Image
-            src={`/images/${model}.png`}
+            src={`/images/${model.replace("brasa-30","brasa-15").replace("brasa-60","brasa-25").replace("brasa-120","brasa-35").replace("brasa-200","brasa-50")}.png`}
             alt=""
             width={400}
             height={500}

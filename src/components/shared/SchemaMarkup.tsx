@@ -23,13 +23,13 @@ export default function SchemaMarkup() {
       },
       {
         "@type": "Product",
-        name: "Caldeira a Lenha BRASA 25",
+        name: "Caldeira a Lenha BRASA 60",
         description:
-          "Caldeira a lenha para aquecimento de piscinas de até 25.000L. Economia de até 80% comparado ao gás.",
+          "Caldeira a lenha para aquecimento de piscinas de até 40.000L. Economia de até 80% comparado ao gás. A mais vendida da linha.",
         brand: { "@type": "Brand", name: "Linha Brasa" },
         offers: {
           "@type": "Offer",
-          price: "13500",
+          price: "14500",
           priceCurrency: "BRL",
           availability: "https://schema.org/InStock",
           url: "https://linhabrasa.com.br/configurador",
@@ -59,7 +59,7 @@ export default function SchemaMarkup() {
             name: "Quanto tempo leva para aquecer a piscina?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Em média, uma piscina de 20.000L sobe de 18°C para 28°C em 4 a 6 horas com a BRASA 25.",
+              text: "Em média, uma piscina de 40.000L sobe de 18°C para 28°C em 6 a 8 horas com a BRASA 60.",
             },
           },
           {
@@ -99,7 +99,7 @@ export default function SchemaMarkup() {
             name: "Qual a garantia do produto?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Todos os modelos possuem 3 anos de garantia de fábrica. Oferecemos garantia estendida de +2 anos (total 5 anos) como aditivo opcional.",
+              text: "Todos os modelos possuem 2 anos de garantia de fábrica. Oferecemos garantia estendida para 5 anos como aditivo opcional.",
             },
           },
           {

@@ -21,10 +21,10 @@ export default function Footer() {
         <div>
           <h4 className="font-bebas text-lg mb-4 text-brasa-orange">PRODUTOS</h4>
           <ul className="space-y-2 text-sm text-brasa-gray">
-            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 15</a></li>
-            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 25</a></li>
-            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 35</a></li>
-            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 50</a></li>
+            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 30</a></li>
+            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 60</a></li>
+            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 120</a></li>
+            <li><a href="/configurador" className="hover:text-brasa-orange transition-colors">BRASA 200</a></li>
           </ul>
         </div>
 

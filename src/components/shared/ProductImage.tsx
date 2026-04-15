@@ -3,12 +3,25 @@
 import Image from "next/image";
 
 /**
- * Product image component — uses real photos when available,
- * falls back to SVG placeholders.
+ * Product image component — maps model IDs to available image files.
+ * New model IDs (brasa-30/60/120/200) map to existing photos.
  */
 
+// Map new model IDs to existing image files
+const imageMap: Record<string, string> = {
+  "brasa-30": "/images/brasa-15.png",
+  "brasa-60": "/images/brasa-25.png",
+  "brasa-120": "/images/brasa-35.png",
+  "brasa-200": "/images/brasa-50.png",
+  // Keep old IDs working
+  "brasa-15": "/images/brasa-15.png",
+  "brasa-25": "/images/brasa-25.png",
+  "brasa-35": "/images/brasa-35.png",
+  "brasa-50": "/images/brasa-50.png",
+};
+
 interface ProductImageProps {
-  model: "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50";
+  model: string;
   className?: string;
   size?: "sm" | "md" | "lg";
   colorFilter?: string;
@@ -22,10 +35,11 @@ export default function ProductImage({ model, className = "", size = "md", color
   };
 
   const { width, height } = sizes[size];
+  const src = imageMap[model] || `/images/${model}.png`;
 
   return (
     <Image
-      src={`/images/${model}.png`}
+      src={src}
       alt={`Caldeira a lenha ${model.toUpperCase()}`}
       width={width}
       height={height}

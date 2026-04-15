@@ -12,7 +12,7 @@ import ScrollProgress from "@/components/shared/ScrollProgress";
 import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
 import ColorMorph from "@/components/shared/ColorMorph";
 import ProductImage from "@/components/shared/ProductImage";
-import { products, addons } from "@/data/products";
+import { products, addons, productColors, testimonials } from "@/data/products";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -79,9 +79,10 @@ function AnimatedTotal({ value }: { value: number }) {
 }
 
 export default function Configurador() {
-  const [selectedModel, setSelectedModel] = useState(0);
+  const [selectedModel, setSelectedModel] = useState(1); // Default BRASA 60
   const [expandedModel, setExpandedModel] = useState<number | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
+  const [selectedColor, setSelectedColor] = useState("preto-satin");
 
   const [showCheckout, setShowCheckout] = useState(false);
   const addonsRef = useRef<HTMLDivElement>(null);
@@ -133,7 +134,6 @@ export default function Configurador() {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
     if (isMobile) {
-      // Mobile: seleciona direto e rola para o resumo
       setSelectedModel(i);
       setExpandedModel(null);
       trackAddToCart(products[i].name, products[i].price);
@@ -143,7 +143,6 @@ export default function Configurador() {
       return;
     }
 
-    // Desktop: mantém expand/preview
     if (expandedModel === i) {
       setSelectedModel(i);
       setExpandedModel(null);
@@ -161,15 +160,22 @@ export default function Configurador() {
     trackAddToCart(products[i].name, products[i].price);
   };
 
+  const colorPrice = productColors.find((c) => c.id === selectedColor)?.price || 0;
+
   const total = useMemo(() => {
     const modelPrice = products[selectedModel].price;
     const addonsPrice = addons
       .filter((a) => selectedAddons.has(a.id))
       .reduce((sum, a) => sum + a.price, 0);
-    return modelPrice + addonsPrice;
-  }, [selectedModel, selectedAddons]);
+    return modelPrice + addonsPrice + colorPrice;
+  }, [selectedModel, selectedAddons, colorPrice]);
 
   const monthlySavings = useMemo(() => Math.round(total * 0.048), [total]);
+
+  // Inline testimonials for selected model
+  const modelTestimonials = testimonials.filter(
+    (t) => t.model === products[selectedModel].id
+  );
 
   return (
     <>
@@ -195,10 +201,9 @@ export default function Configurador() {
             </p>
           </motion.div>
 
-          {/* CSS Grid: mobile = 1 col with order; desktop = 2 cols, sidebar spans 2 rows */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 lg:gap-8">
 
-            {/* === STEP 1: Models — order 1 always === */}
+            {/* === STEP 1: Models === */}
             <motion.section
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -219,38 +224,43 @@ export default function Configurador() {
                       >
                         {expandedModel !== i && (
                           <motion.div
+                            layout
                             layoutId={`cfg-model-${product.id}`}
-                            className={`glass-card rounded-xl p-4 text-left h-full ${
+                            transition={{
+                              layout: { type: "spring", stiffness: 350, damping: 30 },
+                              opacity: { duration: 0.2 },
+                            }}
+                            className={`glass-card p-4 text-left h-full ${
                               selectedModel === i
                                 ? "border-brasa-orange glow-orange-sm"
                                 : "hover:border-brasa-orange/30"
                             } transition-colors duration-300`}
+                            style={{ borderRadius: 12 }}
                           >
                             <motion.div
+                              layout="position"
                               layoutId={`cfg-img-${product.id}`}
-                              className="w-full h-32 rounded-lg mb-3 relative overflow-hidden"
-                              style={{ background: product.gradient }}
+                              className="w-full h-32 mb-3 relative overflow-hidden"
+                              style={{ borderRadius: 8, background: product.gradient }}
                             >
-                              <motion.div layoutId={`cfg-name-big-${product.id}`} className="absolute inset-0">
-                                <ProductImage model={product.id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} />
-                              </motion.div>
+                              <ProductImage model={product.id} />
                               {i === 1 && (
-                                <span className="absolute top-1 right-1 font-mono text-[10px] text-brasa-bg bg-brasa-gold px-1.5 py-0.5 rounded font-bold">
+                                <span className="absolute top-1 right-1 font-mono text-[10px] text-brasa-bg bg-brasa-gold px-1.5 py-0.5 rounded font-bold z-10">
                                   TOP
                                 </span>
                               )}
                             </motion.div>
-                            <motion.h3 layoutId={`cfg-title-${product.id}`} className="font-bebas text-xl text-brasa-orange">
+                            <motion.h3 layout="position" layoutId={`cfg-title-${product.id}`} className="font-bebas text-xl text-brasa-orange">
                               {product.name}
                             </motion.h3>
-                            <p className="text-brasa-gray text-xs font-mono">{product.poolSize}</p>
-                            <motion.p layoutId={`cfg-price-${product.id}`} className="font-bebas text-xl text-brasa-white mt-1">
+                            <motion.p layout="position" className="text-brasa-gray text-xs font-mono">{product.poolSize}</motion.p>
+                            <motion.p layout="position" layoutId={`cfg-price-${product.id}`} className="font-bebas text-xl text-brasa-white mt-1">
                               R$ {product.price.toLocaleString("pt-BR")}
                             </motion.p>
                             {selectedModel === i && (
-                              <div className="mt-2 text-center py-1 rounded bg-brasa-orange/20 text-brasa-orange font-mono text-[10px]">
+                              <motion.div layout="position" className="mt-2 text-center py-1 bg-brasa-orange/20 text-brasa-orange font-mono text-[10px]" style={{ borderRadius: 4 }}>
                                 SELECIONADO
-                              </div>
+                              </motion.div>
                             )}
                           </motion.div>
                         )}
@@ -263,23 +273,33 @@ export default function Configurador() {
                     {expandedModel !== null && (
                       <motion.div
                         ref={expandedRef}
+                        layout
                         layoutId={`cfg-model-${products[expandedModel].id}`}
-                        className="glass-card rounded-2xl p-6 mt-4 overflow-hidden"
-                        style={{ originY: 0 }}
+                        transition={{
+                          layout: { type: "spring", stiffness: 350, damping: 30 },
+                          opacity: { duration: 0.2 },
+                        }}
+                        className="glass-card p-6 mt-4 overflow-hidden"
+                        style={{ borderRadius: 16, originY: 0 }}
                       >
                         <div className="flex flex-col md:flex-row gap-6">
                           <motion.div
+                            layout="position"
                             layoutId={`cfg-img-${products[expandedModel].id}`}
-                            className="w-full md:w-64 h-56 rounded-xl shrink-0 relative overflow-hidden"
-                            style={{ background: products[expandedModel].gradient }}
+                            className="w-full md:w-64 h-56 shrink-0 relative overflow-hidden"
+                            style={{ borderRadius: 12, background: products[expandedModel].gradient }}
                           >
-                            <motion.div layoutId={`cfg-name-big-${products[expandedModel].id}`} className="absolute inset-0">
-                              <ProductImage model={products[expandedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"} />
-                            </motion.div>
+                            <ProductImage model={products[expandedModel].id} size="lg" />
                           </motion.div>
 
-                          <div className="flex-1">
+                          <motion.div
+                            className="flex-1"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.12, duration: 0.3 }}
+                          >
                             <motion.h3
+                              layout="position"
                               layoutId={`cfg-title-${products[expandedModel].id}`}
                               className="font-bebas text-4xl text-brasa-orange mb-1"
                             >
@@ -304,7 +324,7 @@ export default function Configurador() {
                                   key={idx}
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.1 + idx * 0.05 }}
+                                  transition={{ delay: 0.15 + idx * 0.05 }}
                                   className="flex items-center gap-2 text-brasa-gray text-xs"
                                 >
                                   <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full shrink-0" />
@@ -315,6 +335,7 @@ export default function Configurador() {
 
                             <div className="flex items-center justify-between border-t border-brasa-border pt-4">
                               <motion.p
+                                layout="position"
                                 layoutId={`cfg-price-${products[expandedModel].id}`}
                                 className="font-bebas text-3xl text-brasa-white"
                               >
@@ -341,7 +362,7 @@ export default function Configurador() {
                                 </button>
                               </div>
                             </div>
-                          </div>
+                          </motion.div>
                         </div>
                       </motion.div>
                     )}
@@ -349,7 +370,7 @@ export default function Configurador() {
                 </LayoutGroup>
             </motion.section>
 
-            {/* === STEP 2: Addons — order 3 on mobile, appears below sidebar === */}
+            {/* === STEP 2: Addons === */}
             <section className="order-3">
                 <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
                   <span className="text-brasa-orange mr-2">02.</span> ADITIVOS OPCIONAIS
@@ -357,27 +378,24 @@ export default function Configurador() {
                 <p className="text-brasa-gray text-sm mb-6 font-mono">
                   {selectedAddons.size} de {addons.length} selecionados
                 </p>
-                <div ref={addonsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div ref={addonsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-3">
                   {addons.map((addon) => {
                     const isSelected = selectedAddons.has(addon.id);
                     return (
                       <TiltCard key={addon.id} className="cursor-pointer" onClick={() => toggleAddon(addon.id)}>
                         <div
                           data-addon-card
-                          className={`glass-card rounded-xl p-4 text-left transition-all duration-300 h-full ${
+                          className={`glass-card rounded-xl p-3 sm:p-4 text-left transition-all duration-300 h-full ${
                             isSelected
                               ? "border-brasa-orange glow-orange-sm"
                               : "hover:border-brasa-orange/30"
                           }`}
                         >
-                          <div
-                            className={`w-full h-16 rounded-lg mb-3 flex items-center justify-center transition-all duration-300 ${
-                              isSelected ? "bg-brasa-orange/20" : "bg-brasa-bg"
-                            }`}
-                          >
+                          <div className="flex items-start justify-between mb-2">
+                            <span className="text-xl sm:text-2xl">{addon.emoji}</span>
                             <motion.span
                               animate={isSelected ? { scale: [1, 1.3, 1], rotate: [0, 10, 0] } : {}}
-                              className={`font-bebas text-2xl ${
+                              className={`font-bebas text-lg ${
                                 isSelected ? "text-brasa-orange" : "text-brasa-gray-dark"
                               }`}
                             >
@@ -394,17 +412,112 @@ export default function Configurador() {
                           <p className="text-brasa-gray text-xs mt-0.5 leading-tight">
                             {addon.description}
                           </p>
+                          {addon.badge && (
+                            <span className="inline-block mt-1.5 font-mono text-[9px] text-brasa-gold bg-brasa-gold/10 px-2 py-0.5 rounded">
+                              {addon.badge}
+                            </span>
+                          )}
                           <p className="font-mono text-sm text-brasa-gold mt-2">
                             + R$ {addon.price.toLocaleString("pt-BR")}
                           </p>
+                          {addon.models !== "todos" && (
+                            <p className="font-mono text-[9px] text-brasa-gray-dark mt-0.5">
+                              {addon.models === "sul-sudeste" ? "Sul/Sudeste" : `Modelos: ${addon.models}`}
+                            </p>
+                          )}
                         </div>
                       </TiltCard>
                     );
                   })}
                 </div>
+
+                {/* === STEP 3: Color Selector === */}
+                <div className="mt-8">
+                  <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
+                    <span className="text-brasa-orange mr-2">03.</span> ESCOLHA A COR
+                  </h2>
+                  <p className="text-brasa-gray text-sm mb-4 font-mono">
+                    Preto Satin incluso. Outras cores com adicional.
+                  </p>
+                  <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start">
+                    {productColors.map((color) => (
+                      <button
+                        key={color.id}
+                        onClick={() => setSelectedColor(color.id)}
+                        className="group flex flex-col items-center gap-1.5 sm:gap-2"
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 ${
+                            selectedColor === color.id
+                              ? "border-brasa-orange scale-110 ring-2 ring-brasa-orange/30 ring-offset-2 ring-offset-brasa-bg"
+                              : "border-brasa-border group-hover:border-brasa-gray"
+                          }`}
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        <span className={`font-mono text-[10px] text-center leading-tight max-w-[60px] ${
+                          selectedColor === color.id ? "text-brasa-orange" : "text-brasa-gray"
+                        }`}>
+                          {color.name}
+                        </span>
+                        {color.price > 0 && (
+                          <span className="font-mono text-[9px] text-brasa-gold">
+                            +R$ {color.price}
+                          </span>
+                        )}
+                        {color.price === 0 && (
+                          <span className="font-mono text-[9px] text-brasa-green">
+                            Incluso
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* === INLINE TESTIMONIALS === */}
+                {modelTestimonials.length > 0 && (
+                  <div className="mt-8">
+                    <h3 className="font-bebas text-lg text-brasa-gray mb-3">
+                      O que dizem sobre a {products[selectedModel].name}
+                    </h3>
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={products[selectedModel].id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="space-y-3"
+                      >
+                        {modelTestimonials.slice(0, 2).map((t) => (
+                          <div key={t.id} className="glass-card rounded-xl p-3 sm:p-4 flex gap-3 sm:gap-4">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brasa-orange/20 flex items-center justify-center shrink-0">
+                              <span className="font-bebas text-brasa-orange text-lg">
+                                {t.name.charAt(0)}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-bebas text-sm text-brasa-white">{t.name}</span>
+                                <span className="text-brasa-gray text-xs">— {t.location}</span>
+                              </div>
+                              <p className="text-brasa-gray text-xs leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                              {t.result && (
+                                <p className="font-mono text-[10px] text-brasa-green mt-1">
+                                  {t.result} | Piscina: {t.poolSize}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                )}
             </section>
 
-            {/* === SIDEBAR: order 2 on mobile, spans 2 rows on desktop === */}
+            {/* === SIDEBAR === */}
             <div ref={resumoRef} className="order-2 lg:row-span-2 lg:row-start-1 lg:col-start-2 scroll-mt-20">
               <div className="lg:sticky lg:top-24 space-y-6">
                 <motion.div
@@ -420,7 +533,7 @@ export default function Configurador() {
                     style={{ background: products[selectedModel].gradient }}
                   >
                     <img
-                      src={`/images/${products[selectedModel].id}.png`}
+                      src={products[selectedModel].image}
                       alt={`Caldeira ${products[selectedModel].name}`}
                       className="absolute inset-0 w-full h-full object-contain p-2"
                     />
@@ -439,6 +552,22 @@ export default function Configurador() {
                       </span>
                     </div>
 
+                    {/* Color line */}
+                    {colorPrice > 0 && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-brasa-gray text-xs flex items-center gap-2">
+                          <span
+                            className="w-3 h-3 rounded-full border border-brasa-border inline-block"
+                            style={{ backgroundColor: productColors.find(c => c.id === selectedColor)?.hex }}
+                          />
+                          {productColors.find(c => c.id === selectedColor)?.name}
+                        </span>
+                        <span className="font-mono text-xs text-brasa-gray">
+                          + R$ {colorPrice.toLocaleString("pt-BR")}
+                        </span>
+                      </div>
+                    )}
+
                     <AnimatePresence>
                       {addons
                         .filter((a) => selectedAddons.has(a.id))
@@ -450,15 +579,13 @@ export default function Configurador() {
                             exit={{ opacity: 0, height: 0 }}
                             className="flex justify-between items-center overflow-hidden"
                           >
-                            <span className="text-brasa-gray text-xs">{addon.name}</span>
+                            <span className="text-brasa-gray text-xs">{addon.emoji} {addon.name}</span>
                             <span className="font-mono text-xs text-brasa-gray">
                               + R$ {addon.price.toLocaleString("pt-BR")}
                             </span>
                           </motion.div>
                         ))}
                     </AnimatePresence>
-
-
                   </div>
 
                   <div className="border-t border-brasa-border pt-4">
@@ -480,7 +607,7 @@ export default function Configurador() {
 
                   <a
                     href={`https://wa.me/5543999999999?text=${encodeURIComponent(
-                      `Olá! Quero comprar: ${products[selectedModel].name}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
+                      `Olá! Quero comprar: ${products[selectedModel].name}${selectedColor !== "preto-satin" ? ` (cor: ${productColors.find(c => c.id === selectedColor)?.name})` : ""}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -528,6 +655,21 @@ export default function Configurador() {
                     </div>
                   </div>
                 </motion.div>
+
+                {/* Guarantees */}
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { icon: "🛡️", text: "2 anos garantia" },
+                    { icon: "🚚", text: "Frete grátis Sul/SE" },
+                    { icon: "🇧🇷", text: "Fabricado no Brasil" },
+                    { icon: "🔬", text: "Teste 8 bar" },
+                  ].map((g) => (
+                    <div key={g.text} className="flex items-center gap-2 text-brasa-gray text-[10px] font-mono">
+                      <span>{g.icon}</span>
+                      <span>{g.text}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -548,7 +690,7 @@ export default function Configurador() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 50, scale: 0.95 }}
                   transition={{ type: "spring", bounce: 0.15 }}
-                  className="fixed inset-0 sm:inset-4 md:inset-x-auto md:inset-y-8 md:max-w-2xl md:mx-auto bg-brasa-bg-card border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto px-4 pt-20 pb-4 sm:p-6 md:p-8"
+                  className="fixed inset-0 sm:inset-4 md:inset-x-auto md:inset-y-8 md:max-w-2xl md:mx-auto bg-brasa-bg-card border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto px-3 sm:px-4 pt-16 sm:pt-20 pb-3 sm:pb-4 sm:p-6 md:p-8"
                 >
                   <button
                     onClick={() => setShowCheckout(false)}
@@ -623,9 +765,15 @@ export default function Configurador() {
                         <span className="text-brasa-gray">{products[selectedModel].name}</span>
                         <span className="font-mono">R$ {products[selectedModel].price.toLocaleString("pt-BR")}</span>
                       </div>
+                      {colorPrice > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-brasa-gray text-xs">Cor: {productColors.find(c => c.id === selectedColor)?.name}</span>
+                          <span className="font-mono text-xs">R$ {colorPrice.toLocaleString("pt-BR")}</span>
+                        </div>
+                      )}
                       {addons.filter((a) => selectedAddons.has(a.id)).map((a) => (
                         <div key={a.id} className="flex justify-between">
-                          <span className="text-brasa-gray text-xs">{a.name}</span>
+                          <span className="text-brasa-gray text-xs">{a.emoji} {a.name}</span>
                           <span className="font-mono text-xs">R$ {a.price.toLocaleString("pt-BR")}</span>
                         </div>
                       ))}
@@ -647,16 +795,20 @@ export default function Configurador() {
                       </p>
                       <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
                         {[
-                          { label: "PIX", desc: "QR Code dinâmico" },
+                          { label: "PIX", desc: "5% desconto", highlight: true },
                           { label: "Cartão", desc: "Até 12x" },
                           { label: "Boleto", desc: "Venc. 3 dias" },
                         ].map((method) => (
                           <div
                             key={method.label}
-                            className="px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-brasa-bg border border-brasa-border text-center"
+                            className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-brasa-bg border text-center ${
+                              (method as { highlight?: boolean }).highlight ? "border-brasa-green" : "border-brasa-border"
+                            }`}
                           >
                             <span className="font-mono text-xs text-brasa-white block">{method.label}</span>
-                            <span className="font-mono text-[10px] text-brasa-gray-dark">{method.desc}</span>
+                            <span className={`font-mono text-[10px] ${
+                              (method as { highlight?: boolean }).highlight ? "text-brasa-green" : "text-brasa-gray-dark"
+                            }`}>{method.desc}</span>
                           </div>
                         ))}
                       </div>

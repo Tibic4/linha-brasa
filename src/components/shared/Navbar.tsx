@@ -87,7 +87,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 bg-brasa-bg/95 backdrop-blur-lg z-40 pt-20 px-8"
+            className="fixed inset-0 bg-brasa-bg/95 backdrop-blur-lg z-40 pt-16 sm:pt-20 px-4 sm:px-8"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
@@ -95,7 +95,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-bebas text-4xl text-brasa-white hover:text-brasa-orange transition-colors"
+                  className="font-bebas text-2xl sm:text-3xl md:text-4xl text-brasa-white hover:text-brasa-orange transition-colors"
                 >
                   {link.label}
                 </a>

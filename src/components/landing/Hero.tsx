@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { products } from "@/data/products";
 import ColorMorph from "@/components/shared/ColorMorph";
 import HeroVideoPlaceholder from "@/components/shared/HeroVideo";
+import ProductImage from "@/components/shared/ProductImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -17,7 +18,12 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
+  const embersRef = useRef<HTMLDivElement>(null);
   const [videoError, setVideoError] = useState(false);
+
+  // Mouse position for parallax (normalized -1 to 1)
+  const mousePos = useRef({ x: 0, y: 0 });
 
   // Auto-cycle models
   useEffect(() => {
@@ -27,7 +33,43 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  // GSAP parallax
+  // Mouse parallax — move layers at different speeds
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const { innerWidth, innerHeight } = window;
+    mousePos.current = {
+      x: (e.clientX / innerWidth - 0.5) * 2,
+      y: (e.clientY / innerHeight - 0.5) * 2,
+    };
+
+    // Product layer — subtle movement
+    if (productRef.current) {
+      gsap.to(productRef.current, {
+        x: mousePos.current.x * 15,
+        y: mousePos.current.y * 10,
+        duration: 0.8,
+        ease: "power2.out",
+      });
+    }
+
+    // Embers layer — stronger movement (opposite direction for depth)
+    if (embersRef.current) {
+      gsap.to(embersRef.current, {
+        x: mousePos.current.x * -25,
+        y: mousePos.current.y * -15,
+        duration: 1.2,
+        ease: "power2.out",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    // Skip parallax on touch devices — no hover, saves battery
+    if (window.matchMedia("(hover: none)").matches) return;
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [handleMouseMove]);
+
+  // GSAP scroll parallax
   useEffect(() => {
     if (!heroRef.current || !contentRef.current) return;
     const ctx = gsap.context(() => {
@@ -53,7 +95,7 @@ export default function Hero() {
       ref={heroRef}
       className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-10 md:pt-20"
     >
-      {/* Video or Animated Placeholder */}
+      {/* Layer 0: Video / Animated Placeholder */}
       {!videoError ? (
         <video
           ref={videoRef}
@@ -71,32 +113,51 @@ export default function Hero() {
         <HeroVideoPlaceholder />
       )}
 
-      {/* COLOR MORPHING */}
+      {/* Layer 1: COLOR MORPHING */}
       <ColorMorph activeModel={activeModel} variant="hero" />
 
-      {/* Gradient overlays */}
+      {/* Layer 2: Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg via-brasa-bg/40 to-brasa-bg/20" />
       <div className="absolute inset-0 bg-gradient-to-b from-brasa-bg/60 via-transparent to-transparent h-32" />
 
-      {/* Embers */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
+      {/* Layer 3: Watermark Typography (pulsing scale) */}
+      <span className="watermark font-bebas top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-watermark-pulse">
+        LINHA BRASA
+      </span>
+
+      {/* Layer 4: Embers — react to mouse */}
+      <div ref={embersRef} className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
+        {Array.from({ length: 12 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-brasa-orange/60"
+            className={`absolute rounded-full bg-brasa-orange/60 ${i % 3 === 0 ? "w-1.5 h-1.5" : "w-1 h-1"} hidden sm:block`}
             initial={{ x: `${Math.random() * 100}%`, y: "110%", opacity: 0 }}
-            animate={{ y: "-10%", opacity: [0, 1, 0], x: `${Math.random() * 100}%` }}
+            animate={{ y: "-10%", opacity: [0, 0.8, 0], x: `${Math.random() * 100}%` }}
             transition={{ duration: 4 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 5, ease: "linear" }}
           />
         ))}
       </div>
 
-      {/* Watermark */}
-      <span className="watermark font-bebas top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        LINHA BRASA
-      </span>
+      {/* Layer 5: Product Image — big, centered, reacts to mouse */}
+      <div
+        ref={productRef}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform z-[1]"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeModel}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 0.15, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.8 }}
+            className="w-[65vw] h-[30vh] sm:w-[40vw] sm:h-[60vh] max-w-[500px] max-h-[600px] relative"
+          >
+            <ProductImage model={products[activeModel].id} size="lg" className="w-full h-full opacity-60" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-      {/* Content */}
+      {/* Layer 6: UI Content */}
       <div ref={contentRef} className="relative z-10 text-center max-w-5xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -132,12 +193,12 @@ export default function Hero() {
           Produto único no Brasil.
         </motion.p>
 
-        {/* Model Selector */}
+        {/* Model Selector with Clip Mask Typography */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex justify-center gap-2 md:gap-3 mb-8"
+          className="flex justify-center gap-2 md:gap-3 mb-6"
         >
           {products.map((product, i) => (
             <button
@@ -161,7 +222,7 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Info Card */}
+        {/* Info Card with Clip Mask Typography — name slides up/down on change */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModel}
@@ -172,13 +233,37 @@ export default function Hero() {
             className="glass-card rounded-2xl p-5 max-w-md mx-auto"
           >
             <div className="flex items-center justify-between">
-              <div className="text-left">
-                <p className="font-bebas text-2xl text-brasa-orange">{products[activeModel].name}</p>
+              <div className="text-left overflow-hidden">
+                {/* Clip mask: name enters from below, exits upward */}
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`name-${activeModel}`}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-bebas text-2xl text-brasa-orange"
+                  >
+                    {products[activeModel].name}
+                  </motion.p>
+                </AnimatePresence>
                 <p className="text-brasa-gray text-xs font-mono">{products[activeModel].subtitle}</p>
               </div>
-              <div className="text-right">
+              <div className="text-right overflow-hidden">
                 <p className="font-mono text-brasa-gold text-lg">{products[activeModel].poolSize}</p>
-                <p className="font-bebas text-2xl">R$ {products[activeModel].price.toLocaleString("pt-BR")}</p>
+                {/* Price slides in too */}
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`price-${activeModel}`}
+                    initial={{ y: 15, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -15, opacity: 0 }}
+                    transition={{ duration: 0.3, delay: 0.05 }}
+                    className="font-bebas text-2xl"
+                  >
+                    R$ {products[activeModel].price.toLocaleString("pt-BR")}
+                  </motion.p>
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>
@@ -189,7 +274,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
+          className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-6 sm:mt-8"
         >
           <a href="/configurador" className="btn-brasa text-base sm:text-xl w-full sm:w-auto text-center">
             CONFIGURAR MINHA CALDEIRA

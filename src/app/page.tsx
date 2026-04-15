@@ -10,6 +10,7 @@ import CostComparison from "@/components/landing/CostComparison";
 import Calculator from "@/components/landing/Calculator";
 import Testimonials from "@/components/landing/Testimonials";
 import FAQ from "@/components/landing/FAQ";
+import GarantiaSection from "@/components/landing/GarantiaSection";
 import CTASection from "@/components/landing/CTASection";
 import Footer from "@/components/shared/Footer";
 import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
@@ -38,6 +39,7 @@ export default function Home() {
         <section id="depoimentos">
           <Testimonials />
         </section>
+        <GarantiaSection />
         <section id="faq">
           <FAQ />
         </section>
