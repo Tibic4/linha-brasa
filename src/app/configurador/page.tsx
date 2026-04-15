@@ -8,7 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
-import LoadingScreen from "@/components/shared/LoadingScreen";
 import ScrollProgress from "@/components/shared/ScrollProgress";
 import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
 import ColorMorph from "@/components/shared/ColorMorph";
@@ -174,7 +173,6 @@ export default function Configurador() {
 
   return (
     <>
-      <LoadingScreen />
       <ScrollProgress />
       <Navbar />
       <main className="pt-20 min-h-screen relative">
@@ -550,7 +548,7 @@ export default function Configurador() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 50, scale: 0.95 }}
                   transition={{ type: "spring", bounce: 0.15 }}
-                  className="fixed inset-4 md:inset-x-auto md:inset-y-8 md:max-w-2xl md:mx-auto bg-brasa-bg-card border border-brasa-border rounded-2xl z-50 overflow-y-auto p-8"
+                  className="fixed inset-0 sm:inset-4 md:inset-x-auto md:inset-y-8 md:max-w-2xl md:mx-auto bg-brasa-bg-card border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto px-4 pt-20 pb-4 sm:p-6 md:p-8"
                 >
                   <button
                     onClick={() => setShowCheckout(false)}
@@ -559,12 +557,12 @@ export default function Configurador() {
                     ✕
                   </button>
 
-                  <h2 className="font-bebas text-4xl mb-6">CHECKOUT</h2>
+                  <h2 className="font-bebas text-3xl sm:text-4xl mb-4 sm:mb-6 pr-12">CHECKOUT</h2>
 
-                  <div className="mb-8">
-                    <h3 className="font-bebas text-xl text-brasa-orange mb-4">ENDEREÇO DE ENTREGA</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" id="address-form">
-                      <div className="col-span-2 md:col-span-1">
+                  <div className="mb-6 sm:mb-8">
+                    <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">ENDEREÇO DE ENTREGA</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4" id="address-form">
+                      <div>
                         <label className="font-mono text-xs text-brasa-gray block mb-1">CEP</label>
                         <input
                           type="text"
@@ -595,7 +593,7 @@ export default function Configurador() {
                           }}
                         />
                       </div>
-                      <div className="col-span-2 md:col-span-1">
+                      <div className="sm:col-span-2">
                         <label className="font-mono text-xs text-brasa-gray block mb-1">Rua</label>
                         <input data-field="rua" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange outline-none" />
                       </div>
@@ -618,7 +616,7 @@ export default function Configurador() {
                     </div>
                   </div>
 
-                  <div className="glass-card rounded-xl p-6 mb-8">
+                  <div className="glass-card rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                     <h3 className="font-bebas text-xl mb-3">RESUMO</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
@@ -643,11 +641,11 @@ export default function Configurador() {
 
                   <div className="mb-6">
                     <h3 className="font-bebas text-xl text-brasa-orange mb-4">PAGAMENTO</h3>
-                    <div className="glass-card rounded-xl p-8 text-center">
+                    <div className="glass-card rounded-xl p-4 sm:p-8 text-center">
                       <p className="text-brasa-gray font-mono text-sm mb-4">
                         Mercado Pago Checkout Bricks
                       </p>
-                      <div className="flex justify-center gap-3 mb-4">
+                      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
                         {[
                           { label: "PIX", desc: "QR Code dinâmico" },
                           { label: "Cartão", desc: "Até 12x" },
@@ -655,7 +653,7 @@ export default function Configurador() {
                         ].map((method) => (
                           <div
                             key={method.label}
-                            className="px-4 py-3 rounded-lg bg-brasa-bg border border-brasa-border text-center"
+                            className="px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-brasa-bg border border-brasa-border text-center"
                           >
                             <span className="font-mono text-xs text-brasa-white block">{method.label}</span>
                             <span className="font-mono text-[10px] text-brasa-gray-dark">{method.desc}</span>

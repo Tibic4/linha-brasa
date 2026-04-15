@@ -353,6 +353,66 @@
     body { background: var(--bg); }
     .page { margin: 0; box-shadow: none; }
   }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    body { font-size: 13px; }
+
+    .page {
+      width: 100%;
+      min-height: auto;
+      padding: 24px 16px 60px;
+      page-break-after: unset;
+    }
+
+    .page::before { height: 3px; }
+
+    .watermark { display: none; }
+
+    h1 { font-size: 28px; letter-spacing: 1px; }
+    h2 { font-size: 20px; letter-spacing: 1px; margin-bottom: 10px; }
+    h3 { font-size: 14px; }
+
+    .cover-logo { font-size: 44px; letter-spacing: 4px; }
+    .subtitle { font-size: 9px; letter-spacing: 2px; }
+
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .stat-number { font-size: 24px; }
+    .stat-label { font-size: 7px; }
+
+    .card { padding: 12px; margin-bottom: 8px; }
+
+    .highlight-box { padding: 12px; }
+
+    table { font-size: 9px; display: block; overflow-x: auto; white-space: nowrap; }
+    th, td { padding: 6px 8px; }
+
+    .footer-bar {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      margin-top: 24px;
+    }
+
+    .cover-center { padding-top: 40px; padding-bottom: 40px; }
+
+    .badge { font-size: 8px; padding: 3px 8px; }
+    .tech-tag { font-size: 7px; padding: 2px 6px; }
+
+    .timeline-item { gap: 10px; }
+    .timeline-dot { width: 24px; height: 24px; font-size: 11px; }
+
+    .mono { font-size: 9px; }
+
+    /* Fix columns layout */
+    [style*="columns:2"], [style*="columns:3"] {
+      columns: 1 !important;
+    }
+  }
 </style>
 </head>
 <body>
