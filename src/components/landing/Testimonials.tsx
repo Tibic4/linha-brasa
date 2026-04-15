@@ -34,26 +34,31 @@ export default function Testimonials() {
           slidesPerView="auto"
           loop
           coverflowEffect={{
-            rotate: 0,
+            rotate: 5,
             stretch: 0,
             depth: 200,
             modifier: 2,
             slideShadows: false,
           }}
+          breakpoints={{
+            0: { slidesPerView: 1.2, spaceBetween: 16 },
+            640: { slidesPerView: "auto", spaceBetween: 24 },
+            1024: { slidesPerView: "auto", spaceBetween: 32 },
+          }}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          autoplay={{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }}
           modules={[EffectCoverflow, Pagination, Autoplay]}
           className="pb-16"
         >
           {testimonials.map((t) => (
-            <SwiperSlide key={t.id} className="!w-[300px] md:!w-[400px]">
-              <div className="glass-card rounded-2xl p-6 h-full">
+            <SwiperSlide key={t.id} className="!w-[280px] sm:!w-[320px] md:!w-[400px]">
+              <div className="glass-card rounded-2xl p-5 sm:p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-brasa-orange/20 flex items-center justify-center text-brasa-orange font-bebas text-xl">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brasa-orange/20 flex items-center justify-center text-brasa-orange font-bebas text-lg sm:text-xl">
                     {t.name[0]}
                   </div>
                   <div>
-                    <p className="font-bebas text-lg">{t.name}</p>
+                    <p className="font-bebas text-base sm:text-lg">{t.name}</p>
                     <p className="text-brasa-gray text-xs font-mono">{t.location}</p>
                   </div>
                 </div>
@@ -62,9 +67,28 @@ export default function Testimonials() {
                     <span key={i} className="text-brasa-gold text-sm">★</span>
                   ))}
                 </div>
-                <p className="text-brasa-gray text-sm leading-relaxed italic">
+                <p className="text-brasa-gray text-sm leading-relaxed italic mb-3">
                   &ldquo;{t.text}&rdquo;
                 </p>
+                {(t.model || t.result) && (
+                  <div className="border-t border-brasa-border pt-3 flex items-center gap-2 flex-wrap">
+                    {t.model && (
+                      <span className="font-mono text-[10px] text-brasa-orange bg-brasa-orange/10 px-2 py-0.5 rounded">
+                        {t.model}
+                      </span>
+                    )}
+                    {t.poolSize && (
+                      <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2 py-0.5 rounded">
+                        {t.poolSize}
+                      </span>
+                    )}
+                    {t.result && (
+                      <span className="font-mono text-[10px] text-brasa-green bg-brasa-green/10 px-2 py-0.5 rounded">
+                        {t.result}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </SwiperSlide>
           ))}

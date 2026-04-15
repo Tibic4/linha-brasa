@@ -181,7 +181,7 @@ export default function Configurador() {
     <>
       <ScrollProgress />
       <Navbar />
-      <main className="pt-20 min-h-screen relative">
+      <motion.main layoutScroll className="pt-20 min-h-screen relative" style={{ overflow: "auto" }}>
         <ColorMorph activeModel={selectedModel} variant="page" className="fixed" />
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12 pb-28 lg:pb-12 relative z-10">
           {/* Header */}
@@ -848,7 +848,7 @@ export default function Configurador() {
             </button>
           </div>
         </div>
-      </main>
+      </motion.main>
       <Footer />
       <WhatsAppFloat />
     </>

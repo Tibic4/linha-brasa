@@ -63,11 +63,10 @@ export default function ProblemSection() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cards,
-        { y: 50, opacity: 0, rotateY: -5 },
+        { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          rotateY: 0,
           duration: 0.8,
           stagger: 0.15,
           ease: "power3.out",

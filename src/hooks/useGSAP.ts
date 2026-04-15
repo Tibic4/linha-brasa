@@ -6,13 +6,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
+
+/** Detect mobile/touch devices for reduced-motion strategies */
+const isMobile = () =>
+  typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
 
 export function useParallax(speed: number = 0.5) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
+    // Skip parallax on mobile — saves GPU/battery
+    if (isMobile()) return;
+
     const ctx = gsap.context(() => {
       gsap.to(ref.current, {
         yPercent: speed * 30,
@@ -22,6 +30,7 @@ export function useParallax(speed: number = 0.5) {
           start: "top bottom",
           end: "bottom top",
           scrub: true,
+          invalidateOnRefresh: true,
         },
       });
     });

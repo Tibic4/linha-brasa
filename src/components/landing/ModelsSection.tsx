@@ -69,11 +69,11 @@ export default function ModelsSection() {
       cards.forEach((card, i) => {
         gsap.fromTo(
           card,
-          { y: 60, opacity: 0, rotateX: 10 },
+          { y: 40, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            rotateX: 0,
+
             duration: 0.8,
             delay: i * 0.15,
             ease: "power3.out",
@@ -190,8 +190,10 @@ export default function ModelsSection() {
                   className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
                   onClick={() => setSelectedId(null)}
                 />
-                <div
+                <motion.div
+                  layoutRoot
                   className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                  style={{ position: "fixed" }}
                   onClick={() => setSelectedId(null)}
                 >
                   <motion.div
@@ -283,7 +285,7 @@ export default function ModelsSection() {
                       ✕
                     </button>
                   </motion.div>
-                </div>
+                </motion.div>
               </>
             )}
           </AnimatePresence>

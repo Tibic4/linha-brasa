@@ -77,14 +77,14 @@ export default function Hero() {
         gsap.to(videoRef.current, {
           yPercent: 30,
           ease: "none",
-          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
+          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true, invalidateOnRefresh: true },
         });
       }
       gsap.to(contentRef.current, {
         yPercent: -15,
         opacity: 0,
         ease: "none",
-        scrollTrigger: { trigger: heroRef.current, start: "20% top", end: "80% top", scrub: true },
+        scrollTrigger: { trigger: heroRef.current, start: "20% top", end: "80% top", scrub: true, invalidateOnRefresh: true },
       });
     });
     return () => ctx.revert();
