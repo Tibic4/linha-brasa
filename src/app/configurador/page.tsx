@@ -13,7 +13,7 @@ import ScrollProgress from "@/components/shared/ScrollProgress";
 import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
 import ColorMorph from "@/components/shared/ColorMorph";
 import ProductImage from "@/components/shared/ProductImage";
-import { products, addons, colors } from "@/data/products";
+import { products, addons } from "@/data/products";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -83,7 +83,7 @@ export default function Configurador() {
   const [selectedModel, setSelectedModel] = useState(0);
   const [expandedModel, setExpandedModel] = useState<number | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
-  const [selectedColor, setSelectedColor] = useState("preto-fosco");
+
   const [showCheckout, setShowCheckout] = useState(false);
   const addonsRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +127,8 @@ export default function Configurador() {
     });
   };
 
+  const expandedRef = useRef<HTMLDivElement>(null);
+
   const handleModelClick = (i: number) => {
     if (expandedModel === i) {
       // Click on already expanded → select it and collapse
@@ -135,6 +137,10 @@ export default function Configurador() {
     } else {
       // Expand to preview
       setExpandedModel(i);
+      // Scroll expanded card into view after animation starts
+      setTimeout(() => {
+        expandedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     }
   };
 
@@ -211,7 +217,7 @@ export default function Configurador() {
                           >
                             <motion.div
                               layoutId={`cfg-img-${product.id}`}
-                              className="w-full h-24 rounded-lg mb-3 relative overflow-hidden"
+                              className="w-full h-32 rounded-lg mb-3 relative overflow-hidden"
                               style={{ background: product.gradient }}
                             >
                               <motion.div layoutId={`cfg-name-big-${product.id}`} className="absolute inset-0">
@@ -245,6 +251,7 @@ export default function Configurador() {
                   <AnimatePresence>
                     {expandedModel !== null && (
                       <motion.div
+                        ref={expandedRef}
                         layoutId={`cfg-model-${products[expandedModel].id}`}
                         className="glass-card rounded-2xl p-6 mt-4 overflow-hidden"
                         style={{ originY: 0 }}
@@ -252,7 +259,7 @@ export default function Configurador() {
                         <div className="flex flex-col md:flex-row gap-6">
                           <motion.div
                             layoutId={`cfg-img-${products[expandedModel].id}`}
-                            className="w-full md:w-56 h-56 rounded-xl shrink-0 relative overflow-hidden"
+                            className="w-full md:w-64 h-56 rounded-xl shrink-0 relative overflow-hidden"
                             style={{ background: products[expandedModel].gradient }}
                           >
                             <motion.div layoutId={`cfg-name-big-${products[expandedModel].id}`} className="absolute inset-0">
@@ -400,56 +407,20 @@ export default function Configurador() {
                 >
                   <h3 className="font-bebas text-2xl mb-4">RESUMO DO PEDIDO</h3>
 
-                  {/* Product Photo — clean, no color filter */}
+                  {/* Product Photo */}
                   <div className="relative w-full h-44 rounded-xl overflow-hidden mb-4"
                     style={{ background: products[selectedModel].gradient }}
                   >
-                    <ProductImage
-                      model={products[selectedModel].id as "brasa-15" | "brasa-25" | "brasa-35" | "brasa-50"}
-                      className="absolute inset-0"
+                    <img
+                      src={`/images/${products[selectedModel].id}.png`}
+                      alt={`Caldeira ${products[selectedModel].name}`}
+                      className="absolute inset-0 w-full h-full object-contain p-2"
                     />
                     <div className="absolute top-2 right-2">
                       <span className="font-bebas text-sm text-white/70 bg-black/40 px-2 py-0.5 rounded">
                         {products[selectedModel].name}
                       </span>
                     </div>
-                  </div>
-
-                  {/* Color Swatches — selection only, no image tint */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="font-mono text-[10px] text-brasa-gray uppercase tracking-wider shrink-0">Cor:</span>
-                    {colors.map((color) => (
-                      <button
-                        key={color.id}
-                        onClick={() => setSelectedColor(color.id)}
-                        title={color.name}
-                        className="relative"
-                      >
-                        <motion.div
-                          animate={
-                            selectedColor === color.id
-                              ? { scale: 1.25, boxShadow: `0 0 12px ${color.hex}80` }
-                              : { scale: 1, boxShadow: "none" }
-                          }
-                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                          className="w-7 h-7 rounded-full border-2"
-                          style={{
-                            backgroundColor: color.hex,
-                            borderColor: selectedColor === color.id ? "#FF4F00" : "#1E293B",
-                          }}
-                        />
-                        {selectedColor === color.id && (
-                          <motion.div
-                            layoutId="color-ring"
-                            className="absolute -inset-1 rounded-full border-2 border-brasa-orange"
-                            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                          />
-                        )}
-                      </button>
-                    ))}
-                    <span className="font-mono text-[10px] text-brasa-gray ml-1">
-                      {colors.find((c) => c.id === selectedColor)?.name}
-                    </span>
                   </div>
 
                   <div className="space-y-3 mb-6">
@@ -479,11 +450,7 @@ export default function Configurador() {
                         ))}
                     </AnimatePresence>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-brasa-gray text-xs">
-                        Cor: {colors.find((c) => c.id === selectedColor)?.name}
-                      </span>
-                    </div>
+
                   </div>
 
                   <div className="border-t border-brasa-border pt-4">
@@ -505,9 +472,7 @@ export default function Configurador() {
 
                   <a
                     href={`https://wa.me/5543999999999?text=${encodeURIComponent(
-                      `Olá! Quero comprar: ${products[selectedModel].name} na cor ${
-                        colors.find((c) => c.id === selectedColor)?.name
-                      }${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
+                      `Olá! Quero comprar: ${products[selectedModel].name}${selectedAddons.size > 0 ? ` com ${selectedAddons.size} aditivos` : ""}. Total: R$ ${total.toLocaleString("pt-BR")}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -656,11 +621,7 @@ export default function Configurador() {
                           <span className="font-mono text-xs">R$ {a.price.toLocaleString("pt-BR")}</span>
                         </div>
                       ))}
-                      <div className="flex justify-between">
-                        <span className="text-brasa-gray text-xs">
-                          Cor: {colors.find((c) => c.id === selectedColor)?.name}
-                        </span>
-                      </div>
+
                       <div className="border-t border-brasa-border pt-2 flex justify-between">
                         <span className="font-bebas text-xl">TOTAL</span>
                         <span className="font-bebas text-2xl text-brasa-orange">

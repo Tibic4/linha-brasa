@@ -613,7 +613,7 @@
   <span class="watermark watermark-3">CONFIG</span>
 
   <h2>3. PÁGINA 2 — CONFIGURADOR INTERATIVO</h2>
-  <p>Página de vendas completa com configurador passo-a-passo. O usuário monta sua caldeira, escolhe aditivos, seleciona cor, visualiza o total em tempo real e finaliza com checkout inline.</p>
+  <p>Página de vendas completa com configurador passo-a-passo. O usuário monta sua caldeira, escolhe aditivos, visualiza o total em tempo real e finaliza com checkout inline.</p>
 
   <div class="card card-highlight" style="margin: 14px 0;">
     <h3 style="margin-top:0;">SELETOR DE 4 MODELOS + COLOR MORPHING + SHARED LAYOUT</h3>
@@ -623,43 +623,29 @@
     <span class="tech-tag">COLOR MORPH VARIANT="PAGE"</span>
   </div>
 
-  <div class="grid-2">
-    <div class="card">
-      <h3 style="margin-top:0;">GRID DE 12 ADITIVOS OPCIONAIS</h3>
-      <p>Grid responsivo (2→3→4 colunas). Estado de seleção animado: <strong class="text-orange">borda laranja + glow</strong> ao marcar. vanilla-tilt nos cards. GSAP stagger entrance (duration:0.6, stagger:0.06). Itens incluem:</p>
-      <div style="font-size:9px; color:var(--gray); columns:2; margin-top:6px;">
-        <p style="margin:2px 0;">• Capa Térmica</p>
-        <p style="margin:2px 0;">• Termômetro Digital</p>
-        <p style="margin:2px 0;">• Kit Instalação</p>
-        <p style="margin:2px 0;">• Bomba Pressurizadora</p>
-        <p style="margin:2px 0;">• Chaminé Inox 3m</p>
-        <p style="margin:2px 0;">• Base em Concreto</p>
-        <p style="margin:2px 0;">• Controlador Temp.</p>
-        <p style="margin:2px 0;">• Trocador de Calor Extra</p>
-        <p style="margin:2px 0;">• Lenha Eucalipto 1m³</p>
-        <p style="margin:2px 0;">• Suporte Elevado</p>
-        <p style="margin:2px 0;">• Garantia Estendida</p>
-        <p style="margin:2px 0;">• Instalação Profissional</p>
-      </div>
-    </div>
-    <div class="card">
-      <h3 style="margin-top:0;">SELETOR DE 6 CORES</h3>
-      <p>Swatches circulares com animação de seleção (<code>scale + boxShadow</code> via Framer Motion). Ao trocar a cor, a imagem do produto faz swap animado.</p>
-      <div style="margin-top:10px;">
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#1a1a1a;"></span> <span class="mono">Preto Fosco</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4a4a4a;"></span> <span class="mono">Cinza Grafite</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#C75B39;"></span> <span class="mono">Terracota</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4A6741;"></span> <span class="mono">Verde Musgo</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#2D4A6F;"></span> <span class="mono">Azul Petróleo</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#E8E8E8;border-color:#999;"></span> <span class="mono">Branco Gelo</span></p>
-      </div>
+  <div class="card">
+    <h3 style="margin-top:0;">GRID DE 12 ADITIVOS OPCIONAIS</h3>
+    <p>Grid responsivo (2→3→4 colunas). Estado de seleção animado: <strong class="text-orange">borda laranja + glow</strong> ao marcar. vanilla-tilt nos cards. GSAP stagger entrance (duration:0.6, stagger:0.06). Itens incluem:</p>
+    <div style="font-size:9px; color:var(--gray); columns:3; margin-top:6px;">
+      <p style="margin:2px 0;">• Capa Térmica</p>
+      <p style="margin:2px 0;">• Termômetro Digital</p>
+      <p style="margin:2px 0;">• Kit Instalação</p>
+      <p style="margin:2px 0;">• Bomba Pressurizadora</p>
+      <p style="margin:2px 0;">• Chaminé Inox 3m</p>
+      <p style="margin:2px 0;">• Base em Concreto</p>
+      <p style="margin:2px 0;">• Controlador Temp.</p>
+      <p style="margin:2px 0;">• Trocador de Calor Extra</p>
+      <p style="margin:2px 0;">• Lenha Eucalipto 1m³</p>
+      <p style="margin:2px 0;">• Suporte Elevado</p>
+      <p style="margin:2px 0;">• Garantia Estendida</p>
+      <p style="margin:2px 0;">• Instalação Profissional</p>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="card">
       <h3 style="margin-top:0;">SIDEBAR STICKY — TOTAL EM TEMPO REAL</h3>
-      <p><code>position: sticky; top: 24px</code> no desktop. Mostra modelo selecionado, aditivos marcados, cor escolhida e <strong class="text-gold">total animado com CountUp.js</strong>. A cada mudança, o valor transiciona suavemente com easing.</p>
+      <p><code>position: sticky; top: 24px</code> no desktop. Mostra modelo selecionado, aditivos marcados e <strong class="text-gold">total animado com CountUp.js</strong>. A cada mudança, o valor transiciona suavemente com easing.</p>
       <span class="tech-tag">COUNTUP.JS</span>
       <span class="tech-tag">LG:STICKY</span>
       <span class="tech-tag">USEMEMO</span>
