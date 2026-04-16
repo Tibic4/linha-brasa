@@ -8,10 +8,39 @@ interface Testimonial {
   location: string;
   rating: number;
   text: string;
+  image?: string;
   model: string;
   poolSize: string;
   result: string;
   active?: boolean;
+}
+
+function resizeImage(file: File, maxSize: number, quality: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let w = img.width;
+        let h = img.height;
+        if (w > h) {
+          if (w > maxSize) { h = Math.round((h * maxSize) / w); w = maxSize; }
+        } else {
+          if (h > maxSize) { w = Math.round((w * maxSize) / h); h = maxSize; }
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = reject;
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 const MODELS = ["brasa-30", "brasa-60", "brasa-120", "brasa-200"];
@@ -76,7 +105,7 @@ export default function DepoimentosPage() {
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
   const [modalMode, setModalMode] = useState<"create" | "edit" | null>(null);
-  const [form, setForm] = useState<Omit<Testimonial, "id"> & { id?: number | string }>(EMPTY);
+  const [form, setForm] = useState<Omit<Testimonial, "id"> & { id?: number | string; image?: string }>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<number | string | null>(null);
   const [filterModel, setFilterModel] = useState<string>("all");
@@ -236,9 +265,13 @@ export default function DepoimentosPage() {
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-brasa-orange/20 text-brasa-orange flex items-center justify-center font-bebas text-lg shrink-0">
-                  {t.name.charAt(0)}
-                </div>
+                {t.image ? (
+                  <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-brasa-orange/20 text-brasa-orange flex items-center justify-center font-bebas text-lg shrink-0">
+                    {t.name.charAt(0)}
+                  </div>
+                )}
                 <div>
                   <h3 className="font-bebas text-lg text-brasa-white tracking-wider">{t.name}</h3>
                   <p className="font-mono text-xs text-brasa-gray">{t.location}</p>
@@ -276,6 +309,52 @@ export default function DepoimentosPage() {
                 <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className={inputCls} />
               </div>
             </div>
+            {/* Photo upload */}
+            <div>
+              <label className="font-mono text-xs text-brasa-gray uppercase tracking-wider block mb-1">Foto</label>
+              <div className="flex items-center gap-4">
+                {form.image ? (
+                  <img src={form.image} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-brasa-orange/30" />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-brasa-orange/20 text-brasa-orange flex items-center justify-center font-bebas text-2xl border-2 border-dashed border-brasa-border">
+                    {form.name ? form.name.charAt(0) : "?"}
+                  </div>
+                )}
+                <div className="flex-1 space-y-2">
+                  <label className="block cursor-pointer">
+                    <span className="inline-block bg-brasa-orange/10 text-brasa-orange border border-brasa-orange/30 px-4 py-2 rounded-lg font-mono text-xs hover:bg-brasa-orange/20 transition-colors">
+                      {form.image ? "TROCAR FOTO" : "ENVIAR FOTO"}
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          const base64 = await resizeImage(file, 200, 0.85);
+                          setForm({ ...form, image: base64 });
+                        } catch {
+                          setToast("Erro ao processar imagem.");
+                        }
+                      }}
+                    />
+                  </label>
+                  <p className="font-mono text-[9px] text-brasa-gray">Redimensiona para 200x200px automaticamente. Qualquer tamanho aceito.</p>
+                  {form.image && (
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, image: undefined })}
+                      className="font-mono text-[10px] text-red-400 hover:text-red-300"
+                    >
+                      Remover foto
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <div>
               <label className="font-mono text-xs text-brasa-gray uppercase tracking-wider block mb-1">Avaliacao</label>
               <Stars rating={form.rating} onChange={(v) => setForm({ ...form, rating: v })} />
