@@ -173,10 +173,12 @@ export default function ModelsSection() {
 
                   {/* Title — shared layoutId for seamless card→modal */}
                   <motion.div layout="position" layoutId={`title-${product.id}`}>
-                    <h3 className="font-bebas text-lg xs:text-xl sm:text-2xl md:text-3xl text-brasa-orange">{product.name}</h3>
+                    <h3 className="font-bebas text-lg xs:text-xl sm:text-2xl md:text-3xl text-brasa-orange leading-tight">{product.name}</h3>
                   </motion.div>
-                  <motion.p layout="position" className="text-brasa-gray text-sm mb-1">{product.subtitle}</motion.p>
-                  <motion.p layout="position" className="font-mono text-brasa-gold text-sm mb-3">{product.poolSize}</motion.p>
+                  <div className="min-h-[40px] xs:min-h-[44px]">
+                    <motion.p layout="position" className="text-brasa-gray text-xs xs:text-sm mb-1 line-clamp-1">{product.subtitle}</motion.p>
+                    <motion.p layout="position" className="font-mono text-brasa-gold text-xs xs:text-sm">{product.poolSize}</motion.p>
+                  </div>
 
                   <motion.div layout="position" className="border-t border-brasa-border pt-3 mt-auto">
                     <p className="font-bebas text-lg xs:text-xl sm:text-2xl md:text-3xl text-brasa-white">

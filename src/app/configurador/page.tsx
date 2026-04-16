@@ -173,12 +173,6 @@ export default function Configurador() {
         next.add(id);
         const addon = addons.find((a) => a.id === id);
         if (addon) trackAddToCart(addon.name, addon.price);
-        // On mobile, scroll to order summary so user sees the item added
-        if (typeof window !== "undefined" && window.innerWidth < 1024) {
-          setTimeout(() => {
-            resumoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 300);
-        }
       }
       return next;
     });
