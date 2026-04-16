@@ -23,7 +23,7 @@ export default function Testimonials() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Depoimentos
           </p>
-          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
+          <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
             QUEM USA, <span className="text-brasa-orange">RECOMENDA</span>
           </h2>
         </motion.div>
@@ -47,7 +47,7 @@ export default function Testimonials() {
             1024: { slidesPerView: "auto", spaceBetween: 32 },
           }}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
           modules={[EffectCoverflow, Pagination, Autoplay]}
           className="pb-16"
         >

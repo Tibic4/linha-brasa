@@ -15,10 +15,14 @@ function TiltCard({
   children,
   className,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,7 +47,7 @@ function TiltCard({
   }, []);
 
   return (
-    <div ref={ref} className={className} onClick={onClick}>
+    <div ref={ref} className={className} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {children}
     </div>
   );
@@ -89,8 +93,19 @@ export default function ModelsSection() {
     return () => ctx.revert();
   }, []);
 
+  // Color morphing for section background
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const hoveredProduct = products.find((p) => p.id === hoveredId);
+
   return (
     <section className="section-padding bg-brasa-bg relative overflow-hidden">
+      {/* Color morphing background */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{ background: hoveredProduct?.gradient || "transparent" }}
+        transition={{ duration: 0.6 }}
+        style={{ opacity: hoveredId ? 0.15 : 0, mixBlendMode: "screen" }}
+      />
       <span className="watermark font-bebas top-10 right-10">MODELOS</span>
 
       <div className="max-w-6xl mx-auto" ref={sectionRef}>
@@ -104,7 +119,7 @@ export default function ModelsSection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Nossos Modelos
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">
+          <h2 className="font-bebas text-3xl xs:text-5xl md:text-7xl">
             ESCOLHA SUA <span className="text-brasa-orange">BRASA</span>
           </h2>
           <p className="text-brasa-gray mt-3 max-w-lg mx-auto">
@@ -114,12 +129,14 @@ export default function ModelsSection() {
 
         {/* Cards Grid — LayoutGroup syncs all shared layoutId transitions */}
         <LayoutGroup>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-4 md:gap-6">
             {products.map((product, i) => (
               <TiltCard
                 key={product.id}
                 className="cursor-pointer"
                 onClick={() => setSelectedId(product.id)}
+                onMouseEnter={() => setHoveredId(product.id)}
+                onMouseLeave={() => setHoveredId(null)}
               >
                 <motion.div
                   data-model-card
@@ -129,7 +146,7 @@ export default function ModelsSection() {
                     layout: layoutTransition,
                     opacity: { duration: 0.2 },
                   }}
-                  className="glass-card p-6 hover:border-brasa-orange/50 transition-colors duration-300 group h-full"
+                  className="glass-card p-3 xs:p-6 hover:border-brasa-orange/50 transition-colors duration-300 group h-full"
                   style={{ borderRadius: 16 }}
                 >
                   {/* Product Image — layout="position" avoids aspect ratio distortion */}
@@ -156,13 +173,13 @@ export default function ModelsSection() {
 
                   {/* Title — shared layoutId for seamless card→modal */}
                   <motion.div layout="position" layoutId={`title-${product.id}`}>
-                    <h3 className="font-bebas text-xl sm:text-2xl md:text-3xl text-brasa-orange">{product.name}</h3>
+                    <h3 className="font-bebas text-lg xs:text-xl sm:text-2xl md:text-3xl text-brasa-orange">{product.name}</h3>
                   </motion.div>
                   <motion.p layout="position" className="text-brasa-gray text-sm mb-1">{product.subtitle}</motion.p>
                   <motion.p layout="position" className="font-mono text-brasa-gold text-sm mb-3">{product.poolSize}</motion.p>
 
                   <motion.div layout="position" className="border-t border-brasa-border pt-3 mt-auto">
-                    <p className="font-bebas text-xl sm:text-2xl md:text-3xl text-brasa-white">
+                    <p className="font-bebas text-lg xs:text-xl sm:text-2xl md:text-3xl text-brasa-white">
                       R$ {product.price.toLocaleString("pt-BR")}
                     </p>
                     <p className="text-brasa-gray text-xs font-mono">
@@ -203,16 +220,15 @@ export default function ModelsSection() {
                       layout: layoutTransition,
                       opacity: { duration: 0.2 },
                     }}
-                    className="bg-brasa-bg-card border border-brasa-border w-full max-h-[100vh] sm:max-h-[85vh] sm:max-w-4xl overflow-y-auto relative"
-                    style={{ borderRadius: 16 }}
+                    className="bg-brasa-bg-card border-0 sm:border border-brasa-border w-full max-h-[100vh] sm:max-h-[85vh] sm:max-w-4xl overflow-y-auto relative rounded-t-2xl sm:rounded-2xl"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex flex-col md:flex-row">
-                      {/* Left — Image */}
+                      {/* Left — Image (colossal) */}
                       <motion.div
                         layout="position"
-                        className="w-full md:w-[320px] shrink-0 relative overflow-hidden flex items-center justify-center p-6 md:p-8 max-h-[35vh] md:max-h-none"
-                        style={{ borderRadius: "16px 16px 0 0", background: selectedProduct.gradient }}
+                        className="w-full md:w-[420px] shrink-0 relative overflow-hidden flex items-center justify-center p-6 md:p-10 max-h-[40vh] md:max-h-none rounded-t-2xl md:rounded-tl-2xl md:rounded-tr-none md:rounded-bl-2xl"
+                        style={{ background: selectedProduct.gradient }}
                       >
                         <ProductImage model={selectedProduct.id} size="md" className="relative z-10" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

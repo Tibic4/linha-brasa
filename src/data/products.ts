@@ -40,11 +40,11 @@ export const products: Product[] = [
       "Ideal para piscinas pequenas e spas. Aquecimento rápido com consumo mínimo de lenha. Perfeita para quem quer começar a economizar.",
     features: [
       "Corpo em aço carbono 4.75mm",
-      "Serpentina em cobre de alta eficiência",
+      "Serpentina em inox 304L de alta eficiência",
       "Porta com vedação hermética",
       "Pintura eletrostática resistente",
     ],
-    gradient: "linear-gradient(135deg, #1B3A5C 0%, #2B5D8C 100%)",
+    gradient: "linear-gradient(135deg, #0A1628, #1A2A4A)",
     image: "/images/brasa-30.png",
   },
   {
@@ -58,11 +58,11 @@ export const products: Product[] = [
       "Nosso modelo mais vendido. Equilíbrio perfeito entre potência e economia para piscinas residenciais. Aquece 60.000L por R$ 84.",
     features: [
       "Corpo em aço carbono 4.75mm",
-      "Serpentina dupla em cobre",
+      "Serpentina dupla em inox 304L",
       "Sistema de tiragem otimizado",
       "Cinzeiro removível de fácil limpeza",
     ],
-    gradient: "linear-gradient(135deg, #CC8400 0%, #FFD166 100%)",
+    gradient: "linear-gradient(135deg, #1A0F00, #3D2200)",
     image: "/images/brasa-60.png",
   },
   {
@@ -76,11 +76,11 @@ export const products: Product[] = [
       "Para piscinas maiores que exigem alto desempenho. Aquece rapidamente mesmo em dias frios. Ticket médio da linha BRASA.",
     features: [
       "Corpo reforçado em aço carbono 6.3mm",
-      "Serpentina tripla em cobre",
+      "Serpentina tripla em inox 304L",
       "Câmara de combustão ampliada",
       "Grelha em ferro fundido",
     ],
-    gradient: "linear-gradient(135deg, #FF4F00 0%, #FF7043 100%)",
+    gradient: "linear-gradient(135deg, #1A0800, #FF4F00)",
     image: "/images/brasa-120.png",
   },
   {
@@ -94,11 +94,11 @@ export const products: Product[] = [
       "Potência máxima para piscinas comerciais, clubes e academias. Robustez incomparável. A solução definitiva para grandes volumes.",
     features: [
       "Corpo em aço carbono 6.3mm reforçado",
-      "Serpentina quádrupla em cobre",
+      "Serpentina quádrupla em inox 304L",
       "Sistema de combustão turbo",
       "Painel de controle de temperatura",
     ],
-    gradient: "linear-gradient(135deg, #BF360C 0%, #D84315 100%)",
+    gradient: "linear-gradient(135deg, #1A0000, #8B0000)",
     image: "/images/brasa-200.png",
   },
 ];
@@ -192,15 +192,6 @@ export const addons: Addon[] = [
     name: "Embalagem Transporte Longa Distância",
     description: "Caixote madeira + espuma para Norte/Nordeste ou exportação.",
     price: 380,
-    models: "todos",
-  },
-  {
-    id: "capa-termica",
-    emoji: "🧊",
-    name: "Capa Térmica para Piscina",
-    description: "Reduz perda de calor em até 70%. Essencial para manter temperatura.",
-    badge: "Recomendado",
-    price: 950,
     models: "todos",
   },
 ];

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { motion } from "framer-motion";
 import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 import { trackPurchase } from "@/components/shared/AnalyticsEvents";
 
 export default function Obrigado() {
@@ -32,8 +33,11 @@ export default function Obrigado() {
     };
     frame();
 
-    // Track purchase
-    trackPurchase(14500);
+    // Track purchase — read total from URL param if available, fallback to 14500
+    const params = new URLSearchParams(window.location.search);
+    const totalParam = params.get("total");
+    const purchaseValue = totalParam ? Number(totalParam) : 14500;
+    trackPurchase(purchaseValue);
   }, []);
 
   return (
@@ -54,11 +58,11 @@ export default function Obrigado() {
             🔥
           </motion.div>
 
-          <h1 className="font-bebas text-6xl md:text-8xl mb-4">
+          <h1 className="font-bebas text-4xl xs:text-6xl md:text-8xl mb-4">
             <span className="text-brasa-orange">OBRIGADO</span>!
           </h1>
 
-          <p className="text-brasa-gray text-lg mb-8">
+          <p className="text-brasa-gray text-base xs:text-lg mb-8">
             Sua compra foi realizada com sucesso. Em breve entraremos em contato
             para confirmar os detalhes da entrega e instalação.
           </p>
@@ -97,6 +101,7 @@ export default function Obrigado() {
           </div>
         </motion.div>
       </main>
+      <Footer />
     </>
   );
 }

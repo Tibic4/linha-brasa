@@ -7,18 +7,26 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xs: "360px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       colors: {
         brasa: {
           bg: "#07090C",
           "bg-light": "#0D1117",
-          "bg-card": "#111827",
+          "bg-card": "#1A2030",
           orange: "#FF4F00",
           "orange-dark": "#CC3F00",
           gold: "#FFD166",
           green: "#22C55E",
           "green-dark": "#16A34A",
-          white: "#F8FAFC",
+          white: "#ECF0F8",
           gray: "#94A3B8",
           "gray-dark": "#475569",
           border: "#1E293B",
@@ -30,7 +38,8 @@ const config: Config = {
         mono: ["var(--font-jetbrains)", "monospace"],
       },
       animation: {
-        "marquee": "marquee 30s linear infinite",
+        "marquee": "marquee 60s linear infinite",
+        "marquee-desktop": "marquee 30s linear infinite",
         "marquee-reverse": "marquee-reverse 30s linear infinite",
         "float": "float 6s ease-in-out infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",

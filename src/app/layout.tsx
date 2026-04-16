@@ -24,9 +24,9 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://linhabrasa.com.br"),
-  title: "Linha Brasa | Caldeira a Lenha para Piscinas — Aquecimento Econômico",
+  title: "BRASA Caldeiras — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
   description:
-    "Caldeiras a lenha para aquecimento de piscinas fabricadas em Londrina/PR. Economize até 80% comparado ao gás. Modelos de 15.000 a 50.000 kcal/h. Produto único no Brasil.",
+    "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
   keywords: [
     "caldeira a lenha",
     "aquecimento de piscina",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     "aquecimento econômico piscina",
   ],
   openGraph: {
-    title: "Linha Brasa | Caldeira a Lenha para Piscinas",
+    title: "BRASA Caldeiras — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
     description:
-      "Aqueça sua piscina gastando até 80% menos. Caldeiras a lenha fabricadas no Brasil com tecnologia premium.",
+      "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
     type: "website",
     locale: "pt_BR",
     siteName: "Linha Brasa",

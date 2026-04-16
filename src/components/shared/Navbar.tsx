@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/#depoimentos", label: "Depoimentos" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#contato", label: "Contato" },
+  { href: "/manutencao", label: "Manutenção" },
 ];
 
 export default function Navbar() {
@@ -38,7 +39,7 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-brasa-orange rounded-lg flex items-center justify-center">
               <span className="font-bebas text-white text-lg">B</span>
             </div>
-            <span className="font-bebas text-2xl tracking-wider">
+            <span className="font-bebas text-xl xs:text-2xl tracking-wider">
               LINHA <span className="text-brasa-orange">BRASA</span>
             </span>
           </a>

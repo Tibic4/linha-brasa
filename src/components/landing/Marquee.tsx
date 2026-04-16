@@ -1,14 +1,14 @@
 "use client";
 
 const items = [
-  "🔥 Fabricação 100% Nacional",
-  "⚡ Aquecimento em até 4h",
+  "✓ Garantia 2 anos",
+  "✓ Inox 304L",
+  "✓ Teste hidráulico 8 bar",
+  "✓ Fabricação Londrina/PR",
+  "✓ +200 piscinas aquecidas",
   "💰 Economia de até 80%",
-  "🏆 Único no Brasil",
-  "🛡️ 3 Anos de Garantia",
-  "📦 Entrega para Todo Brasil",
-  "🔧 Instalação Simples",
-  "♻️ Energia Renovável",
+  "🏆 Produto único no Brasil",
+  "♻️ Energia 100% renovável",
 ];
 
 export default function Marquee() {
@@ -17,7 +17,7 @@ export default function Marquee() {
   return (
     <section className="py-4 bg-brasa-bg-light border-y border-brasa-border overflow-hidden group">
       <div className="marquee-container">
-        <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
+        <div className="flex animate-marquee sm:animate-marquee-desktop whitespace-nowrap group-hover:[animation-play-state:paused]">
           {doubled.map((item, i) => (
             <span
               key={i}

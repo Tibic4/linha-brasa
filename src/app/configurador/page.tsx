@@ -10,7 +10,6 @@ import Footer from "@/components/shared/Footer";
 import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
 import ScrollProgress from "@/components/shared/ScrollProgress";
 import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
-import ColorMorph from "@/components/shared/ColorMorph";
 import ProductImage from "@/components/shared/ProductImage";
 import { products, addons, productColors, testimonials } from "@/data/products";
 import ProductColorPreview from "@/components/shared/ProductColorPreview";
@@ -79,6 +78,53 @@ function AnimatedTotal({ value }: { value: number }) {
   );
 }
 
+function InlineCalculator({ total }: { total: number }) {
+  const [poolVolume, setPoolVolume] = useState(30000);
+
+  const gasMonthly = poolVolume * 0.042;
+  const brasaMonthly = poolVolume * 0.0075;
+  const monthlySaving = gasMonthly - brasaMonthly;
+  const annualSaving = monthlySaving * 8;
+  const paybackMonths = monthlySaving > 0 ? Math.ceil(total / monthlySaving) : 0;
+
+  return (
+    <div className="hidden lg:block glass-card rounded-2xl p-4">
+      <h4 className="font-bebas text-base text-brasa-green mb-3">CALCULADORA DE ECONOMIA</h4>
+      <label className="font-mono text-[10px] text-brasa-gray block mb-1">Volume da piscina</label>
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          type="range"
+          min={5000}
+          max={60000}
+          step={1000}
+          value={poolVolume}
+          onChange={(e) => setPoolVolume(Number(e.target.value))}
+          className="flex-1 accent-brasa-orange"
+        />
+        <span className="font-mono text-xs text-brasa-orange w-16 text-right">{(poolVolume / 1000).toFixed(0)}k L</span>
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between">
+          <span className="text-brasa-gray text-xs">Custo gás/mês</span>
+          <span className="font-mono text-xs text-red-400">R$ {Math.round(gasMonthly).toLocaleString("pt-BR")}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-brasa-gray text-xs">Custo BRASA/mês</span>
+          <span className="font-mono text-xs text-brasa-green">R$ {Math.round(brasaMonthly).toLocaleString("pt-BR")}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-brasa-gray text-xs">Economia anual</span>
+          <span className="font-mono text-xs text-brasa-green font-bold">R$ {Math.round(annualSaving).toLocaleString("pt-BR")}</span>
+        </div>
+        <div className="pt-2 border-t border-brasa-border flex justify-between">
+          <span className="text-brasa-gray text-xs">Retorno do investimento</span>
+          <span className="font-mono text-xs text-brasa-gold">~{paybackMonths} meses</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Configurador() {
   const [selectedModel, setSelectedModel] = useState(1); // Default BRASA 60
   const [expandedModel, setExpandedModel] = useState<number | null>(null);
@@ -86,6 +132,7 @@ export default function Configurador() {
   const [selectedColor, setSelectedColor] = useState("preto-satin");
 
   const [showCheckout, setShowCheckout] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao" | "boleto">("pix");
   const addonsRef = useRef<HTMLDivElement>(null);
   const colorSectionRef = useRef<HTMLElement>(null);
   const resumoRef = useRef<HTMLDivElement>(null);
@@ -150,9 +197,10 @@ export default function Configurador() {
     setSelectedModel(i);
     setExpandedModel(null);
     trackAddToCart(products[i].name, products[i].price);
+    // Aguarda o modal fechar, depois rola suavemente para a seção de cor
     setTimeout(() => {
       colorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 200);
+    }, 350);
   };
 
   const colorPrice = productColors.find((c) => c.id === selectedColor)?.price || 0;
@@ -165,8 +213,6 @@ export default function Configurador() {
     return modelPrice + addonsPrice + colorPrice;
   }, [selectedModel, selectedAddons, colorPrice]);
 
-  const monthlySavings = useMemo(() => Math.round(total * 0.048), [total]);
-
   // Inline testimonials for selected model
   const modelTestimonials = testimonials.filter(
     (t) => t.model === products[selectedModel].id
@@ -177,7 +223,13 @@ export default function Configurador() {
       <ScrollProgress />
       <Navbar />
       <motion.main layoutScroll className="pt-20 min-h-screen relative">
-        <ColorMorph activeModel={selectedModel} variant="page" className="fixed" />
+        {/* Color Morphing — gradiente de fundo muda por modelo (relatório spec) */}
+        <motion.div
+          className="fixed inset-0 pointer-events-none z-0"
+          animate={{ background: products[selectedModel].gradient }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          style={{ opacity: 0.4 }}
+        />
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12 pb-28 lg:pb-12 relative z-10">
           {/* Header */}
           <motion.div
@@ -188,7 +240,7 @@ export default function Configurador() {
             <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
               Configurador Interativo
             </p>
-            <h1 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
+            <h1 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
               MONTE SUA <span className="text-brasa-orange">CALDEIRA</span>
             </h1>
             <p className="text-brasa-gray mt-3 max-w-lg mx-auto">
@@ -212,7 +264,7 @@ export default function Configurador() {
             <section>
 
                 <LayoutGroup>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-3 md:gap-4">
                     {products.map((product, i) => (
                       <TiltCard
                         key={product.id}
@@ -227,7 +279,7 @@ export default function Configurador() {
                               layout: { type: "spring", stiffness: 350, damping: 30 },
                               opacity: { duration: 0.2 },
                             }}
-                            className={`glass-card p-4 text-left h-full ${
+                            className={`glass-card p-2.5 xs:p-4 text-left h-full ${
                               selectedModel === i
                                 ? "border-brasa-orange glow-orange-sm"
                                 : "hover:border-brasa-orange/30"
@@ -237,7 +289,7 @@ export default function Configurador() {
                             <motion.div
                               layout="position"
                               layoutId={`cfg-img-${product.id}`}
-                              className="w-full h-32 mb-3 relative overflow-hidden"
+                              className="w-full h-24 xs:h-32 mb-2 xs:mb-3 relative overflow-hidden"
                               style={{ borderRadius: 8, background: product.gradient }}
                             >
                               <ProductImage model={product.id} />
@@ -247,11 +299,11 @@ export default function Configurador() {
                                 </span>
                               )}
                             </motion.div>
-                            <motion.h3 layout="position" layoutId={`cfg-title-${product.id}`} className="font-bebas text-xl text-brasa-orange">
+                            <motion.h3 layout="position" layoutId={`cfg-title-${product.id}`} className="font-bebas text-base xs:text-xl text-brasa-orange">
                               {product.name}
                             </motion.h3>
                             <motion.p layout="position" className="text-brasa-gray text-xs font-mono">{product.poolSize}</motion.p>
-                            <motion.p layout="position" layoutId={`cfg-price-${product.id}`} className="font-bebas text-xl text-brasa-white mt-1">
+                            <motion.p layout="position" layoutId={`cfg-price-${product.id}`} className="font-bebas text-base xs:text-xl text-brasa-white mt-1">
                               R$ {product.price.toLocaleString("pt-BR")}
                             </motion.p>
                             {selectedModel === i && (
@@ -293,7 +345,6 @@ export default function Configurador() {
                               opacity: { duration: 0.2 },
                             }}
                             className="bg-brasa-bg-card border-0 sm:border border-brasa-border w-full sm:max-w-2xl max-h-[calc(100vh-90px)] sm:max-h-[85vh] overflow-y-auto relative rounded-t-2xl sm:rounded-2xl"
-                            style={{ borderRadius: 16 }}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <button
@@ -375,116 +426,10 @@ export default function Configurador() {
                 </LayoutGroup>
             </section>
 
-            {/* === STEP 2: Color === */}
-            <section ref={colorSectionRef} className="scroll-mt-24">
-                <h2 className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6">
-                  <span className="text-brasa-orange mr-2">02.</span> ESCOLHA A COR
-                </h2>
-                <div className="flex flex-row sm:flex-row gap-4 sm:gap-6 items-center sm:items-start">
-                  {/* Color Preview */}
-                  <div className="relative w-32 sm:w-64 rounded-xl overflow-hidden flex items-center justify-center py-2 sm:py-4 shrink-0"
-                    style={{ background: products[selectedModel].gradient }}
-                  >
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`${products[selectedModel].id}-${selectedColor}`}
-                        initial={{ opacity: 0, scale: 0.88, y: 15 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.92, y: -10 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 22,
-                          opacity: { duration: 0.3 },
-                        }}
-                      >
-                        <ProductColorPreview
-                          colorHex={productColors.find(c => c.id === selectedColor)?.hex || "#1A1A1A"}
-                          modelName={products[selectedModel].name}
-                          className="w-24 h-32 sm:w-48 sm:h-56"
-                        />
-                      </motion.div>
-                    </AnimatePresence>
-                    <div className="absolute top-2 right-2">
-                      <span className="font-bebas text-sm text-white/70 bg-black/40 px-2 py-0.5 rounded">
-                        {products[selectedModel].name}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Color Swatches — compact circles on mobile, cards on desktop */}
-                  <div className="flex-1">
-                    {/* Mobile: horizontal circles */}
-                    <div className="sm:hidden">
-                      <div className="flex gap-3 justify-center mb-3">
-                        {productColors.map((color) => (
-                          <button
-                            key={color.id}
-                            onClick={() => setSelectedColor(color.id)}
-                          >
-                            <motion.div
-                              whileTap={{ scale: 0.9 }}
-                              className={`w-10 h-10 rounded-full border-2 transition-all duration-300 ${
-                                selectedColor === color.id
-                                  ? "border-brasa-orange ring-2 ring-brasa-orange/40 ring-offset-2 ring-offset-brasa-bg"
-                                  : "border-brasa-border"
-                              }`}
-                              style={{ backgroundColor: color.hex }}
-                            />
-                          </button>
-                        ))}
-                      </div>
-                      <p className="text-center font-mono text-sm">
-                        <span className="text-brasa-white">{productColors.find(c => c.id === selectedColor)?.name}</span>
-                        <span className={`ml-2 text-xs ${(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? "text-brasa-gold" : "text-brasa-green"}`}>
-                          {(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? `+R$ ${productColors.find(c => c.id === selectedColor)?.price}` : "Incluso"}
-                        </span>
-                      </p>
-                    </div>
-
-                    {/* Desktop: cards with name + price */}
-                    <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-3">
-                      {productColors.map((color) => (
-                        <button
-                          key={color.id}
-                          onClick={() => setSelectedColor(color.id)}
-                          className={`group flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 ${
-                            selectedColor === color.id
-                              ? "border-brasa-orange bg-brasa-orange/10"
-                              : "border-brasa-border hover:border-brasa-orange/30 bg-brasa-bg-card/50"
-                          }`}
-                        >
-                          <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className={`w-8 h-8 rounded-full border-2 shrink-0 ${
-                              selectedColor === color.id
-                                ? "border-brasa-orange"
-                                : "border-brasa-border"
-                            }`}
-                            style={{ backgroundColor: color.hex }}
-                          />
-                          <div className="text-left">
-                            <p className={`font-mono text-xs leading-tight ${
-                              selectedColor === color.id ? "text-brasa-orange" : "text-brasa-white"
-                            }`}>{color.name}</p>
-                            <p className={`font-mono text-[10px] ${
-                              color.price > 0 ? "text-brasa-gold" : "text-brasa-green"
-                            }`}>
-                              {color.price > 0 ? `+R$ ${color.price}` : "Incluso"}
-                            </p>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-            </section>
-
-            {/* === STEP 3: Addons === */}
+            {/* === STEP 2: Addons === */}
             <section className="">
                 <h2 className="font-bebas text-2xl sm:text-3xl mb-2">
-                  <span className="text-brasa-orange mr-2">03.</span> ADITIVOS OPCIONAIS
+                  <span className="text-brasa-orange mr-2">02.</span> ADITIVOS OPCIONAIS
                 </h2>
                 <p className="text-brasa-gray text-sm mb-6 font-mono">
                   {selectedAddons.size} selecionados
@@ -546,8 +491,6 @@ export default function Configurador() {
                   })}
                 </div>
 
-                {/* Color selector moved to sidebar for visual proximity with product */}
-
                 {/* === INLINE TESTIMONIALS === */}
                 {modelTestimonials.length > 0 && (
                   <div className="mt-8">
@@ -587,6 +530,114 @@ export default function Configurador() {
                     </AnimatePresence>
                   </div>
                 )}
+            </section>
+
+            {/* === STEP 3: Color === */}
+            <section ref={colorSectionRef} className="scroll-mt-24">
+                <h2 className="font-bebas text-2xl sm:text-3xl mb-4 sm:mb-6">
+                  <span className="text-brasa-orange mr-2">03.</span> ESCOLHA A COR
+                </h2>
+                <div className="flex flex-col xs:flex-row gap-4 sm:gap-6 items-center xs:items-start">
+                  {/* Color Preview */}
+                  <div className="relative w-32 sm:w-64 rounded-xl overflow-hidden flex items-center justify-center py-2 sm:py-4 shrink-0"
+                    style={{ background: products[selectedModel].gradient }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`${products[selectedModel].id}-${selectedColor}`}
+                        initial={{ opacity: 0, scale: 0.88, y: 15 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.92, y: -10 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 22,
+                          opacity: { duration: 0.3 },
+                        }}
+                      >
+                        <ProductColorPreview
+                          colorHex={productColors.find(c => c.id === selectedColor)?.hex || "#1A1A1A"}
+                          modelName={products[selectedModel].name}
+                          className="w-24 h-32 sm:w-48 sm:h-56"
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                    <div className="absolute top-2 right-2">
+                      <span className="font-bebas text-sm text-white/70 bg-black/40 px-2 py-0.5 rounded">
+                        {products[selectedModel].name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Color Swatches — compact circles on mobile, cards on desktop */}
+                  <div className="flex-1">
+                    {/* Mobile: horizontal circles */}
+                    <div className="sm:hidden">
+                      <div className="flex flex-wrap gap-2 xs:gap-3 justify-center mb-3">
+                        {productColors.map((color) => (
+                          <button
+                            key={color.id}
+                            onClick={() => setSelectedColor(color.id)}
+                          >
+                            <motion.div
+                              animate={{ scale: selectedColor === color.id ? 1.2 : 1 }}
+                              whileTap={{ scale: 0.9 }}
+                              className={`w-10 h-10 rounded-full border-2 transition-all duration-300 ${
+                                selectedColor === color.id
+                                  ? "border-brasa-orange ring-2 ring-brasa-orange/40 ring-offset-2 ring-offset-brasa-bg"
+                                  : "border-brasa-border"
+                              }`}
+                              style={{ backgroundColor: color.hex }}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-center font-mono text-sm">
+                        <span className="text-brasa-white">{productColors.find(c => c.id === selectedColor)?.name}</span>
+                        <span className={`ml-2 text-xs ${(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? "text-brasa-gold" : "text-brasa-green"}`}>
+                          {(productColors.find(c => c.id === selectedColor)?.price || 0) > 0 ? `+R$ ${productColors.find(c => c.id === selectedColor)?.price}` : "Incluso"}
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Desktop: cards with name + price */}
+                    <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-3">
+                      {productColors.map((color) => (
+                        <button
+                          key={color.id}
+                          onClick={() => setSelectedColor(color.id)}
+                          className={`group flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 ${
+                            selectedColor === color.id
+                              ? "border-brasa-orange bg-brasa-orange/10"
+                              : "border-brasa-border hover:border-brasa-orange/30 bg-brasa-bg-card/50"
+                          }`}
+                        >
+                          <motion.div
+                            animate={{ scale: selectedColor === color.id ? 1.2 : 1 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className={`w-10 h-10 rounded-full border-2 shrink-0 ${
+                              selectedColor === color.id
+                                ? "border-brasa-orange ring-2 ring-brasa-orange/30"
+                                : "border-brasa-border"
+                            }`}
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <div className="text-left">
+                            <p className={`font-mono text-xs leading-tight ${
+                              selectedColor === color.id ? "text-brasa-orange" : "text-brasa-white"
+                            }`}>{color.name}</p>
+                            <p className={`font-mono text-[10px] ${
+                              color.price > 0 ? "text-brasa-gold" : "text-brasa-green"
+                            }`}>
+                              {color.price > 0 ? `+R$ ${color.price}` : "Incluso"}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
             </section>
             </div>
 
@@ -660,11 +711,25 @@ export default function Configurador() {
                       </p>
                     </div>
 
+                    {/* Frete */}
+                    <div className="flex justify-between items-center mt-3 mb-1">
+                      <span className="text-brasa-gray text-xs">Frete</span>
+                      <span className="font-mono text-xs text-brasa-green">
+                        Grátis Sul/Sudeste
+                      </span>
+                    </div>
+
                     <button
                       onClick={() => setShowCheckout(true)}
-                      className="btn-brasa w-full text-xl mt-4"
+                      className="w-full mt-4 py-4 font-bebas text-xl tracking-wider text-white bg-brasa-green rounded-lg hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] active:scale-95 transition-all"
                     >
-                      FINALIZAR COMPRA
+                      FINALIZAR COM PIX (5% OFF)
+                    </button>
+                    <button
+                      onClick={() => setShowCheckout(true)}
+                      className="btn-brasa w-full text-lg mt-2"
+                    >
+                      PAGAR NO CARTÃO
                     </button>
 
                     <a
@@ -676,29 +741,13 @@ export default function Configurador() {
                       className="block text-center mt-3 text-brasa-green font-mono text-sm hover:underline"
                       onClick={() => trackWhatsAppClick("configurador_sidebar")}
                     >
-                      Ou compre pelo WhatsApp →
+                      Ou solicite via WhatsApp →
                     </a>
                   </div>
                 </motion.div>
 
-                {/* Economy Card */}
-                <div className="hidden lg:block glass-card rounded-2xl p-4">
-                  <h4 className="font-bebas text-base text-brasa-green mb-2">ECONOMIA ESTIMADA</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-brasa-gray text-xs">Economia mensal vs gás</span>
-                      <span className="font-mono text-xs text-brasa-green">~R$ {monthlySavings.toLocaleString("pt-BR")}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-brasa-gray text-xs">Retorno do investimento</span>
-                      <span className="font-mono text-xs text-brasa-gold">~{Math.ceil(total / monthlySavings)} meses</span>
-                    </div>
-                    <div className="pt-2 border-t border-brasa-border flex justify-between">
-                      <span className="text-brasa-gray text-xs">Economia em 5 anos</span>
-                      <span className="font-mono text-xs text-brasa-green font-bold">R$ {(monthlySavings * 60 - total).toLocaleString("pt-BR")}</span>
-                    </div>
-                  </div>
-                </div>
+                {/* Inline Economy Calculator */}
+                <InlineCalculator total={total} />
 
                 {/* Guarantees — compact inline */}
                 <div className="hidden lg:flex flex-wrap gap-x-4 gap-y-1 justify-center">
@@ -751,6 +800,46 @@ export default function Configurador() {
                     {/* Left Column — Form */}
                     <div className="flex-1 p-4 sm:p-6 lg:p-8">
                       <div className="mb-6 sm:mb-8">
+                        <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">DADOS PESSOAIS</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Nome completo</label>
+                            <input
+                              type="text"
+                              placeholder="Seu nome"
+                              required
+                              className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">CPF / CNPJ</label>
+                            <input
+                              type="text"
+                              placeholder="000.000.000-00"
+                              required
+                              className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Telefone / WhatsApp</label>
+                            <input
+                              type="tel"
+                              placeholder="(00) 00000-0000"
+                              required
+                              className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">E-mail</label>
+                            <input
+                              type="email"
+                              placeholder="seu@email.com"
+                              required
+                              className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors"
+                            />
+                          </div>
+                        </div>
+
                         <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">ENDEREÇO DE ENTREGA</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" id="address-form">
                           <div>
@@ -794,6 +883,10 @@ export default function Configurador() {
                             <input type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
                           </div>
                           <div>
+                            <label className="font-mono text-xs text-brasa-gray block mb-1.5">Complemento</label>
+                            <input type="text" placeholder="Apto, bloco, etc. (opcional)" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white placeholder:text-brasa-gray-dark font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
+                          </div>
+                          <div>
                             <label className="font-mono text-xs text-brasa-gray block mb-1.5">Bairro</label>
                             <input data-field="bairro" type="text" className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white font-mono focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange/30 outline-none transition-colors" />
                           </div>
@@ -811,28 +904,72 @@ export default function Configurador() {
                       <div>
                         <h3 className="font-bebas text-lg sm:text-xl text-brasa-orange mb-3 sm:mb-4">PAGAMENTO</h3>
                         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
-                          {[
-                            { label: "PIX", desc: "5% desconto", highlight: true },
-                            { label: "Cartão", desc: "Até 12x", highlight: false },
-                            { label: "Boleto", desc: "Venc. 3 dias", highlight: false },
-                          ].map((method) => (
-                            <div
-                              key={method.label}
-                              className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-brasa-bg border-2 text-center cursor-pointer transition-all hover:scale-[1.02] ${
-                                method.highlight ? "border-brasa-green bg-brasa-green/5" : "border-brasa-border hover:border-brasa-orange/30"
-                              }`}
-                            >
-                              <span className="font-mono text-sm text-brasa-white block">{method.label}</span>
-                              <span className={`font-mono text-[10px] ${
-                                method.highlight ? "text-brasa-green" : "text-brasa-gray-dark"
-                              }`}>{method.desc}</span>
-                            </div>
-                          ))}
+                          {([
+                            { id: "pix" as const, label: "PIX", desc: "5% desconto", icon: "⚡" },
+                            { id: "cartao" as const, label: "Cartão", desc: "Até 12x", icon: "💳" },
+                            { id: "boleto" as const, label: "Boleto", desc: "Venc. 3 dias", icon: "📄" },
+                          ]).map((method) => {
+                            const isActive = paymentMethod === method.id;
+                            return (
+                              <button
+                                key={method.id}
+                                type="button"
+                                onClick={() => setPaymentMethod(method.id)}
+                                className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-brasa-bg border-2 text-center cursor-pointer transition-all hover:scale-[1.02] ${
+                                  isActive
+                                    ? method.id === "pix"
+                                      ? "border-brasa-green bg-brasa-green/10 shadow-[0_0_15px_rgba(34,197,94,0.2)]"
+                                      : "border-brasa-orange bg-brasa-orange/10"
+                                    : "border-brasa-border hover:border-brasa-orange/30"
+                                }`}
+                              >
+                                <span className="text-lg block mb-0.5">{method.icon}</span>
+                                <span className={`font-mono text-sm block ${isActive ? "text-white" : "text-brasa-white"}`}>{method.label}</span>
+                                <span className={`font-mono text-[10px] ${
+                                  isActive && method.id === "pix" ? "text-brasa-green" : isActive ? "text-brasa-orange" : "text-brasa-gray-dark"
+                                }`}>{method.desc}</span>
+                              </button>
+                            );
+                          })}
                         </div>
-                        <div id="mercadopago-bricks-container" className="min-h-[100px] rounded-xl border border-dashed border-brasa-border flex items-center justify-center">
-                          <p className="text-brasa-gray-dark text-xs font-mono p-6 text-center">
-                            Mercado Pago Checkout Bricks será renderizado aqui.
-                          </p>
+
+                        {/* Mercado Pago Bricks container — renders CardPayment or PaymentBrick */}
+                        <div id="mercadopago-bricks-container" className="min-h-[120px] rounded-xl border border-dashed border-brasa-border">
+                          {paymentMethod === "pix" ? (
+                            <div className="p-6 text-center">
+                              <p className="font-bebas text-2xl text-brasa-green mb-2">PIX — 5% DE DESCONTO</p>
+                              <p className="font-mono text-xs text-brasa-gray mb-3">
+                                Total: <span className="text-brasa-green font-bold">R$ {Math.floor(total * 0.95).toLocaleString("pt-BR")}</span>
+                                <span className="line-through ml-2 text-brasa-gray-dark">R$ {total.toLocaleString("pt-BR")}</span>
+                              </p>
+                              <p className="text-brasa-gray-dark text-[10px] font-mono">
+                                QR Code dinâmico será gerado ao confirmar (Mercado Pago Checkout Bricks).
+                                <br />Configure NEXT_PUBLIC_MP_PUBLIC_KEY para ativar.
+                              </p>
+                            </div>
+                          ) : paymentMethod === "cartao" ? (
+                            <div className="p-6 text-center">
+                              <p className="font-bebas text-2xl text-brasa-orange mb-2">CARTÃO DE CRÉDITO</p>
+                              <p className="font-mono text-xs text-brasa-gray mb-3">
+                                Até 12x de <span className="text-brasa-gold font-bold">R$ {Math.ceil(total / 12).toLocaleString("pt-BR")}</span> sem juros
+                              </p>
+                              <p className="text-brasa-gray-dark text-[10px] font-mono">
+                                Formulário do cartão será renderizado aqui (Mercado Pago CardPayment Brick).
+                                <br />Configure NEXT_PUBLIC_MP_PUBLIC_KEY para ativar.
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="p-6 text-center">
+                              <p className="font-bebas text-2xl text-brasa-white mb-2">BOLETO BANCÁRIO</p>
+                              <p className="font-mono text-xs text-brasa-gray mb-3">
+                                Vencimento em 3 dias úteis — R$ {total.toLocaleString("pt-BR")}
+                              </p>
+                              <p className="text-brasa-gray-dark text-[10px] font-mono">
+                                Boleto será gerado ao confirmar (Mercado Pago Checkout Bricks).
+                                <br />Configure NEXT_PUBLIC_MP_PUBLIC_KEY para ativar.
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -865,23 +1002,39 @@ export default function Configurador() {
                         ))}
                       </div>
 
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-brasa-gray text-xs">Frete</span>
+                        <span className="font-mono text-xs text-brasa-green">Grátis Sul/Sudeste</span>
+                      </div>
+
                       <div className="border-t border-brasa-border pt-4 mb-6">
                         <div className="flex justify-between items-center mb-1">
                           <span className="font-bebas text-xl">TOTAL</span>
                           <span className="font-bebas text-2xl text-brasa-orange">
-                            R$ {total.toLocaleString("pt-BR")}
+                            {paymentMethod === "pix"
+                              ? `R$ ${Math.floor(total * 0.95).toLocaleString("pt-BR")}`
+                              : `R$ ${total.toLocaleString("pt-BR")}`}
                           </span>
                         </div>
-                        <p className="text-brasa-gray text-xs font-mono text-right">
-                          ou 12x de R$ {Math.ceil(total / 12).toLocaleString("pt-BR")}
-                        </p>
-                        <p className="text-brasa-green text-xs font-mono text-right mt-1">
-                          PIX: R$ {Math.floor(total * 0.95).toLocaleString("pt-BR")} (5% off)
-                        </p>
+                        {paymentMethod === "pix" && (
+                          <p className="text-brasa-green text-xs font-mono text-right">
+                            5% off no Pix <span className="line-through text-brasa-gray-dark ml-1">R$ {total.toLocaleString("pt-BR")}</span>
+                          </p>
+                        )}
+                        {paymentMethod === "cartao" && (
+                          <p className="text-brasa-gray text-xs font-mono text-right">
+                            ou 12x de R$ {Math.ceil(total / 12).toLocaleString("pt-BR")} sem juros
+                          </p>
+                        )}
+                        {paymentMethod === "boleto" && (
+                          <p className="text-brasa-gray text-xs font-mono text-right">
+                            Vencimento em 3 dias úteis
+                          </p>
+                        )}
                       </div>
 
                       <a
-                        href="/obrigado"
+                        href={`/obrigado?total=${paymentMethod === "pix" ? Math.floor(total * 0.95) : total}`}
                         className="btn-brasa w-full text-lg text-center block"
                       >
                         FINALIZAR PEDIDO
@@ -931,7 +1084,7 @@ export default function Configurador() {
             </div>
             <button
               onClick={() => setShowCheckout(true)}
-              className="btn-brasa !py-3 !px-6 !text-base"
+              className="btn-brasa !py-3 !px-4 xs:!px-6 !text-sm xs:!text-base"
             >
               FINALIZAR COMPRA
             </button>

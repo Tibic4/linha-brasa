@@ -45,7 +45,7 @@ function GSAPCounter({ end, suffix = "", prefix = "", label, color }: CounterPro
 
   return (
     <div className="text-center">
-      <span ref={ref} className={`font-bebas text-5xl md:text-7xl tabular-nums ${color}`}>
+      <span ref={ref} className={`font-bebas text-3xl xs:text-4xl sm:text-5xl md:text-7xl tabular-nums ${color}`}>
         {prefix}0{suffix}
       </span>
       <p className="text-brasa-gray text-sm mt-2 font-mono">{label}</p>
@@ -82,7 +82,7 @@ export default function ProblemSection() {
   }, []);
 
   return (
-    <section className="section-padding bg-brasa-bg relative">
+    <section className="section-padding relative" style={{ background: "#0E1118" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -94,19 +94,20 @@ export default function ProblemSection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             O Problema
           </p>
-          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
-            AQUECER PISCINA NO BRASIL
+          <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
+            VOCÊ PAGA{" "}
+            <span className="text-red-500">R$ 400/MÊS</span>
             <br />
-            <span className="text-brasa-gray">É ABSURDAMENTE CARO</span>
+            <span className="text-brasa-gray">DE GÁS PARA AQUECER A PISCINA?</span>
           </h2>
         </motion.div>
 
-        {/* GSAP Counters */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-          <GSAPCounter end={850} prefix="R$ " label="Custo médio mensal a gás" color="text-red-500" />
-          <GSAPCounter end={12} suffix=" meses" label="Sem uso no inverno" color="text-brasa-gold" />
-          <GSAPCounter end={65} suffix="%" label="Desvalorização sem aquecimento" color="text-brasa-gold" />
-          <GSAPCounter end={40} suffix=" mil" prefix="R$ " label="Investimento em solar" color="text-red-500" />
+        {/* GSAP Counters — custo acumulado */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 xs:gap-4 sm:gap-8 mb-16">
+          <GSAPCounter end={400} prefix="R$ " label="Custo mensal com gás" color="text-red-500" />
+          <GSAPCounter end={4800} prefix="R$ " label="Custo em 1 ano" color="text-red-500" />
+          <GSAPCounter end={9600} prefix="R$ " label="Custo em 2 anos" color="text-brasa-gold" />
+          <GSAPCounter end={24000} prefix="R$ " label="Custo em 5 anos" color="text-red-500" />
         </div>
 
         {/* GSAP stagger problem cards */}

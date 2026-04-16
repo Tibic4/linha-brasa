@@ -152,6 +152,23 @@ export default function SchemaMarkup() {
           },
         ],
       },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://linhabrasa.com.br",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Configurador",
+            item: "https://linhabrasa.com.br/configurador",
+          },
+        ],
+      },
     ],
   };
 

@@ -4,7 +4,7 @@
 
 :root {
   --background: #07090C;
-  --foreground: #F8FAFC;
+  --foreground: #ECF0F8;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -25,7 +25,7 @@
 /* ===== SELECTIONS ===== */
 ::selection {
   background: rgba(255, 79, 0, 0.3);
-  color: #F8FAFC;
+  color: #ECF0F8;
 }
 
 /* ===== BODY ===== */
@@ -94,7 +94,7 @@ html {
 
 /* ===== GLASS CARD ===== */
 .glass-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: rgba(26, 32, 48, 0.6);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(30, 41, 59, 0.5);
 }
@@ -158,7 +158,34 @@ html {
   box-shadow: 0 0 10px rgba(255, 79, 0, 0.5);
 }
 
+/* Coverflow slide scale — central 1.0, laterais 0.8 */
+.swiper-slide {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: scale(0.8);
+  opacity: 0.6;
+}
+.swiper-slide-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
 /* ===== SAFE AREA (Mobile sticky bar) ===== */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ===== 320px SMALL SCREEN OVERRIDES ===== */
+@media (max-width: 359px) {
+  .section-padding {
+    @apply px-3 py-16;
+  }
+  .watermark {
+    font-size: clamp(60px, 20vw, 120px);
+  }
+  .btn-brasa {
+    @apply px-5 py-3 text-base;
+  }
+  .counter-value {
+    @apply text-4xl;
+  }
 }

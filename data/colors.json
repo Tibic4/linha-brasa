@@ -1,0 +1,8 @@
+[
+  { "id": "preto-satin", "name": "Preto Satin", "hex": "#1A1A1A", "price": 0, "active": true },
+  { "id": "cinza-grafite", "name": "Cinza Grafite", "hex": "#4A4A4A", "price": 480, "active": true },
+  { "id": "verde-militar", "name": "Verde Militar", "hex": "#4A5D3A", "price": 480, "active": true },
+  { "id": "bege-rustico", "name": "Bege Rústico", "hex": "#C4A77D", "price": 480, "active": true },
+  { "id": "bronze", "name": "Bronze", "hex": "#8B6914", "price": 680, "active": true },
+  { "id": "inox-escovado", "name": "Inox Escovado", "hex": "#C0C0C0", "price": 980, "active": true }
+]

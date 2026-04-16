@@ -16,7 +16,7 @@ function FAQItem({ question, answer, isOpen, onClick }: {
         onClick={onClick}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-bebas text-xl md:text-2xl group-hover:text-brasa-orange transition-colors">
+        <span className="font-bebas text-lg xs:text-xl md:text-2xl group-hover:text-brasa-orange transition-colors">
           {question}
         </span>
         <motion.span
@@ -62,7 +62,7 @@ export default function FAQ() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Dúvidas Frequentes
           </p>
-          <h2 className="font-bebas text-5xl md:text-7xl">FAQ</h2>
+          <h2 className="font-bebas text-3xl xs:text-4xl sm:text-5xl md:text-7xl">FAQ</h2>
         </motion.div>
 
         <div>

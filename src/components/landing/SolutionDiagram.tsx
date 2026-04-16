@@ -79,7 +79,7 @@ export default function SolutionDiagram() {
           <p className="text-brasa-green font-mono text-sm tracking-[0.3em] uppercase mb-4">
             A Solução
           </p>
-          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
+          <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
             COMO A <span className="text-brasa-orange">LINHA BRASA</span> FUNCIONA
           </h2>
         </motion.div>
@@ -88,45 +88,45 @@ export default function SolutionDiagram() {
         <div className="relative max-w-4xl mx-auto mb-16">
           <svg
             ref={svgRef}
-            viewBox="0 0 800 300"
+            viewBox="0 0 900 300"
             className="w-full h-auto"
             fill="none"
           >
-            {/* Top flow path */}
+            {/* Flow paths connecting 5 nodes */}
             <path
-              d="M 100 150 C 200 150, 250 80, 400 80 C 550 80, 600 150, 700 150"
+              d="M 90 150 C 160 150, 200 80, 270 80 C 340 80, 360 150, 450 150"
               stroke="#FF4F00"
               strokeWidth="3"
               strokeLinecap="round"
             />
-            {/* Bottom flow path */}
             <path
-              d="M 100 150 C 200 150, 250 220, 400 220 C 550 220, 600 150, 700 150"
+              d="M 450 150 C 540 150, 560 80, 630 80 C 700 80, 720 150, 810 150"
               stroke="#22C55E"
               strokeWidth="3"
               strokeLinecap="round"
             />
 
-            {/* Nodes */}
+            {/* 5 Nodes */}
             {[
-              { x: 100, y: 150, label: "LENHA", sub: "Energia renovável", color: "#FFD166" },
-              { x: 400, y: 80, label: "CALDEIRA BRASA", sub: "Combustão eficiente", color: "#FF4F00" },
-              { x: 400, y: 220, label: "SERPENTINA", sub: "Troca de calor", color: "#22C55E" },
-              { x: 700, y: 150, label: "PISCINA QUENTE", sub: "28°C o ano todo", color: "#FF4F00" },
+              { x: 90, y: 150, label: "LENHA", sub: "Energia renovável", color: "#FFD166" },
+              { x: 270, y: 80, label: "CÂMARA", sub: "Combustão eficiente", color: "#FF4F00" },
+              { x: 450, y: 150, label: "SERPENTINA", sub: "Inox 304L", color: "#FF4F00" },
+              { x: 630, y: 80, label: "ÁGUA QUENTE", sub: "Troca de calor", color: "#22C55E" },
+              { x: 810, y: 150, label: "PISCINA", sub: "28°C o ano todo", color: "#22C55E" },
             ].map((node, i) => (
               <motion.g
                 key={i}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 + i * 0.3 }}
+                transition={{ duration: 0.5, delay: 0.8 + i * 0.25 }}
               >
-                <circle cx={node.x} cy={node.y} r="35" fill="#111827" stroke={node.color} strokeWidth="2" />
+                <circle cx={node.x} cy={node.y} r="35" fill="#1A2030" stroke={node.color} strokeWidth="2" />
                 <text
                   x={node.x}
                   y={node.y - 5}
                   textAnchor="middle"
-                  fill="#F8FAFC"
-                  fontSize="9"
+                  fill="#ECF0F8"
+                  fontSize="8"
                   fontWeight="bold"
                   fontFamily="var(--font-bebas)"
                 >
@@ -148,20 +148,29 @@ export default function SolutionDiagram() {
         </div>
 
         {/* Benefits Grid — GSAP stagger with bounce */}
-        <div ref={benefitsRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div ref={benefitsRef} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {[
-            { value: "80%", label: "Economia vs gás", icon: "💰" },
-            { value: "4h", label: "Tempo de aquecimento", icon: "⏱️" },
-            { value: "365", label: "Dias por ano", icon: "📅" },
-            { value: "R$5", label: "Custo diário médio", icon: "🔥" },
+            { value: "13h", label: "Para aquecer 60.000L", icon: "⏱️" },
+            { value: "R$84", label: "Por aquecimento completo", icon: "💰" },
+            { value: "365", label: "Independe do clima", icon: "🔥" },
           ].map((item, i) => (
             <div
               key={i}
               data-benefit
-              className="glass-card rounded-xl p-6 text-center hover:border-brasa-green/40 transition-colors duration-300"
+              className="glass-card rounded-xl p-6 text-center hover:border-brasa-green/40 transition-all duration-300"
+              style={{ transformStyle: "preserve-3d" }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                e.currentTarget.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "perspective(600px) rotateY(0deg) rotateX(0deg)";
+              }}
             >
               <span className="text-3xl block mb-3">{item.icon}</span>
-              <p className="font-bebas text-4xl text-brasa-green">{item.value}</p>
+              <p className="font-bebas text-3xl xs:text-4xl text-brasa-green">{item.value}</p>
               <p className="text-brasa-gray text-sm mt-1 font-mono">{item.label}</p>
             </div>
           ))}

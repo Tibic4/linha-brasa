@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Ricardo M.",
+    "location": "Curitiba, PR",
+    "rating": 5,
+    "text": "Economizo mais de R$ 400/mês comparado ao aquecimento a gás. Em 6 meses a caldeira já se pagou.",
+    "image": "/images/testimonials/ricardo.jpg",
+    "model": "brasa-60",
+    "poolSize": "35.000L",
+    "result": "Aqueci em 8h por R$ 76",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Fernanda S.",
+    "location": "Campinas, SP",
+    "rating": 5,
+    "text": "A piscina fica na temperatura perfeita mesmo no inverno. Meus filhos adoram! Recomendo demais.",
+    "image": "/images/testimonials/fernanda.jpg",
+    "model": "brasa-30",
+    "poolSize": "18.000L",
+    "result": "Aqueceu em 4h por R$ 42",
+    "active": true
+  },
+  {
+    "id": 3,
+    "name": "Carlos A.",
+    "location": "Florianópolis, SC",
+    "rating": 5,
+    "text": "Produto robusto, acabamento impecável. A equipe da Linha Brasa deu todo suporte na instalação.",
+    "image": "/images/testimonials/carlos.jpg",
+    "model": "brasa-120",
+    "poolSize": "60.000L",
+    "result": "Aqueceu em 11h por R$ 84",
+    "active": true
+  },
+  {
+    "id": 4,
+    "name": "Mariana L.",
+    "location": "Londrina, PR",
+    "rating": 5,
+    "text": "Tinha receio de caldeira a lenha, mas a praticidade me surpreendeu. Acendo e em 2h a piscina está quente.",
+    "image": "/images/testimonials/mariana.jpg",
+    "model": "brasa-60",
+    "poolSize": "25.000L",
+    "result": "Aqueceu em 5h por R$ 58",
+    "active": true
+  },
+  {
+    "id": 5,
+    "name": "João P.",
+    "location": "Porto Alegre, RS",
+    "rating": 5,
+    "text": "Tenho uma academia com piscina e a BRASA 200 dá conta perfeita. Economia absurda no gás.",
+    "image": "/images/testimonials/joao.jpg",
+    "model": "brasa-200",
+    "poolSize": "120.000L",
+    "result": "Economizo R$ 2.800/mês vs GLP",
+    "active": true
+  }
+]

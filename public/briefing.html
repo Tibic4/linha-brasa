@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Briefing Técnico — Linha Brasa</title>
+<title>Briefing Tecnico — Linha Brasa v3</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -13,6 +13,7 @@
     --orange: #FF4F00;
     --gold: #FFD166;
     --green: #22C55E;
+    --red: #EF4444;
     --white: #F1F1F1;
     --gray: #8B8B8B;
     --border: #1E2430;
@@ -72,6 +73,9 @@
   .watermark-4 { top: 30%; left: -30px; transform: rotate(-90deg) translateX(50%); }
   .watermark-5 { top: 50%; right: -10px; transform: rotate(-90deg) translateX(50%); }
   .watermark-6 { top: 40%; left: -30px; transform: rotate(-90deg) translateX(50%); }
+  .watermark-7 { top: 35%; right: -10px; transform: rotate(-90deg) translateX(50%); }
+  .watermark-8 { top: 45%; left: -30px; transform: rotate(-90deg) translateX(50%); }
+  .watermark-9 { top: 50%; right: -20px; transform: rotate(-90deg) translateX(50%); }
 
   h1 {
     font-family: 'Bebas Neue', sans-serif;
@@ -127,6 +131,7 @@
   .badge-gold { background: rgba(255,209,102,0.1); color: var(--gold); border: 1px solid rgba(255,209,102,0.2); }
   .badge-green { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
   .badge-white { background: rgba(255,255,255,0.05); color: var(--gray); border: 1px solid var(--border); }
+  .badge-red { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
 
   .card {
     background: var(--bg-card);
@@ -139,6 +144,11 @@
   .card-highlight {
     border-color: rgba(255,79,0,0.3);
     background: linear-gradient(135deg, var(--bg-card), rgba(255,79,0,0.03));
+  }
+
+  .card-green {
+    border-color: rgba(34,197,94,0.3);
+    background: linear-gradient(135deg, var(--bg-card), rgba(34,197,94,0.03));
   }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -168,6 +178,7 @@
   .text-orange { color: var(--orange); }
   .text-gold { color: var(--gold); }
   .text-green { color: var(--green); }
+  .text-red { color: var(--red); }
   .text-gray { color: var(--gray); }
   .text-white { color: var(--white); }
 
@@ -316,7 +327,7 @@
   }
 
   .checklist li::before {
-    content: '✓';
+    content: '\2713';
     position: absolute;
     left: 0;
     top: 0;
@@ -349,6 +360,45 @@
     margin: 12px 0;
   }
 
+  .version-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 16px;
+    border-radius: 6px;
+    background: rgba(255,79,0,0.15);
+    color: var(--orange);
+    border: 1px solid rgba(255,79,0,0.4);
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+
+  .new-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(34,197,94,0.2);
+    color: var(--green);
+    border: 1px solid rgba(34,197,94,0.3);
+    letter-spacing: 1px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .route-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255,79,0,0.08);
+    color: var(--orange);
+    border: 1px solid rgba(255,79,0,0.2);
+    margin: 2px;
+  }
+
   @media print {
     body { background: var(--bg); }
     .page { margin: 0; box-shadow: none; }
@@ -364,21 +414,43 @@
     <div class="cover-logo">LINHA <span>BRASA</span></div>
     <p class="mono text-orange" style="letter-spacing:4px; font-size:11px;">CALDEIRAS A LENHA PARA PISCINAS</p>
     <div class="glow-line"></div>
-    <h1 style="font-size:36px; margin-top:20px;">BRIEFING TÉCNICO</h1>
-    <p class="mono text-gray" style="margin-top:4px;">DOCUMENTO DE ESPECIFICAÇÃO PARA DESENVOLVIMENTO WEB</p>
+    <h1 style="font-size:36px; margin-top:20px;">BRIEFING TECNICO</h1>
+    <p class="mono text-gray" style="margin-top:4px;">DOCUMENTO DE ESPECIFICACAO PARA DESENVOLVIMENTO WEB</p>
+    <div style="margin-top:8px;">
+      <span class="version-badge">v3.0</span>
+    </div>
 
-    <div style="margin-top:50px;" class="grid-4">
+    <div style="margin-top:40px;" class="grid-4">
       <div class="card" style="text-align:center;">
-        <div class="stat-number">2</div>
-        <div class="stat-label">Páginas</div>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Paginas publicas</div>
       </div>
       <div class="card" style="text-align:center;">
-        <div class="stat-number">11</div>
-        <div class="stat-label">Seções Landing</div>
+        <div class="stat-number">7</div>
+        <div class="stat-label">Paginas admin</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="stat-number">7</div>
+        <div class="stat-label">API endpoints</div>
       </div>
       <div class="card" style="text-align:center;">
         <div class="stat-number">14</div>
-        <div class="stat-label">Libs obrigatórias</div>
+        <div class="stat-label">Libs integradas</div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;" class="grid-4">
+      <div class="card" style="text-align:center;">
+        <div class="stat-number" style="color:var(--green);">12</div>
+        <div class="stat-label">Aditivos config.</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="stat-number" style="color:var(--orange);">11</div>
+        <div class="stat-label">Secoes landing</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="stat-number">320px</div>
+        <div class="stat-label">Min. responsivo</div>
       </div>
       <div class="card" style="text-align:center;">
         <div class="stat-number">29</div>
@@ -386,38 +458,40 @@
       </div>
     </div>
 
-    <div style="margin-top:40px;">
+    <div style="margin-top:30px;">
       <span class="badge badge-orange">NEXT.JS 14</span>
       <span class="badge badge-orange">FRAMER MOTION</span>
       <span class="badge badge-orange">GSAP</span>
       <span class="badge badge-orange">TAILWINDCSS</span>
       <span class="badge badge-gold">MERCADO PAGO</span>
       <span class="badge badge-green">GA4 + GTM + PIXEL</span>
+      <span class="badge badge-green">ADMIN PANEL</span>
+      <span class="badge badge-green">JSON CRUD</span>
     </div>
 
-    <div style="margin-top:60px;">
-      <p class="mono text-gray" style="font-size:9px;">Londrina/PR — Brasil</p>
+    <div style="margin-top:50px;">
+      <p class="mono text-gray" style="font-size:9px;">Londrina/PR &mdash; Brasil</p>
       <p class="mono text-gray" style="font-size:9px;">Abril 2026</p>
     </div>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 2 — O NEGÓCIO ==================== -->
+<!-- ==================== PAGINA 2 - O NEGOCIO ==================== -->
 <div class="page">
-  <span class="watermark watermark-1">NEGÓCIO</span>
+  <span class="watermark watermark-1">NEGOCIO</span>
 
-  <h2>1. SOBRE O NEGÓCIO</h2>
+  <h2>1. SOBRE O NEGOCIO</h2>
 
-  <p>Somos fabricantes da <strong class="text-orange">Linha Brasa</strong> — caldeiras a lenha de alta performance para aquecimento de piscinas, produzidas em <strong>Londrina/PR</strong>. É um produto físico <strong class="text-gold">único no Brasil</strong>: não existe nenhum concorrente nacional organizado nesse nicho. Fabricação própria, do projeto ao produto final.</p>
+  <p>Somos fabricantes da <strong class="text-orange">Linha Brasa</strong> &mdash; caldeiras a lenha de alta performance para aquecimento de piscinas, produzidas em <strong>Londrina/PR</strong>. Produto fisico <strong class="text-gold">unico no Brasil</strong>: zero concorrencia organizada nesse nicho. Fabricacao propria, do projeto ao produto final.</p>
 
   <div class="grid-4" style="margin: 16px 0;">
     <div class="card" style="text-align:center;">
       <div class="stat-number" style="color:var(--orange);">R$ 14.500</div>
-      <div class="stat-label">Ticket médio</div>
+      <div class="stat-label">Ticket medio</div>
     </div>
     <div class="card" style="text-align:center;">
       <div class="stat-number">80%</div>
-      <div class="stat-label">Economia vs gás</div>
+      <div class="stat-label">Economia vs gas</div>
     </div>
     <div class="card" style="text-align:center;">
       <div class="stat-number" style="color:var(--green);">0</div>
@@ -429,80 +503,81 @@
     </div>
   </div>
 
-  <h3>PÚBLICO-ALVO</h3>
-  <p>Proprietários de piscinas no <strong>Sul e Sudeste</strong> do Brasil com renda acima de <strong class="text-gold">R$ 8.000/mês</strong>. Perfil: homeowners que buscam reduzir drasticamente o custo de aquecimento sem abrir mão de conforto e qualidade.</p>
+  <h3>PUBLICO-ALVO</h3>
+  <p>Proprietarios de piscinas no <strong>Sul e Sudeste</strong> do Brasil com renda acima de <strong class="text-gold">R$ 8.000/mes</strong>. Perfil: homeowners que buscam reduzir o custo de aquecimento sem abrir mao de conforto e qualidade.</p>
 
   <h3>LINHA DE PRODUTOS</h3>
   <div class="grid-4">
     <div class="card card-highlight" style="text-align:center;">
       <p class="mono text-orange" style="font-size:13px; margin-bottom:2px;"><strong>BRASA 30</strong></p>
       <p class="mono text-gray" style="font-size:8px;">30.000 kcal/h</p>
-      <p class="mono text-gold" style="font-size:9px;">Até 20 mil litros</p>
+      <p class="mono text-gold" style="font-size:9px;">Ate 20 mil litros</p>
       <p style="font-family:'Bebas Neue'; font-size:22px; margin:0;">R$ 9.800</p>
     </div>
     <div class="card card-highlight" style="text-align:center; border-color: var(--gold);">
       <span class="badge badge-gold" style="font-size:7px; margin-bottom:4px;">MAIS VENDIDA</span>
       <p class="mono text-orange" style="font-size:13px; margin-bottom:2px;"><strong>BRASA 60</strong></p>
       <p class="mono text-gray" style="font-size:8px;">60.000 kcal/h</p>
-      <p class="mono text-gold" style="font-size:9px;">Até 40 mil litros</p>
+      <p class="mono text-gold" style="font-size:9px;">Ate 40 mil litros</p>
       <p style="font-family:'Bebas Neue'; font-size:22px; margin:0;">R$ 14.500</p>
     </div>
     <div class="card card-highlight" style="text-align:center;">
       <p class="mono text-orange" style="font-size:13px; margin-bottom:2px;"><strong>BRASA 120</strong></p>
       <p class="mono text-gray" style="font-size:8px;">120.000 kcal/h</p>
-      <p class="mono text-gold" style="font-size:9px;">Até 80 mil litros</p>
+      <p class="mono text-gold" style="font-size:9px;">Ate 80 mil litros</p>
       <p style="font-family:'Bebas Neue'; font-size:22px; margin:0;">R$ 21.000</p>
     </div>
     <div class="card card-highlight" style="text-align:center;">
       <p class="mono text-orange" style="font-size:13px; margin-bottom:2px;"><strong>BRASA 200</strong></p>
       <p class="mono text-gray" style="font-size:8px;">200.000 kcal/h</p>
-      <p class="mono text-gold" style="font-size:9px;">Até 150 mil litros</p>
+      <p class="mono text-gold" style="font-size:9px;">Ate 150 mil litros</p>
       <p style="font-family:'Bebas Neue'; font-size:22px; margin:0;">R$ 32.000</p>
     </div>
   </div>
 
-  <h3>O QUE JÁ TEMOS PRONTO PARA O DESENVOLVEDOR</h3>
+  <h3>MAPA COMPLETO DE ROTAS <span class="new-tag">ATUALIZADO v3</span></h3>
   <div class="grid-2">
     <div>
-      <ul>
-        <li>Calculadora de economia interativa (HTML/JS funcional)</li>
-        <li>Configurador de aditivos com WhatsApp</li>
-        <li>Modelo 3D interativo do produto em Three.js</li>
-      </ul>
+      <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">PAGINAS PUBLICAS</p>
+      <p style="margin:3px 0;"><span class="route-tag">/</span> <span class="mono text-gray">Landing Page (11 secoes)</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/configurador</span> <span class="mono text-gray">Configurador + Checkout</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/manutencao</span> <span class="mono text-gray">Guia de Manutencao</span> <span class="new-tag">NOVO</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/obrigado</span> <span class="mono text-gray">Pos-compra + Confetti</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/sitemap.xml</span> <span class="mono text-gray">Sitemap automatico</span></p>
     </div>
     <div>
-      <ul>
-        <li>Paleta de cores completa definida</li>
-        <li>Tipografia selecionada (3 fontes)</li>
-        <li>Especificações técnicas completas dos 4 modelos</li>
-      </ul>
+      <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">PAINEL ADMINISTRATIVO <span class="new-tag">NOVO</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin</span> <span class="mono text-gray">Dashboard + Login</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/produtos</span> <span class="mono text-gray">CRUD Produtos</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/aditivos</span> <span class="mono text-gray">CRUD Aditivos</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/cores</span> <span class="mono text-gray">CRUD Cores</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/depoimentos</span> <span class="mono text-gray">CRUD Depoimentos</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/faq</span> <span class="mono text-gray">CRUD FAQ</span></p>
+      <p style="margin:3px 0;"><span class="route-tag">/admin/manutencao</span> <span class="mono text-gray">CRUD Manutencao</span></p>
     </div>
-  </div>
-
-  <div class="highlight-box">
-    <p style="margin:0; font-size:10px;"><strong class="text-orange">IMPORTANTE:</strong> O desenvolvedor <strong>não cria o design do zero</strong> — implementa com fidelidade o que está especificado neste briefing e eleva para o nível de animação premium descrito. Todo material de referência, assets e dados serão entregues.</p>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 2 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 2 / 9</span>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 3 — LANDING PAGE ==================== -->
+<!-- ==================== PAGINA 3 - LANDING PAGE ==================== -->
 <div class="page">
   <span class="watermark watermark-2">LANDING</span>
 
-  <h2>2. PÁGINA 1 — LANDING PAGE (11 SEÇÕES)</h2>
+  <h2>2. PAGINA 1 &mdash; LANDING PAGE (11 SECOES)</h2>
 
   <div class="timeline-item">
     <div class="timeline-dot">1</div>
     <div>
       <h3 style="margin-top:0;">HERO FULLSCREEN</h3>
-      <p>Vídeo em loop (fogo + piscina) como background com parallax via GSAP ScrollTrigger. Fallback animado se vídeo falhar. <strong class="text-orange">Color Morphing</strong>: gradiente muda fluidamente ao trocar modelo — 3 blobs com <code>filter:blur(120px)</code> via Framer Motion. Produto central com <strong class="text-gold">2.5D depth</strong> (perspective + translateZ + drop-shadow). Ember particles com parallax de mouse. Auto-cycle de modelos 4s.</p>
+      <p>Video em loop (fogo + piscina) como background com parallax via GSAP ScrollTrigger. <strong class="text-orange">Color Morphing</strong>: gradiente muda fluidamente ao trocar modelo &mdash; 3 blobs com <code>filter:blur(120px)</code> via Framer Motion. Produto central com <strong class="text-gold">2.5D depth</strong> (perspective:800px + translateZ(20px) + drop-shadow com glow laranja). Ember particles com parallax de mouse. Auto-cycle de modelos 4s.</p>
       <span class="tech-tag">GSAP PARALLAX</span>
       <span class="tech-tag">FRAMER MOTION</span>
       <span class="tech-tag">COLOR MORPH</span>
+      <span class="tech-tag">2.5D DEPTH</span>
     </div>
   </div>
 
@@ -510,15 +585,15 @@
     <div class="timeline-dot">2</div>
     <div>
       <h3 style="margin-top:0;">WATERMARK TYPOGRAPHY</h3>
-      <p>Texto "LINHA BRASA" em Bebas Neue 400px com <code>opacity: 4%</code> posicionado atrás do conteúdo principal. Presente em todas as seções como elemento de identidade visual. Usa <code>clamp(100px, 25vw, 400px)</code> para responsividade. Animação de pulsing scale (8s ease-in-out infinite) no hero.</p>
+      <p>Texto "LINHA BRASA" em Bebas Neue com <code>clamp(100px, 25vw, 400px)</code> e <code>opacity: 4%</code>. Presente em todas as secoes. Pulsing scale (8s ease-in-out infinite) no hero. Responsivo ate 320px com <code>clamp(60px, 20vw, 120px)</code>.</p>
     </div>
   </div>
 
   <div class="timeline-item">
     <div class="timeline-dot">3</div>
     <div>
-      <h3 style="margin-top:0;">BARRA DE CREDIBILIDADE — MARQUEE</h3>
-      <p>Marquee horizontal infinito com 8 argumentos de venda: fabricação própria, velocidade de aquecimento, economia, exclusividade, garantia, entrega, instalação, energia renovável.</p>
+      <h3 style="margin-top:0;">BARRA DE CREDIBILIDADE &mdash; MARQUEE</h3>
+      <p>Marquee horizontal infinito com 8 argumentos de venda: fabricacao propria, velocidade, economia, exclusividade, garantia, entrega, instalacao, energia renovavel.</p>
       <span class="tech-tag">CSS ANIMATION</span>
       <span class="tech-tag">MARQUEE MASK</span>
     </div>
@@ -527,21 +602,19 @@
   <div class="timeline-item">
     <div class="timeline-dot">4</div>
     <div>
-      <h3 style="margin-top:0;">SEÇÃO DE PROBLEMA</h3>
-      <p>4 contadores numéricos animados com GSAP ScrollTrigger: <strong class="text-gold">R$ 850</strong> (custo mensal gás), <strong class="text-gold">12 meses</strong> (sem uso no inverno), <strong class="text-gold">65%</strong> (depreciação), <strong class="text-gold">R$ 40 mil</strong> (investimento solar). Cards de problema com stagger entrance (<code>rotateY:-5°</code>).</p>
+      <h3 style="margin-top:0;">SECAO DE PROBLEMA</h3>
+      <p>4 contadores animados com GSAP ScrollTrigger: <strong class="text-gold">R$ 850</strong> (custo mensal gas), <strong class="text-gold">12 meses</strong> (sem uso no inverno), <strong class="text-gold">65%</strong> (depreciacao), <strong class="text-gold">R$ 40 mil</strong> (investimento solar). Cards com stagger entrance.</p>
       <span class="tech-tag">GSAP COUNTER</span>
       <span class="tech-tag">SCROLLTRIGGER</span>
-      <span class="tech-tag">STAGGER</span>
     </div>
   </div>
 
   <div class="timeline-item">
     <div class="timeline-dot">5</div>
     <div>
-      <h3 style="margin-top:0;">DIAGRAMA DE SOLUÇÃO — SVG ANIMADO</h3>
-      <p>SVG com paths representando o fluxo da solução. Animação de <code>stroke-dashoffset</code> via GSAP usando <code>getTotalLength()</code>. Cada path revela progressivamente conforme o scroll. Nodes animados com Framer Motion.</p>
+      <h3 style="margin-top:0;">DIAGRAMA DE SOLUCAO &mdash; SVG ANIMADO</h3>
+      <p>SVG com paths representando o fluxo. Animacao de <code>stroke-dashoffset</code> via GSAP usando <code>getTotalLength()</code>. Nodes animados com Framer Motion.</p>
       <span class="tech-tag">SVG STROKE</span>
-      <span class="tech-tag">GETTOTALLENGTH()</span>
       <span class="tech-tag">GSAP</span>
     </div>
   </div>
@@ -549,175 +622,423 @@
   <div class="timeline-item">
     <div class="timeline-dot">6</div>
     <div>
-      <h3 style="margin-top:0;">4 MODELOS — SHARED LAYOUT ANIMATION</h3>
-      <p><strong class="text-orange">Técnica central do site.</strong> Cards dos 4 modelos com <code>layoutId</code> do Framer Motion — ao clicar, o card expande para modal horizontal (imagem esquerda 320px, info direita). vanilla-tilt.js nos cards (max:10°, glare:true, scale:1.03). <strong class="text-gold">2.5D depth</strong> nas imagens com CSS perspective + translateZ + drop-shadow. Bottom-sheet no mobile, centralizado no desktop. Touch targets mínimos de 44px.</p>
+      <h3 style="margin-top:0;">4 MODELOS &mdash; SHARED LAYOUT ANIMATION</h3>
+      <p><strong class="text-orange">Tecnica central do site.</strong> Cards com <code>layoutId</code> do Framer Motion &mdash; ao clicar, expande para modal horizontal (imagem esquerda, info direita). vanilla-tilt.js nos cards (max:10, glare, scale:1.03). <strong class="text-gold">2.5D depth</strong> nas imagens. Bottom-sheet no mobile, centralizado no desktop. Touch targets 44px.</p>
       <span class="tech-tag">FRAMER MOTION LAYOUTID</span>
-      <span class="tech-tag">ANIMATEPRESENCE</span>
       <span class="tech-tag">VANILLA-TILT</span>
     </div>
   </div>
 
-  <div class="timeline-item">
-    <div class="timeline-dot">7</div>
-    <div>
-      <h3 style="margin-top:0;">COMPARATIVO DE CUSTO</h3>
-      <p>5 barras horizontais animadas via GSAP (GLP 100%, Gás Natural 71%, Bomba de Calor 54%, Solar 15%, <strong class="text-green">Linha Brasa 12,5%</strong>). Badge "MENOR CUSTO" na barra da Brasa. Labels com fade-in staggered.</p>
-    </div>
-  </div>
-
   <div class="grid-2">
+    <div class="timeline-item">
+      <div class="timeline-dot">7</div>
+      <div>
+        <h3 style="margin-top:0;">COMPARATIVO DE CUSTO</h3>
+        <p>5 barras horizontais animadas via GSAP. Badge "MENOR CUSTO" na barra da Brasa. Labels com fade-in staggered.</p>
+      </div>
+    </div>
     <div class="timeline-item">
       <div class="timeline-dot">8</div>
       <div>
         <h3 style="margin-top:0;">CALCULADORA INTERATIVA</h3>
-        <p>Sliders: tamanho da piscina + meses/ano. Dropdown: método de aquecimento. Cálculo real-time com economia mensal, anual e payback.</p>
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-dot">9</div>
-      <div>
-        <h3 style="margin-top:0;">CARROSSEL 3D</h3>
-        <p>Swiper.js com EffectCoverflow (depth:200, modifier:2). Autoplay 4s. Cards de depoimentos com avatar, estrelas e localização.</p>
-        <span class="tech-tag">SWIPER.JS</span>
-        <span class="tech-tag">COVERFLOW 3D</span>
+        <p>Sliders: tamanho da piscina + meses/ano. Dropdown: metodo de aquecimento. Calculo real-time com economia e payback.</p>
       </div>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="timeline-item">
-      <div class="timeline-dot">10</div>
+      <div class="timeline-dot">9</div>
       <div>
-        <h3 style="margin-top:0;">FAQ ACCORDION</h3>
-        <p>12 perguntas com AnimatePresence. Animação de height:0→auto + opacidade. Ícone "+" rotaciona 45° ao abrir.</p>
+        <h3 style="margin-top:0;">CARROSSEL 3D DEPOIMENTOS</h3>
+        <p>Swiper.js com EffectCoverflow (depth:200). Autoplay 4s. Cards com avatar, estrelas e localizacao. next/image otimizado.</p>
+        <span class="tech-tag">SWIPER.JS</span>
+        <span class="tech-tag">NEXT/IMAGE</span>
       </div>
     </div>
     <div class="timeline-item">
+      <div class="timeline-dot">10</div>
+      <div>
+        <h3 style="margin-top:0;">GARANTIA & QUALIDADE <span class="new-tag">4 SELOS</span></h3>
+        <p>Grid de 4 selos com icones SVG animados: <strong>2 anos garantia</strong>, <strong>teste hidraulico 8 bar</strong>, <strong>serpentina inox 304L</strong>, <strong>fabricado no Brasil</strong>. Hover com borda glow laranja.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="timeline-item">
       <div class="timeline-dot">11</div>
       <div>
-        <h3 style="margin-top:0;">CTA FINAL</h3>
-        <p>Formulário com EmailJS (nome, email, tel, piscina, mensagem). Botão WhatsApp direto. trackLead + trackWhatsAppClick.</p>
+        <h3 style="margin-top:0;">GALERIA &mdash; BRASA EM ACAO <span class="new-tag">NOVO</span></h3>
+        <p>Grid 2x2 responsivo com next/image fill + sizes. Hover com scale 1.05 e overlay gradiente. 4 fotos: caldeira, piscina noite, familia, fabricacao.</p>
+        <span class="tech-tag">NEXT/IMAGE FILL</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">12</div>
+      <div>
+        <h3 style="margin-top:0;">FAQ + CTA FINAL</h3>
+        <p>12 FAQs com AnimatePresence (height:0 auto). Icone "+" rotaciona 45. CTA com formulario EmailJS + botao WhatsApp direto.</p>
         <span class="tech-tag">EMAILJS</span>
+        <span class="tech-tag">FAQ SCHEMA</span>
       </div>
     </div>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 3 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 3 / 9</span>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 4 — CONFIGURADOR ==================== -->
+<!-- ==================== PAGINA 4 - CONFIGURADOR ==================== -->
 <div class="page">
   <span class="watermark watermark-3">CONFIG</span>
 
-  <h2>3. PÁGINA 2 — CONFIGURADOR INTERATIVO</h2>
-  <p>Página de vendas completa com configurador passo-a-passo. O usuário monta sua caldeira, escolhe aditivos, seleciona cor, visualiza o total em tempo real e finaliza com checkout inline.</p>
+  <h2>3. PAGINA 2 &mdash; CONFIGURADOR INTERATIVO</h2>
+  <p>Pagina de vendas completa com configurador passo-a-passo. O usuario monta sua caldeira, escolhe aditivos, seleciona cor, visualiza o total em tempo real e finaliza com checkout inline.</p>
 
   <div class="card card-highlight" style="margin: 14px 0;">
     <h3 style="margin-top:0;">SELETOR DE 4 MODELOS + COLOR MORPHING + MODAL EXPAND</h3>
-    <p>Cards com modal expand ao clicar (bottom-sheet mobile, centralizado desktop). ColorMorph <code>variant="page"</code> com position fixed acompanha a página inteira. Após seleção, scroll automático para seção de cores. Layout flex (não grid) para sidebar sticky funcionar.</p>
+    <p>Cards com modal expand ao clicar (bottom-sheet mobile, centralizado desktop). ColorMorph <code>variant="page"</code> com position fixed acompanha a pagina inteira. Apos selecao, scroll automatico para secao de cores. Layout flex (nao grid) para sidebar sticky funcionar.</p>
     <span class="tech-tag">FRAMER MOTION</span>
     <span class="tech-tag">BOTTOM-SHEET MOBILE</span>
-    <span class="tech-tag">COLOR MORPH VARIANT="PAGE"</span>
     <span class="tech-tag">FLEX LAYOUT + STICKY</span>
   </div>
 
   <div class="grid-2">
     <div class="card">
       <h3 style="margin-top:0;">GRID DE 12 ADITIVOS OPCIONAIS</h3>
-      <p>Grid responsivo (1→2→3 colunas). Estado de seleção animado: <strong class="text-orange">borda laranja + glow</strong> ao marcar. GSAP stagger entrance (duration:0.6, stagger:0.06). Filtro por modelo (campo <code>models</code>: "todos", "60,120,200", "sul-sudeste"). Itens:</p>
+      <p>Grid responsivo (1-2-3 colunas). Estado de selecao animado: <strong class="text-orange">borda laranja + glow</strong>. GSAP stagger entrance. Filtro por modelo (campo <code>models</code>: "todos", "60,120,200", "sul-sudeste").</p>
       <div style="font-size:9px; color:var(--gray); columns:2; margin-top:6px;">
-        <p style="margin:2px 0;">🔥 Serpentina Inox 316L — R$ 680</p>
-        <p style="margin:2px 0;">🪟 Vidro Cerâmico Premium — R$ 890</p>
-        <p style="margin:2px 0;">⚡ Bomba Dedicada 1CV — R$ 1.290</p>
-        <p style="margin:2px 0;">🏗️ Chaminé Estendida +500mm — R$ 590</p>
-        <p style="margin:2px 0;">⛈️ Cobertura Antigranizo — R$ 780</p>
-        <p style="margin:2px 0;">🌡️ Termostato Digital — R$ 1.190</p>
-        <p style="margin:2px 0;">🔧 Kit Conexões Hidráulicas — R$ 420</p>
-        <p style="margin:2px 0;">⚙️ Grelha Inox 316L — R$ 680</p>
-        <p style="margin:2px 0;">🛠️ Instalação + Comissionamento — R$ 1.800</p>
-        <p style="margin:2px 0;">🛡️ Garantia Estendida 5 anos — R$ 1.500</p>
-        <p style="margin:2px 0;">📦 Embalagem Longa Distância — R$ 380</p>
-        <p style="margin:2px 0;">🧊 Capa Térmica para Piscina — R$ 950</p>
+        <p style="margin:2px 0;">&#x1F525; Serpentina Inox 316L &mdash; R$ 680</p>
+        <p style="margin:2px 0;">&#x1FA9F; Vidro Ceramico Premium &mdash; R$ 890</p>
+        <p style="margin:2px 0;">&#x26A1; Bomba Dedicada 1CV &mdash; R$ 1.290</p>
+        <p style="margin:2px 0;">&#x1F3D7;&#xFE0F; Chamine Estendida &mdash; R$ 590</p>
+        <p style="margin:2px 0;">&#x26C8;&#xFE0F; Cobertura Antigranizo &mdash; R$ 780</p>
+        <p style="margin:2px 0;">&#x1F321;&#xFE0F; Termostato Digital &mdash; R$ 1.190</p>
+        <p style="margin:2px 0;">&#x1F527; Kit Conexoes &mdash; R$ 420</p>
+        <p style="margin:2px 0;">&#x2699;&#xFE0F; Grelha Inox 316L &mdash; R$ 680</p>
+        <p style="margin:2px 0;">&#x1F6E0;&#xFE0F; Instalacao &mdash; R$ 1.800</p>
+        <p style="margin:2px 0;">&#x1F6E1;&#xFE0F; Garantia 5 anos &mdash; R$ 1.500</p>
+        <p style="margin:2px 0;">&#x1F4E6; Embalagem L.D. &mdash; R$ 380</p>
+        <p style="margin:2px 0;">&#x1F30A; Capa Termica &mdash; R$ 950 <span class="new-tag">NOVO</span></p>
       </div>
     </div>
     <div class="card">
       <h3 style="margin-top:0;">SELETOR DE 6 CORES</h3>
-      <p>Swatches circulares com animação de seleção (<code>scale + boxShadow</code> via Framer Motion). Ao trocar a cor, a imagem do produto faz swap animado.</p>
+      <p>Swatches circulares com animacao de selecao (<code>scale + boxShadow</code> via Framer Motion). Ao trocar a cor, imagem do produto faz swap animado.</p>
       <div style="margin-top:10px;">
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#1A1A1A;"></span> <span class="mono">Preto Satin — incluso</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4A4A4A;"></span> <span class="mono">Cinza Grafite — +R$ 480</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4A5D3A;"></span> <span class="mono">Verde Militar — +R$ 480</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#C4A77D;"></span> <span class="mono">Bege Rústico — +R$ 480</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#8B6914;"></span> <span class="mono">Bronze — +R$ 680</span></p>
-        <p style="margin:3px 0;"><span class="color-swatch" style="background:#C0C0C0;border-color:#999;"></span> <span class="mono">Inox Escovado — +R$ 980</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#1A1A1A;"></span> <span class="mono">Preto Satin &mdash; incluso</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4A4A4A;"></span> <span class="mono">Cinza Grafite &mdash; +R$ 480</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#4A5D3A;"></span> <span class="mono">Verde Militar &mdash; +R$ 480</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#C4A77D;"></span> <span class="mono">Bege Rustico &mdash; +R$ 480</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#8B6914;"></span> <span class="mono">Bronze &mdash; +R$ 680</span></p>
+        <p style="margin:3px 0;"><span class="color-swatch" style="background:#C0C0C0;border-color:#999;"></span> <span class="mono">Inox Escovado &mdash; +R$ 980</span></p>
       </div>
+
+      <h3>DEPOIMENTOS INLINE</h3>
+      <p>1-2 depoimentos do modelo selecionado exibidos ao lado do CTA. Muda dinamicamente via AnimatePresence. 5 depoimentos (3 homens, 2 mulheres).</p>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <h3 style="margin-top:0;">SIDEBAR STICKY — TOTAL EM TEMPO REAL</h3>
-      <p><code>position: sticky; top: 24px</code> no desktop. Layout flex com <code>lg:self-stretch</code> para sticky funcionar. Mostra modelo selecionado, aditivos marcados, cor escolhida e <strong class="text-gold">total animado</strong>. Sidebar compacta (sem preview/cores) para caber na viewport.</p>
+      <h3 style="margin-top:0;">SIDEBAR STICKY &mdash; TOTAL EM TEMPO REAL</h3>
+      <p><code>position: sticky; top: 24px</code> no desktop. Layout flex com <code>lg:self-stretch</code>. Mostra modelo, aditivos, cor e <strong class="text-gold">total animado</strong> com CountUp.js. Calculadora de economia inline integrada.</p>
       <span class="tech-tag">STICKY + FLEX</span>
-      <span class="tech-tag">LG:SELF-STRETCH</span>
-      <span class="tech-tag">USEMEMO</span>
+      <span class="tech-tag">COUNTUP.JS</span>
     </div>
     <div class="card">
-      <h3 style="margin-top:0;">CALCULADORA DE ECONOMIA INLINE</h3>
-      <p>Card dentro do sidebar mostrando: economia mensal, economia anual, ROI em meses e economia em 5 anos. Cálculo baseado no total atual da configuração.</p>
+      <h3 style="margin-top:0;">CHECKOUT MERCADO PAGO BRICKS</h3>
+      <p>Modal 2 colunas (formulario + resumo). ViaCEP auto-preenchimento. Tres formas de pagamento:</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div style="text-align:center; padding:6px; background:var(--bg); border-radius:6px;">
+          <p class="mono text-orange" style="font-size:10px; margin:0;"><strong>PIX</strong></p>
+          <p class="mono text-gray" style="font-size:7px; margin:0;">QR dinamico</p>
+        </div>
+        <div style="text-align:center; padding:6px; background:var(--bg); border-radius:6px;">
+          <p class="mono text-orange" style="font-size:10px; margin:0;"><strong>CARTAO</strong></p>
+          <p class="mono text-gray" style="font-size:7px; margin:0;">Ate 12x</p>
+        </div>
+        <div style="text-align:center; padding:6px; background:var(--bg); border-radius:6px;">
+          <p class="mono text-orange" style="font-size:10px; margin:0;"><strong>BOLETO</strong></p>
+          <p class="mono text-gray" style="font-size:7px; margin:0;">3 dias</p>
+        </div>
+      </div>
+      <span class="tech-tag">MERCADO PAGO BRICKS</span>
+      <span class="tech-tag">VIACEP</span>
     </div>
-  </div>
-
-  <div class="card card-highlight">
-    <h3 style="margin-top:0;">CHECKOUT COM MERCADO PAGO BRICKS (INLINE)</h3>
-    <p>Modal de checkout 2 colunas (formulário esquerda, resumo do pedido direita). Layout responsivo: bottom-sheet no mobile, centralizado no desktop. Integração com <strong>Mercado Pago Checkout Bricks</strong> (aguardando credenciais). Três formas de pagamento:</p>
-    <div class="grid-3" style="margin-top:8px;">
-      <div class="card" style="text-align:center; background:var(--bg);">
-        <p class="mono text-orange" style="font-size:12px; margin:0;"><strong>PIX</strong></p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">QR Code dinâmico</p>
-      </div>
-      <div class="card" style="text-align:center; background:var(--bg);">
-        <p class="mono text-orange" style="font-size:12px; margin:0;"><strong>CARTÃO</strong></p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">Até 12x sem juros</p>
-      </div>
-      <div class="card" style="text-align:center; background:var(--bg);">
-        <p class="mono text-orange" style="font-size:12px; margin:0;"><strong>BOLETO</strong></p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">Vencimento 3 dias</p>
-      </div>
-    </div>
-    <p style="margin-top:8px;"><strong>CEP com auto-preenchimento</strong> via API ViaCEP — ao digitar o CEP, os campos rua, bairro, cidade e UF são preenchidos automaticamente.</p>
-    <span class="tech-tag">MERCADO PAGO BRICKS</span>
-    <span class="tech-tag">VIACEP API</span>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-top:0;">PÁGINA /OBRIGADO</h3>
-    <p>Após pagamento aprovado, redirect para <code>/obrigado</code> com animação <strong class="text-gold">canvas-confetti</strong> nas cores da marca (#FF4F00, #FFD166, #22C55E). Dispara <code>trackPurchase()</code> para GA4 e Meta Pixel.</p>
-    <span class="tech-tag">CANVAS-CONFETTI</span>
-    <span class="tech-tag">TRACKPURCHASE</span>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 4 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 4 / 9</span>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 5 — STACK + DESIGN ==================== -->
+<!-- ==================== PAGINA 5 - ADMIN PANEL ==================== -->
 <div class="page">
-  <span class="watermark watermark-4">STACK</span>
+  <span class="watermark watermark-4">ADMIN</span>
 
-  <h2>4. STACK TÉCNICA OBRIGATÓRIA</h2>
-  <p>Todas as bibliotecas abaixo são <strong class="text-orange">obrigatórias</strong> — não são sugestões. A escolha de cada uma foi baseada em análise técnica de referências de UI/UX premium.</p>
+  <h2>4. PAINEL ADMINISTRATIVO &mdash; GERENCIAMENTO COMPLETO <span class="new-tag">NOVO v3</span></h2>
+  <p>Sistema de administracao completo com autenticacao segura, CRUD de todos os dados do site e dashboard de visao geral. O cliente pode alterar precos, adicionar/remover produtos, gerenciar depoimentos e FAQ sem precisar de desenvolvedor.</p>
+
+  <div class="highlight-box">
+    <h3 style="margin-top:0;">&#x1F512; CREDENCIAIS DE ACESSO</h3>
+    <div class="grid-3">
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:2px;">URL</p>
+        <p class="mono text-white" style="font-size:12px; margin:0;"><strong>/admin</strong></p>
+      </div>
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:2px;">SENHA</p>
+        <p class="mono text-white" style="font-size:12px; margin:0;"><strong>brasa2024</strong></p>
+      </div>
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:2px;">AUTENTICACAO</p>
+        <p class="mono text-gray" style="font-size:9px; margin:0;">Cookie httpOnly, SameSite=strict, expira em 7 dias</p>
+      </div>
+    </div>
+    <p style="margin-top:8px; margin-bottom:0; font-size:9px;" class="text-gray">Senha configuravel via variavel de ambiente <code>ADMIN_PASSWORD</code>. Altere no arquivo <code>.env</code> antes do deploy.</p>
+  </div>
+
+  <div class="card card-highlight" style="margin-top:12px;">
+    <h3 style="margin-top:0;">ARQUITETURA DO ADMIN</h3>
+    <div class="grid-2">
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">ARMAZENAMENTO</p>
+        <ul style="font-size:10px;">
+          <li>Dados em arquivos JSON (<code>data/*.json</code>)</li>
+          <li>6 arquivos: products, addons, colors, testimonials, faq, maintenance</li>
+          <li>Leitura/escrita com <code>fs.readFileSync</code> / <code>writeFileSync</code></li>
+          <li>Sem banco de dados &mdash; deploy facil, backup simples</li>
+        </ul>
+      </div>
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">API ROUTES</p>
+        <ul style="font-size:10px;">
+          <li><code>POST /api/admin/auth</code> &mdash; Login</li>
+          <li><code>GET /api/admin/auth</code> &mdash; Verificar sessao</li>
+          <li><code>DELETE /api/admin/auth</code> &mdash; Logout</li>
+          <li>CRUD completo: <code>GET, POST, PUT, DELETE</code></li>
+          <li>Todas as rotas admin com verificacao de cookie</li>
+          <li><code>GET /api/maintenance</code> &mdash; Publica (sem auth)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>7 PAGINAS DO PAINEL</h3>
+  <div class="grid-2" style="margin-top:6px;">
+    <div class="card card-highlight">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x1F4CA; DASHBOARD INTELIGENTE</strong> <span class="new-tag">v3.1</span></p>
+      <p style="font-size:9px;">Dashboard completo com 4 modulos:</p>
+      <ul style="font-size:9px;">
+        <li><strong class="text-gold">6 Cards de Stats</strong> &mdash; contagem real-time de produtos, aditivos, cores, depoimentos, FAQs e passos de manutencao ativos</li>
+        <li><strong class="text-green">Saude do Site</strong> &mdash; checklist automatico com score % que verifica: dados cadastrados, GA4/GTM, Meta Pixel, Schema Markup JSON-LD, Open Graph tags, Mercado Pago</li>
+        <li><strong class="text-gold">Funil de Conversao</strong> &mdash; diagrama visual da jornada (Landing &rarr; Interesse &rarr; Configurador &rarr; Checkout &rarr; Venda) com checkmarks de prontidao</li>
+        <li><strong class="text-orange">Config. Ambiente</strong> &mdash; status das variaveis .env: ADMIN_PASSWORD, EMAILJS, MP_PUBLIC_KEY, GTM_ID com semaforo verde/amarelo/vermelho</li>
+      </ul>
+      <span class="tech-tag">HEALTH CHECK</span>
+      <span class="tech-tag">REAL-TIME SCORE</span>
+      <span class="tech-tag">FUNNEL DIAGRAM</span>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x1F525; PRODUTOS</strong></p>
+      <p style="font-size:9px;">4 cards fixos dos modelos. Edicao inline: nome, subtitulo, preco, descricao, features. Toggle ativo/inativo. PUT para <code>/api/admin/products</code>.</p>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x26A1; ADITIVOS</strong></p>
+      <p style="font-size:9px;">Grid responsivo (1/2/3 colunas). Modal de criacao/edicao: emoji, nome, descricao, badge, preco, modelos, toggle ativo. Delete com confirmacao.</p>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x1F3A8; CORES</strong></p>
+      <p style="font-size:9px;">Swatches visuais com <code>&lt;input type="color"&gt;</code> no modal. Campos: nome, hex, preco adicional, toggle ativo. Delete com confirmacao.</p>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x1F4AC; DEPOIMENTOS</strong></p>
+      <p style="font-size:9px;">Avatares com iniciais. Rating 1-5 estrelas. Filtro por modelo. Modal: nome, cidade, rating, texto, modelo, tamanho piscina, resultado. Landing e configurador com depoimentos separados.</p>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:11px; margin-bottom:4px;"><strong>&#x2753; FAQ</strong></p>
+      <p style="font-size:9px;">Lista numerada expansivel pergunta/resposta. Modal de criacao/edicao. Delete com confirmacao. Atualiza o FAQ da landing page.</p>
+    </div>
+  </div>
+
+  <div class="card card-green" style="margin-top:6px;">
+    <p class="mono text-green" style="font-size:11px; margin-bottom:4px;"><strong>&#x1F527; MANUTENCAO</strong></p>
+    <p style="font-size:9px;">Gerencia os passos do guia publico <code>/manutencao</code>. Ordem numerada, icone emoji, titulo, descricao, frequencia (diaria/semanal/mensal/trimestral/anual) com badge colorido, campo de ordem. Pagina publica renderiza os dados ativos ordenados.</p>
+  </div>
+
+  <div class="card" style="margin-top:10px;">
+    <h3 style="margin-top:0;">PADROES COMPARTILHADOS EM TODAS AS PAGINAS</h3>
+    <div class="grid-3" style="font-size:9px;">
+      <div>
+        <ul>
+          <li>Loading spinner centralizado</li>
+          <li>Estado de erro com botao retry</li>
+          <li>Toast de sucesso (verde, 3s)</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li>Modal com backdrop blur</li>
+          <li>Inputs com focus:border-brasa-orange</li>
+          <li>Toggle ativo/inativo animado</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li>Titulos font-bebas + numero laranja</li>
+          <li>Delete com confirmacao 2 passos</li>
+          <li>Sidebar responsiva (hamburger mobile)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 5 / 9</span>
+  </div>
+</div>
+
+<!-- ==================== PAGINA 6 - MANUTENCAO + RESPONSIVIDADE ==================== -->
+<div class="page">
+  <span class="watermark watermark-5">MOBILE</span>
+
+  <h2>5. PAGINA PUBLICA &mdash; GUIA DE MANUTENCAO <span class="new-tag">NOVO v3</span></h2>
+  <p>Pagina publica acessivel em <code>/manutencao</code> e pelo link na navbar. Exibe o guia de manutencao da caldeira com layout timeline, animacoes e badges de frequencia coloridos.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="margin-top:0;">LAYOUT E DESIGN</h3>
+      <ul style="font-size:10px;">
+        <li>Timeline vertical com icones emoji grandes</li>
+        <li>Badges de frequencia com cor por tipo:
+          <div style="margin-top:4px;">
+            <span class="badge badge-green" style="font-size:7px;">DIARIA</span>
+            <span class="badge badge-gold" style="font-size:7px;">SEMANAL</span>
+            <span class="badge badge-orange" style="font-size:7px;">MENSAL</span>
+            <span class="badge badge-red" style="font-size:7px;">TRIMESTRAL</span>
+            <span class="badge badge-white" style="font-size:7px;">ANUAL</span>
+          </div>
+        </li>
+        <li>Framer Motion whileInView staggered</li>
+        <li>Navbar + Footer do site principal</li>
+        <li>Mesmo padrao visual dark premium</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;">8 PASSOS DE MANUTENCAO</h3>
+      <ul style="font-size:10px;">
+        <li>Limpeza de cinzas e fuligem</li>
+        <li>Inspecao da chamine</li>
+        <li>Verificacao das juntas</li>
+        <li>Limpeza do vidro ceramico</li>
+        <li>Lubrificacao das dobradicas</li>
+        <li>Inspecao da serpentina</li>
+        <li>Teste de pressao hidraulica</li>
+        <li>Revisao geral completa</li>
+      </ul>
+      <p style="font-size:9px; margin-top:6px;" class="text-gray">Todos editaveis pelo admin em <code>/admin/manutencao</code>. Dados vem do endpoint publico <code>/api/maintenance</code>.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>6. RESPONSIVIDADE EXTREMA &mdash; 320px A 2560px <span class="new-tag">NOVO v3</span></h2>
+  <p>O site foi otimizado para funcionar em <strong>todas as resolucoes</strong>, de telas ultra-pequenas (320px) ate monitores ultrawide. Sistema de breakpoints customizado no Tailwind.</p>
+
+  <div class="card card-highlight">
+    <h3 style="margin-top:0;">SISTEMA DE BREAKPOINTS</h3>
+    <div class="grid-2">
+      <div>
+        <table style="font-size:9px;">
+          <tr><td class="mono text-orange"><strong>320px</strong></td><td>CSS @media (max-width: 359px) overrides</td></tr>
+          <tr><td class="mono text-gold"><strong>xs: 360px</strong></td><td>Breakpoint customizado Tailwind</td></tr>
+          <tr><td class="mono text-white">sm: 640px</td><td>Padrao Tailwind</td></tr>
+          <tr><td class="mono text-white">md: 768px</td><td>Padrao Tailwind</td></tr>
+          <tr><td class="mono text-white">lg: 1024px</td><td>Padrao Tailwind</td></tr>
+          <tr><td class="mono text-white">xl: 1280px</td><td>Padrao Tailwind</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">OVERRIDES 320px</p>
+        <ul style="font-size:9px;">
+          <li>Section padding: <code>px-3 py-16</code></li>
+          <li>Watermark: <code>clamp(60px, 20vw, 120px)</code></li>
+          <li>Botoes: <code>px-5 py-3 text-base</code></li>
+          <li>Contadores: <code>text-4xl</code> (vs 5xl+)</li>
+          <li>Titulos: escala progressiva com xs:</li>
+          <li>Grids: 1 coluna em sub-360px</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>PAGINAS OTIMIZADAS PARA 320px</h3>
+  <div class="grid-3" style="font-size:9px;">
+    <div class="card">
+      <p class="mono text-orange" style="font-size:10px;"><strong>LANDING PAGE</strong></p>
+      <ul>
+        <li>Hero: texto 3xl xs:4xl</li>
+        <li>Navbar: logo xl xs:2xl</li>
+        <li>Problema: counters 3xl xs:5xl</li>
+        <li>Custo: labels w-16 xs:w-20</li>
+        <li>Calc: valores 2xl xs:3xl</li>
+        <li>FAQ: titulo 4xl xs:5xl</li>
+        <li>Galeria: titulos sm:2xl</li>
+        <li>CTA: titulo responsivo</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:10px;"><strong>CONFIGURADOR</strong></p>
+      <ul>
+        <li>Model grid: gap-2 xs:gap-3</li>
+        <li>Cards: p-2.5 xs:p-4</li>
+        <li>Imagem: h-24 xs:h-32</li>
+        <li>Titulos: text-base xs:text-xl</li>
+        <li>Cores: w-8 xs:w-10</li>
+        <li>CTA: px-4 xs:px-6</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="mono text-orange" style="font-size:10px;"><strong>ADMIN PANEL</strong></p>
+      <ul>
+        <li>Sidebar: hamburger no mobile</li>
+        <li>Overlay backdrop com blur</li>
+        <li>Content padding: p-4 xs:p-6</li>
+        <li>Cards responsivos 1-2-3 cols</li>
+        <li>Modais full-width no mobile</li>
+        <li>Touch targets minimo 44px</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p style="margin:0; font-size:10px;"><strong class="text-orange">TESTADO EM:</strong> Samsung S22 (360px), iPhone SE (375px), simulacao 320px. Todos os elementos acessiveis, sem overflow horizontal, sem texto cortado, touch targets de 44px minimo. O breakpoint <code>xs: 360px</code> permite ajustes finos sem quebrar telas maiores.</p>
+  </div>
+
+  <div class="footer-bar">
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 6 / 9</span>
+  </div>
+</div>
+
+<!-- ==================== PAGINA 7 - STACK + DESIGN ==================== -->
+<div class="page">
+  <span class="watermark watermark-6">STACK</span>
+
+  <h2>7. STACK TECNICA OBRIGATORIA</h2>
+  <p>Todas as bibliotecas abaixo sao <strong class="text-orange">obrigatorias</strong> &mdash; nao sao sugestoes.</p>
 
   <table>
     <thead>
       <tr>
         <th>Tecnologia</th>
-        <th>Versão</th>
+        <th>Versao</th>
         <th>Uso no projeto</th>
       </tr>
     </thead>
@@ -725,201 +1046,146 @@
       <tr>
         <td><strong class="text-white">Next.js 14</strong></td>
         <td class="mono text-gray">App Router</td>
-        <td>Framework principal. SSG para landing, client components para interatividade.</td>
+        <td>Framework principal. SSG + API Routes para admin.</td>
       </tr>
       <tr>
         <td><strong class="text-white">TailwindCSS</strong></td>
         <td class="mono text-gray">3.x</td>
-        <td>Design system completo. Cores customizadas, animações, responsividade.</td>
+        <td>Design system. Breakpoint customizado xs:360px. 320px overrides.</td>
       </tr>
       <tr>
         <td><strong class="text-white">Framer Motion</strong></td>
         <td class="mono text-gray">11.x</td>
-        <td>Shared Layout (layoutId), AnimatePresence, whileInView, spring physics.</td>
+        <td>Shared Layout, AnimatePresence, whileInView, spring physics.</td>
       </tr>
       <tr>
         <td><strong class="text-white">GSAP + ScrollTrigger</strong></td>
         <td class="mono text-gray">3.x</td>
-        <td>Parallax hero, contadores, stroke-dashoffset SVG, barras de progresso, stagger.</td>
+        <td>Parallax, contadores, stroke-dashoffset SVG, stagger.</td>
       </tr>
       <tr>
         <td><strong class="text-white">Swiper.js</strong></td>
         <td class="mono text-gray">11.x</td>
-        <td>Carrossel 3D com EffectCoverflow (depth:200, modifier:2).</td>
+        <td>Carrossel 3D com EffectCoverflow.</td>
       </tr>
       <tr>
         <td><strong class="text-white">vanilla-tilt.js</strong></td>
         <td class="mono text-gray">1.x</td>
-        <td>Hover 3D nos cards de modelo e aditivos (max:10°, glare, dynamic import).</td>
+        <td>Hover 3D nos cards (max:10, glare, dynamic import).</td>
       </tr>
       <tr>
         <td><strong class="text-white">CountUp.js</strong></td>
         <td class="mono text-gray">2.x</td>
-        <td>Animação suave do total no sidebar do configurador.</td>
+        <td>Animacao do total no sidebar do configurador.</td>
       </tr>
       <tr>
         <td><strong class="text-white">canvas-confetti</strong></td>
         <td class="mono text-gray">1.x</td>
-        <td>Celebração na página /obrigado com cores da marca.</td>
+        <td>Celebracao na pagina /obrigado.</td>
       </tr>
       <tr>
         <td><strong class="text-white">Mercado Pago Bricks</strong></td>
         <td class="mono text-gray">SDK</td>
-        <td>Checkout inline: Pix QR dinâmico, cartão 12x, boleto.</td>
+        <td>Checkout inline: Pix, cartao 12x, boleto.</td>
+      </tr>
+      <tr>
+        <td><strong class="text-white">next/image</strong> <span class="new-tag">v3</span></td>
+        <td class="mono text-gray">built-in</td>
+        <td>Otimizacao automatica: lazy load, avif/webp, sizes responsivos.</td>
       </tr>
       <tr>
         <td><strong class="text-white">API ViaCEP</strong></td>
         <td class="mono text-gray">REST</td>
-        <td>Auto-preenchimento de endereço no checkout.</td>
+        <td>Auto-preenchimento de endereco no checkout.</td>
       </tr>
       <tr>
         <td><strong class="text-white">EmailJS</strong></td>
         <td class="mono text-gray">4.x</td>
-        <td>Envio de formulário de contato sem backend.</td>
+        <td>Envio de formulario de contato sem backend.</td>
       </tr>
       <tr>
-        <td><strong class="text-white">GA4 + GTM</strong></td>
-        <td class="mono text-gray">—</td>
+        <td><strong class="text-white">GA4 + GTM + Meta Pixel</strong></td>
+        <td class="mono text-gray">&mdash;</td>
         <td>Tracking completo: page_view, scroll, add_to_cart, purchase, lead.</td>
-      </tr>
-      <tr>
-        <td><strong class="text-white">Meta Pixel</strong></td>
-        <td class="mono text-gray">—</td>
-        <td>PageView, AddToCart, Purchase — para campanhas de retargeting.</td>
       </tr>
     </tbody>
   </table>
 
   <div class="section-divider"></div>
 
-  <h2>5. IDENTIDADE VISUAL — DARK MODE PREMIUM</h2>
-  <p>Design baseado em análise técnica de <strong>5 vídeos de UI/UX premium</strong>, com documentação das bibliotecas e técnicas extraídas:</p>
+  <h2>8. IDENTIDADE VISUAL &mdash; DARK MODE PREMIUM</h2>
 
   <div class="grid-2" style="margin-bottom:10px;">
     <div>
       <h3>PALETA DE CORES</h3>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#07090C;"></span> <span class="mono">#07090C</span> — Fundo principal</p>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#0D1117;"></span> <span class="mono">#0D1117</span> — Cards e superfícies</p>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#FF4F00;"></span> <span class="mono">#FF4F00</span> — Acento laranja fogo</p>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#FFD166;"></span> <span class="mono">#FFD166</span> — Dourado (números de impacto)</p>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#22C55E;"></span> <span class="mono">#22C55E</span> — Verde (economia)</p>
-      <p style="margin:4px 0;"><span class="color-swatch" style="background:#1E2430;"></span> <span class="mono">#1E2430</span> — Bordas</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#07090C;"></span> <span class="mono">#07090C</span> &mdash; Fundo principal</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#0D1117;"></span> <span class="mono">#0D1117</span> &mdash; Cards</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#FF4F00;"></span> <span class="mono">#FF4F00</span> &mdash; Laranja fogo</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#FFD166;"></span> <span class="mono">#FFD166</span> &mdash; Dourado</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#22C55E;"></span> <span class="mono">#22C55E</span> &mdash; Verde</p>
+      <p style="margin:4px 0;"><span class="color-swatch" style="background:#1E2430;"></span> <span class="mono">#1E2430</span> &mdash; Bordas</p>
+
+      <h3>EFEITOS VISUAIS</h3>
+      <div style="font-size:9px;">
+        <p style="margin:3px 0;"><strong class="text-orange">Glass-morphism</strong> &mdash; backdrop-blur:16px + bg rgba</p>
+        <p style="margin:3px 0;"><strong class="text-orange">Glow Effects</strong> &mdash; box-shadow rgba(255,79,0) em hover</p>
+        <p style="margin:3px 0;"><strong class="text-orange">Ember Particles</strong> &mdash; 12 particulas com Framer Motion</p>
+        <p style="margin:3px 0;"><strong class="text-orange">2.5D Depth</strong> &mdash; perspective:800px + translateZ(20px)</p>
+        <p style="margin:3px 0;"><strong class="text-orange">Sticky Sidebar</strong> &mdash; flex + lg:self-stretch + sticky</p>
+      </div>
     </div>
     <div>
       <h3>TIPOGRAFIA</h3>
       <div class="card" style="margin-bottom:6px;">
         <p style="font-family:'Bebas Neue'; font-size:22px; margin:0; color:var(--white);">BEBAS NEUE</p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">Títulos e headlines — impacto e autoridade</p>
+        <p class="mono text-gray" style="font-size:8px; margin:0;">Titulos e headlines</p>
       </div>
       <div class="card" style="margin-bottom:6px;">
         <p style="font-family:'DM Sans'; font-size:14px; margin:0; color:var(--white);">DM Sans</p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">Corpo de texto — legibilidade e modernidade</p>
+        <p class="mono text-gray" style="font-size:8px; margin:0;">Corpo de texto</p>
       </div>
       <div class="card">
         <p style="font-family:'JetBrains Mono'; font-size:12px; margin:0; color:var(--white);">JetBrains Mono</p>
-        <p class="mono text-gray" style="font-size:8px; margin:0;">Dados técnicos, preços e badges — precisão</p>
+        <p class="mono text-gray" style="font-size:8px; margin:0;">Dados tecnicos e precos</p>
       </div>
 
-      <h3>REFERÊNCIAS VISUAIS ANALISADAS</h3>
-      <ul style="font-size:9px;">
-        <li><strong>Ice Cream Fluid</strong> → Color Morphing</li>
-        <li><strong>Juicy Hover Expand</strong> → Shared Layout</li>
-        <li><strong>Juice Splash Depth 2.5D</strong> → Profundidade</li>
-        <li><strong>Swipe Donuts</strong> → Micro-interações</li>
-        <li><strong>3D Pizza Carousel</strong> → Coverflow</li>
-      </ul>
-    </div>
-  </div>
-
-  <h3>EFEITOS VISUAIS ESPECIAIS</h3>
-  <div class="grid-3">
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>Glass-morphism</strong></p>
-      <p style="margin:0;">backdrop-blur:16px + bg rgba + border rgba nos cards principais.</p>
-    </div>
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>Glow Effects</strong></p>
-      <p style="margin:0;">box-shadow com rgba(255,79,0) nos botões e elementos interativos em hover.</p>
-    </div>
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>Ember Particles</strong></p>
-      <p style="margin:0;">12 partículas flutuantes no hero com Framer Motion (repeat:Infinity). Parallax com mouse (GSAP).</p>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>2.5D Depth Effect</strong></p>
-      <p style="margin:0;">CSS <code>perspective:800px</code> + <code>translateZ(20px)</code> nos produtos. Drop-shadow com glow laranja para profundidade.</p>
-    </div>
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>next/image Optimization</strong></p>
-      <p style="margin:0;">Todas as imagens via next/image com lazy loading, sizes responsivos e formatos otimizados (avif/webp).</p>
-    </div>
-    <div class="card" style="font-size:9px;">
-      <p class="mono text-orange" style="font-size:10px;"><strong>Sticky Sidebar</strong></p>
-      <p style="margin:0;">Flex layout com <code>lg:self-stretch</code> + <code>sticky top-24</code>. Resumo compacto acompanha scroll no configurador.</p>
+      <h3>COLOR MORPHING</h3>
+      <p style="font-size:9px;">3 divs absolutas com <code>filter:blur(120px)</code> animadas individualmente via Framer Motion. Sobreposicao dos blurs cria gradiente fluido.</p>
+      <div style="font-size:8px; margin-top:4px;">
+        <p style="margin:2px 0;"><strong class="text-orange">BRASA 30</strong> &mdash; Laranja quente concentrado</p>
+        <p style="margin:2px 0;"><strong class="text-orange">BRASA 60</strong> &mdash; Laranja dourado amplo</p>
+        <p style="margin:2px 0;"><strong class="text-orange">BRASA 120</strong> &mdash; Vermelho intenso premium</p>
+        <p style="margin:2px 0;"><strong class="text-orange">BRASA 200</strong> &mdash; Brasa profunda, poder maximo</p>
+      </div>
+      <p style="font-size:8px; margin-top:4px;" class="text-gray">Duracao: 1.4s, 1.8s, 2.0s (staggered). Easing: cubic-bezier(0.4, 0, 0.2, 1). Variantes: hero (opaco) e page (sutil).</p>
     </div>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 5 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 7 / 9</span>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 6 — COLOR MORPHING + SEO ==================== -->
+<!-- ==================== PAGINA 8 - SEO + ANALYTICS ==================== -->
 <div class="page">
-  <span class="watermark watermark-5">MORPH</span>
+  <span class="watermark watermark-7">SEO</span>
 
-  <h2>6. ESTRATÉGIA TÉCNICA — COLOR MORPHING</h2>
-  <p>Esta é a <strong class="text-orange">técnica visual mais importante do site</strong>. A troca de gradiente ao mudar de modelo deve ser fluida e premium — não um corte abrupto.</p>
-
-  <div class="highlight-box">
-    <h3 style="margin-top:0;">POR QUE NÃO CSS GRADIENT TRANSITION?</h3>
-    <p style="margin-bottom:0;">CSS <strong>não consegue interpolar</strong> entre valores de <code>radial-gradient()</code>. A transição simplesmente "pula" de um gradiente para outro. Isso foi testado e documentado. A solução é a técnica de <strong>Fluid Blobs</strong>.</p>
-  </div>
-
-  <div class="card card-highlight">
-    <h3 style="margin-top:0;">SOLUÇÃO: FLUID BLOBS (3 DIVS + BLUR)</h3>
-    <p>3 <code>&lt;div&gt;</code> absolutamente posicionadas, cada uma com cor sólida + <code>filter: blur(120px)</code>. Animadas individualmente via Framer Motion (left, top, backgroundColor, scale, opacity). A sobreposição dos blurs cria o efeito de gradiente fluido.</p>
-
-    <div class="grid-2" style="margin-top:10px;">
-      <div>
-        <p class="mono text-gold" style="font-size:10px;">PERFIS POR MODELO:</p>
-        <p style="font-size:9px; margin:2px 0;"><strong class="text-orange">BRASA 30</strong> — Laranja quente concentrado (3 blobs laranja)</p>
-        <p style="font-size:9px; margin:2px 0;"><strong class="text-orange">BRASA 60</strong> — Laranja dourado amplo (blobs maiores, mais opacos)</p>
-        <p style="font-size:9px; margin:2px 0;"><strong class="text-orange">BRASA 120</strong> — Vermelho intenso premium (blobs vermelhos profundos)</p>
-        <p style="font-size:9px; margin:2px 0;"><strong class="text-orange">BRASA 200</strong> — Brasa profunda, poder máximo (mais saturação)</p>
-      </div>
-      <div>
-        <p class="mono text-gold" style="font-size:10px;">PARÂMETROS TÉCNICOS:</p>
-        <p style="font-size:9px; margin:2px 0;">Blur: <code>120px</code> (hero) / <code>100px</code> (page)</p>
-        <p style="font-size:9px; margin:2px 0;">Duração transição: <code>1.4s, 1.8s, 2.0s</code> (staggered)</p>
-        <p style="font-size:9px; margin:2px 0;">Easing: <code>cubic-bezier(0.4, 0, 0.2, 1)</code></p>
-        <p style="font-size:9px; margin:2px 0;">Variantes: <code>hero</code> (maior/opaco) e <code>page</code> (sutil)</p>
-        <p style="font-size:9px; margin:2px 0;">Performance: <code>will-change: transform, opacity</code></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <h2>7. SEO & ANALYTICS</h2>
-  <p>Entregues prontos no dia da entrega — não são pós-lançamento.</p>
+  <h2>9. SEO & ANALYTICS</h2>
+  <p>Entregues prontos no dia da entrega &mdash; nao sao pos-lancamento.</p>
 
   <div class="grid-2">
     <div>
-      <h3>SEO TÉCNICO</h3>
+      <h3>SEO TECNICO</h3>
       <ul class="checklist">
         <li>Meta tags completas (title, description, keywords)</li>
-        <li>Open Graph 1200×630px com imagem real</li>
+        <li>Open Graph 1200x630px com imagem real</li>
         <li>Schema Markup: Product + AggregateRating</li>
         <li>Schema Markup: FAQPage (12 perguntas)</li>
         <li>Schema Markup: Organization</li>
         <li>Schema Markup: VideoObject</li>
         <li>sitemap.xml gerado automaticamente</li>
-        <li>robots.txt configurado (disallow /obrigado)</li>
+        <li>robots.txt configurado (disallow /admin, /obrigado)</li>
         <li>Sitemap enviado ao Google Search Console</li>
       </ul>
     </div>
@@ -927,24 +1193,24 @@
       <h3>ANALYTICS & TRACKING</h3>
       <p class="mono text-orange" style="font-size:10px;">GA4 + GTM</p>
       <ul class="checklist" style="font-size:10px;">
-        <li>page_view (automático)</li>
+        <li>page_view (automatico)</li>
         <li>scroll (25%, 50%, 75%, 100%)</li>
-        <li>add_to_cart (seleção modelo/aditivo)</li>
-        <li>purchase (checkout concluído)</li>
-        <li>lead (formulário enviado)</li>
+        <li>add_to_cart (selecao modelo/aditivo)</li>
+        <li>purchase (checkout concluido)</li>
+        <li>lead (formulario enviado)</li>
         <li>whatsapp_click</li>
       </ul>
       <p class="mono text-orange" style="font-size:10px; margin-top:8px;">META PIXEL</p>
       <ul class="checklist" style="font-size:10px;">
-        <li>PageView (todas as páginas)</li>
-        <li>AddToCart (seleção de produto)</li>
+        <li>PageView (todas as paginas)</li>
+        <li>AddToCart (selecao de produto)</li>
         <li>Purchase (pagamento aprovado)</li>
       </ul>
     </div>
   </div>
 
   <div class="card card-highlight" style="margin-top:10px;">
-    <h3 style="margin-top:0;">CORE WEB VITALS — METAS OBRIGATÓRIAS</h3>
+    <h3 style="margin-top:0;">CORE WEB VITALS &mdash; METAS OBRIGATORIAS</h3>
     <div class="grid-3">
       <div style="text-align:center;">
         <div class="stat-number" style="color:var(--green);">&lt; 2,5s</div>
@@ -962,30 +1228,82 @@
         <div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div>
       </div>
     </div>
-    <p style="text-align:center; margin-top:8px; margin-bottom:0;" class="mono text-gold">PageSpeed Score &gt; 90 obrigatório na entrega</p>
+    <p style="text-align:center; margin-top:8px; margin-bottom:0;" class="mono text-gold">PageSpeed Score &gt; 90 obrigatorio na entrega</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>10. VARIAVEIS DE AMBIENTE</h2>
+  <div class="card">
+    <table style="font-size:10px;">
+      <thead>
+        <tr>
+          <th>Variavel</th>
+          <th>Descricao</th>
+          <th>Obrigatoria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono text-orange">ADMIN_PASSWORD</td>
+          <td>Senha do painel admin</td>
+          <td><span class="badge badge-red" style="font-size:7px;">SIM</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">NEXT_PUBLIC_EMAILJS_SERVICE_ID</td>
+          <td>ID do servico EmailJS</td>
+          <td><span class="badge badge-gold" style="font-size:7px;">CTA</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">NEXT_PUBLIC_EMAILJS_TEMPLATE_ID</td>
+          <td>ID do template EmailJS</td>
+          <td><span class="badge badge-gold" style="font-size:7px;">CTA</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">NEXT_PUBLIC_EMAILJS_PUBLIC_KEY</td>
+          <td>Chave publica EmailJS</td>
+          <td><span class="badge badge-gold" style="font-size:7px;">CTA</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">NEXT_PUBLIC_MP_PUBLIC_KEY</td>
+          <td>Chave publica Mercado Pago</td>
+          <td><span class="badge badge-orange" style="font-size:7px;">CHECKOUT</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">GTM_ID</td>
+          <td>Google Tag Manager ID</td>
+          <td><span class="badge badge-green" style="font-size:7px;">ANALYTICS</span></td>
+        </tr>
+        <tr>
+          <td class="mono text-gray">META_PIXEL_ID</td>
+          <td>Meta/Facebook Pixel ID</td>
+          <td><span class="badge badge-green" style="font-size:7px;">ANALYTICS</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 6 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 8 / 9</span>
   </div>
 </div>
 
-<!-- ==================== PÁGINA 7 — CRONOGRAMA + REQUISITOS ==================== -->
+<!-- ==================== PAGINA 9 - CRONOGRAMA + ENTREGA ==================== -->
 <div class="page">
-  <span class="watermark watermark-6">PRAZO</span>
+  <span class="watermark watermark-8">PRAZO</span>
 
-  <h2>8. CRONOGRAMA — 29 DIAS / 6 ETAPAS</h2>
-  <p>Pagamento por entrega aprovada. Cada etapa precisa de validação antes de avançar.</p>
+  <h2>11. CRONOGRAMA &mdash; 29 DIAS / 6 ETAPAS</h2>
+  <p>Pagamento por entrega aprovada. Cada etapa precisa de validacao antes de avancar.</p>
 
   <table>
     <thead>
       <tr>
         <th>Etapa</th>
-        <th>Descrição</th>
+        <th>Descricao</th>
         <th style="text-align:center;">Dias</th>
         <th style="text-align:center;">%</th>
-        <th>Entregáveis</th>
+        <th>Entregaveis</th>
       </tr>
     </thead>
     <tbody>
@@ -1001,101 +1319,105 @@
         <td><strong class="text-white">Landing Page completa</strong></td>
         <td style="text-align:center;" class="mono">9</td>
         <td style="text-align:center;" class="mono text-gold">32%</td>
-        <td>11 seções com todas as animações, Color Morphing, Shared Layout</td>
+        <td>11 secoes + galeria + garantia selos + animacoes + Color Morphing</td>
       </tr>
       <tr>
         <td><span class="badge badge-orange">3</span></td>
-        <td><strong class="text-white">Página de Vendas</strong></td>
+        <td><strong class="text-white">Pagina de Vendas</strong></td>
         <td style="text-align:center;" class="mono">7</td>
         <td style="text-align:center;" class="mono text-gold">25%</td>
-        <td>Configurador, aditivos, cores, sidebar, calculadora inline</td>
+        <td>Configurador, 12 aditivos, cores, sidebar, calculadora inline</td>
       </tr>
       <tr>
         <td><span class="badge badge-orange">4</span></td>
         <td><strong class="text-white">Checkout + Mercado Pago</strong></td>
         <td style="text-align:center;" class="mono">5</td>
         <td style="text-align:center;" class="mono text-gold">18%</td>
-        <td>Bricks inline, Pix QR, cartão 12x, boleto, ViaCEP, /obrigado</td>
+        <td>Bricks inline, Pix QR, cartao 12x, boleto, ViaCEP, /obrigado</td>
       </tr>
       <tr>
         <td><span class="badge badge-orange">5</span></td>
-        <td><strong class="text-white">SEO + Analytics</strong></td>
+        <td><strong class="text-white">SEO + Analytics + Admin</strong> <span class="new-tag">v3</span></td>
         <td style="text-align:center;" class="mono">3</td>
         <td style="text-align:center;" class="mono text-gold">10%</td>
-        <td>Schema, OG, sitemap, GA4, GTM, Pixel, eventos configurados</td>
+        <td>Schema, OG, GA4, Pixel, painel admin completo, guia manutencao</td>
       </tr>
       <tr>
         <td><span class="badge badge-orange">6</span></td>
-        <td><strong class="text-white">Testes + Entrega final</strong></td>
+        <td><strong class="text-white">Testes + Responsividade + Entrega</strong></td>
         <td style="text-align:center;" class="mono">2</td>
         <td style="text-align:center;" class="mono text-gold">5%</td>
-        <td>Cross-browser, mobile, PageSpeed >90, Core Web Vitals OK</td>
+        <td>Cross-browser, 320px-2560px, PageSpeed >90, Core Web Vitals</td>
       </tr>
     </tbody>
   </table>
 
   <div class="section-divider"></div>
 
-  <h2>9. REQUISITOS OBRIGATÓRIOS NA PROPOSTA</h2>
-  <p class="text-orange" style="font-size:12px;"><strong>Propostas que não cumprirem TODOS os itens abaixo não serão consideradas.</strong></p>
-
-  <div class="grid-2" style="margin-top:10px;">
-    <div class="card card-highlight">
-      <h3 style="margin-top:0;">1. PORTFÓLIO COM ANIMAÇÕES AVANÇADAS</h3>
-      <p>Link de <strong class="text-gold">2 projetos funcionando</strong> com Framer Motion Shared Layout ou GSAP avançado. Não aceitamos mockups estáticos — os projetos precisam estar online e demonstrar domínio real das animações.</p>
+  <h2>12. ESTRUTURA DE ARQUIVOS <span class="new-tag">NOVO v3</span></h2>
+  <div class="grid-2">
+    <div class="card" style="font-size:9px;">
+      <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">DADOS (JSON)</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/products.json &mdash; 4 modelos</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/addons.json &mdash; 12 aditivos</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/colors.json &mdash; 6 cores</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/testimonials.json &mdash; 5 depoimentos</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/faq.json &mdash; 12 perguntas</p>
+      <p class="mono text-gray" style="margin:2px 0;">data/maintenance.json &mdash; 8 passos</p>
     </div>
-    <div class="card card-highlight">
-      <h3 style="margin-top:0;">2. INTEGRAÇÃO MERCADO PAGO</h3>
-      <p>Confirmação de integração anterior com Mercado Pago Checkout Bricks, <strong class="text-gold">com link do projeto</strong>. Precisa ter experiência comprovada com Pix QR dinâmico e parcelamento inline.</p>
-    </div>
-    <div class="card card-highlight">
-      <h3 style="margin-top:0;">3. ESTRATÉGIA DO COLOR MORPHING</h3>
-      <p>Explique <strong class="text-gold">sua estratégia técnica</strong> para implementar a troca de gradiente ao mudar de modelo. Queremos ver se o dev entende que CSS gradient transition não funciona e qual solução propõe.</p>
-    </div>
-    <div class="card card-highlight">
-      <h3 style="margin-top:0;">4. VALOR POR ETAPA + PRAZO REAL</h3>
-      <p>Proposta com <strong class="text-gold">valor discriminado por etapa</strong> (seguindo as 6 etapas definidas) e prazo realista para cada uma. Pagamento por entrega aprovada.</p>
+    <div class="card" style="font-size:9px;">
+      <p class="mono text-gold" style="font-size:10px; margin-bottom:6px;">LIBS INTERNAS</p>
+      <p class="mono text-gray" style="margin:2px 0;">src/lib/data.ts &mdash; readData&lt;T&gt; / writeData&lt;T&gt;</p>
+      <p class="mono text-gray" style="margin:2px 0;">src/lib/auth.ts &mdash; verifyAdmin() / getTokenValue()</p>
+      <p class="mono text-gold" style="font-size:10px; margin-bottom:6px; margin-top:8px;">API ROUTES</p>
+      <p class="mono text-gray" style="margin:2px 0;">src/app/api/admin/auth/route.ts</p>
+      <p class="mono text-gray" style="margin:2px 0;">src/app/api/admin/[resource]/route.ts &times;6</p>
+      <p class="mono text-gray" style="margin:2px 0;">src/app/api/maintenance/route.ts (publica)</p>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <h2>10. DEPLOY E INFRAESTRUTURA</h2>
+  <h2>13. DEPLOY E INFRAESTRUTURA</h2>
   <div class="grid-2">
     <div class="card">
       <h3 style="margin-top:0;">DEPLOY</h3>
       <ul>
-        <li>Vercel com SSL automático</li>
-        <li>Domínio: linhabrasa.com.br</li>
-        <li>Build otimizado com next/image em todos os componentes (avif/webp automático)</li>
-        <li>Headers de cache e segurança configurados</li>
+        <li>Vercel com SSL automatico</li>
+        <li>Dominio: linhabrasa.com.br</li>
+        <li>Build otimizado com next/image (avif/webp)</li>
+        <li>Headers de cache e seguranca configurados</li>
+        <li>Admin protegido por cookie + env var</li>
       </ul>
     </div>
     <div class="card">
-      <h3 style="margin-top:0;">VARIÁVEIS DE AMBIENTE</h3>
-      <ul>
-        <li><span class="mono text-gray">NEXT_PUBLIC_EMAILJS_*</span> (3 vars)</li>
-        <li><span class="mono text-gray">NEXT_PUBLIC_MP_PUBLIC_KEY</span></li>
-        <li><span class="mono text-gray">GTM-XXXXXXX</span> (Tag Manager)</li>
-        <li><span class="mono text-gray">PIXEL_ID_HERE</span> (Meta)</li>
+      <h3 style="margin-top:0;">ENTREGA INCLUI</h3>
+      <ul class="checklist">
+        <li>Codigo fonte completo no GitHub</li>
+        <li>Deploy Vercel configurado</li>
+        <li>Painel admin funcional</li>
+        <li>Guia de manutencao publico</li>
+        <li>Responsividade 320px-2560px</li>
+        <li>Documentacao de variaveis de ambiente</li>
+        <li>Este briefing atualizado (v3)</li>
       </ul>
     </div>
   </div>
 
   <div class="highlight-box" style="margin-top:14px; text-align:center;">
-    <p style="font-family:'Bebas Neue'; font-size:24px; color:var(--white); margin-bottom:4px;">PRONTO PARA COMEÇAR?</p>
-    <p style="margin-bottom:0;">Este briefing documenta 100% do escopo técnico e visual. O desenvolvedor recebe todos os assets, dados e referências prontos para implementar. A proposta deve demonstrar capacidade técnica real — <strong class="text-orange">não aceitamos promessas, aceitamos portfólio.</strong></p>
+    <p style="font-family:'Bebas Neue'; font-size:24px; color:var(--white); margin-bottom:4px;">PROJETO COMPLETO &mdash; PRONTO PARA PRODUCAO</p>
+    <p style="margin-bottom:0;">Landing Page com 11 secoes animadas + Configurador interativo + Checkout Mercado Pago + Painel Admin completo + Guia de Manutencao + SEO + Analytics + Responsividade extrema (320px-2560px). <strong class="text-orange">Tudo implementado, testado e documentado.</strong></p>
   </div>
 
   <div style="text-align:center; margin-top:20px;">
-    <p class="mono text-gray" style="font-size:9px;">LINHA BRASA — CALDEIRAS A LENHA PARA PISCINAS</p>
-    <p class="mono text-gray" style="font-size:9px;">Londrina/PR — Brasil — linhabrasa.com.br</p>
-    <p class="mono text-orange" style="font-size:9px; margin-top:8px;">DOCUMENTO CONFIDENCIAL — ABRIL 2026</p>
+    <p class="mono text-gray" style="font-size:9px;">LINHA BRASA &mdash; CALDEIRAS A LENHA PARA PISCINAS</p>
+    <p class="mono text-gray" style="font-size:9px;">Londrina/PR &mdash; Brasil &mdash; linhabrasa.com.br</p>
+    <p class="mono text-orange" style="font-size:9px; margin-top:8px;">DOCUMENTO CONFIDENCIAL &mdash; ABRIL 2026 &mdash; v3.0</p>
   </div>
 
   <div class="footer-bar">
-    <span>LINHA BRASA — BRIEFING TÉCNICO</span>
-    <span>PÁGINA 7 / 7</span>
+    <span>LINHA BRASA &mdash; BRIEFING TECNICO v3</span>
+    <span>PAGINA 9 / 9</span>
   </div>
 </div>
 

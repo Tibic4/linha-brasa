@@ -1,0 +1,113 @@
+[
+  {
+    "id": "serpentina-316l",
+    "emoji": "🔥",
+    "name": "Serpentina Inox 316L",
+    "description": "Para piscinas salinizadas. Resistência superior à corrosão.",
+    "badge": "Ideal para piscina com sal",
+    "price": 680,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "vidro-ceramico",
+    "emoji": "🪟",
+    "name": "Vidro Cerâmico Premium",
+    "description": "Janela maior 200×200mm Schott Robax. Visão plena do fogo.",
+    "badge": "Diferencial visual",
+    "price": 890,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "bomba-dedicada",
+    "emoji": "⚡",
+    "name": "Bomba Dedicada 1CV",
+    "description": "Bomba exclusiva da caldeira. Não interfere na filtragem.",
+    "price": 1290,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "chamine-estendida",
+    "emoji": "🏗️",
+    "name": "Chaminé Estendida +500mm",
+    "description": "Seção adicional para instalação próxima a paredes ou telhados.",
+    "price": 590,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "cobertura-antigranizo",
+    "emoji": "⛈️",
+    "name": "Cobertura Antigranizo",
+    "description": "Estrutura alumínio + telha sanduíche. Proteção a céu aberto.",
+    "price": 780,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "termostato-digital",
+    "emoji": "🌡️",
+    "name": "Termostato Digital com Display",
+    "description": "Controlador LCD com sonda PT100. Monitora entrada e saída.",
+    "price": 1190,
+    "models": "60,120,200",
+    "active": true
+  },
+  {
+    "id": "kit-conexoes",
+    "emoji": "🔧",
+    "name": "Kit Conexões Hidráulicas",
+    "description": "Registros, adaptadores, tubos flex. Instalação plug-and-play.",
+    "price": 420,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "grelha-inox",
+    "emoji": "⚙️",
+    "name": "Grelha Inox 316L",
+    "description": "Substituição da grelha de ferro fundido. Maior durabilidade.",
+    "price": 680,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "instalacao-comissionamento",
+    "emoji": "🛠️",
+    "name": "Instalação + Comissionamento",
+    "description": "Visita técnica, teste hidráulico, queima de cura, treinamento.",
+    "price": 1800,
+    "models": "sul-sudeste",
+    "active": true
+  },
+  {
+    "id": "garantia-estendida",
+    "emoji": "🛡️",
+    "name": "Garantia Estendida 5 anos",
+    "description": "Estende de 2 para 5 anos. Cobre serpentina e estrutura.",
+    "price": 1500,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "embalagem-longa-distancia",
+    "emoji": "📦",
+    "name": "Embalagem Transporte Longa Distância",
+    "description": "Caixote madeira + espuma para Norte/Nordeste ou exportação.",
+    "price": 380,
+    "models": "todos",
+    "active": true
+  },
+  {
+    "id": "capa-termica",
+    "emoji": "🌊",
+    "name": "Capa Térmica para Piscina",
+    "description": "Retém até 75% do calor. Reduz consumo de lenha e evaporação.",
+    "badge": "Recomendado",
+    "price": 950,
+    "models": "todos",
+    "active": true
+  }
+]

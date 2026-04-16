@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "emailjs-com";
 import { trackLead, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
+import ProductImage from "@/components/shared/ProductImage";
 
 export default function CTASection() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", poolSize: "", message: "" });
@@ -42,6 +43,10 @@ export default function CTASection() {
 
   return (
     <section className="section-padding bg-brasa-bg-light relative overflow-hidden">
+      {/* Product render background */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.15]">
+        <ProductImage model="brasa-60" size="lg" className="w-[60vw] max-w-[700px] h-auto" />
+      </div>
       <span className="watermark font-bebas bottom-10 right-10">CONTATO</span>
 
       <div className="max-w-5xl mx-auto">
@@ -55,7 +60,7 @@ export default function CTASection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Fale Conosco
           </p>
-          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
+          <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
             PRONTO PARA <span className="text-brasa-orange">ECONOMIZAR</span>?
           </h2>
           <p className="text-brasa-gray mt-4 max-w-xl mx-auto">
@@ -122,7 +127,7 @@ export default function CTASection() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full bg-brasa-bg border border-brasa-border rounded-lg px-4 py-3 text-brasa-white placeholder:text-brasa-gray-dark font-dm focus:border-brasa-orange outline-none transition-colors resize-none"
                 />
-                <button type="submit" disabled={sending} className="btn-brasa w-full text-xl">
+                <button type="submit" disabled={sending} className="btn-brasa w-full text-base sm:text-xl">
                   {sending ? "ENVIANDO..." : "SOLICITAR ORÇAMENTO"}
                 </button>
               </form>
@@ -141,16 +146,19 @@ export default function CTASection() {
               href={`https://wa.me/5543999999999?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-card rounded-2xl p-4 sm:p-8 flex items-center gap-4 sm:gap-6 hover:border-brasa-green/50 transition-colors group"
+              className="glass-card rounded-2xl p-6 sm:p-10 flex flex-col items-center gap-4 hover:border-brasa-green/50 hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] transition-all group text-center"
               onClick={() => trackWhatsAppClick("cta_section")}
             >
-              <div className="w-16 h-16 rounded-full bg-brasa-green/20 flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">
+              <div className="w-20 h-20 rounded-full bg-brasa-green/20 flex items-center justify-center text-4xl shrink-0 group-hover:scale-110 transition-transform">
                 💬
               </div>
               <div>
-                <p className="font-bebas text-2xl text-brasa-green">WHATSAPP DIRETO</p>
+                <p className="font-bebas text-2xl xs:text-3xl sm:text-4xl text-brasa-green">FALE PELO WHATSAPP</p>
                 <p className="text-brasa-gray text-sm">Resposta rápida — fale com um especialista</p>
               </div>
+              <span className="inline-block bg-brasa-green text-white font-bebas text-base xs:text-lg sm:text-xl px-6 xs:px-8 sm:px-10 py-3 sm:py-4 rounded-lg group-hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] transition-shadow">
+                INICIAR CONVERSA
+              </span>
             </a>
 
             <div className="glass-card rounded-2xl p-8 flex-1">
@@ -160,7 +168,7 @@ export default function CTASection() {
                   "Fabricação própria em Londrina/PR",
                   "Produto único — sem concorrentes no Brasil",
                   "Economia real de até 80% no aquecimento",
-                  "3 anos de garantia de fábrica",
+                  "2 anos de garantia de fábrica",
                   "Entrega e instalação para todo Brasil",
                   "Suporte técnico direto com fabricante",
                 ].map((item, i) => (

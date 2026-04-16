@@ -42,7 +42,7 @@ export default function GallerySection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Na prática
           </p>
-          <h2 className="font-bebas text-4xl sm:text-5xl md:text-6xl">
+          <h2 className="font-bebas text-3xl xs:text-4xl sm:text-5xl md:text-6xl">
             VEJA A <span className="text-brasa-orange">BRASA</span> EM AÇÃO
           </h2>
         </motion.div>

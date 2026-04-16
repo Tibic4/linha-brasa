@@ -10,11 +10,10 @@ if (typeof window !== "undefined") {
 }
 
 const comparisons = [
-  { method: "GLP (Botijão)", monthly: 1200, color: "#EF4444", percent: 100 },
-  { method: "Gás Natural", monthly: 850, color: "#F97316", percent: 71 },
-  { method: "Bomba de Calor", monthly: 650, color: "#EAB308", percent: 54 },
-  { method: "Aquecedor Solar", monthly: 180, color: "#3B82F6", percent: 15 },
-  { method: "LINHA BRASA", monthly: 150, color: "#22C55E", percent: 12.5, highlight: true },
+  { method: "Elétrico", monthly: 523, color: "#EF4444", percent: 100 },
+  { method: "GLP (Botijão)", monthly: 410, color: "#F97316", percent: 78 },
+  { method: "Trocador de Calor", monthly: 87, color: "#EAB308", percent: 17 },
+  { method: "LINHA BRASA", monthly: 84, color: "#22C55E", percent: 16, highlight: true },
 ];
 
 export default function CostComparison() {
@@ -101,15 +100,15 @@ export default function CostComparison() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Comparativo
           </p>
-          <h2 className="font-bebas text-3xl sm:text-5xl md:text-7xl">
+          <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
             CUSTO MENSAL <span className="text-brasa-gold">REAL</span>
           </h2>
           <p className="text-brasa-gray mt-4 max-w-xl mx-auto">
-            Baseado em piscina de 20.000L mantida a 28°C durante o mês inteiro
+            Baseado em piscina de 60.000L mantida a 28°C durante o mês inteiro
           </p>
         </motion.div>
 
-        <div className="flex gap-6 md:gap-10">
+        <div className="flex gap-3 xs:gap-4 sm:gap-6 md:gap-10">
           {/* Thermometer Visual — GSAP scaleY animated */}
           <div className="hidden sm:flex flex-col items-center shrink-0 py-2">
             <span className="font-mono text-[10px] text-brasa-gray mb-2">R$/mês</span>
@@ -133,7 +132,7 @@ export default function CostComparison() {
                 key={item.method}
                 className={`flex items-center gap-3 sm:gap-4 ${item.highlight ? "scale-105 origin-left" : ""}`}
               >
-                <div className="w-20 sm:w-24 md:w-44 text-right shrink-0" data-bar-label>
+                <div className="w-14 xs:w-20 sm:w-24 md:w-44 text-right shrink-0" data-bar-label>
                   <p
                     className={`font-mono text-xs sm:text-sm ${
                       item.highlight ? "text-brasa-green font-bold" : "text-brasa-gray"
@@ -145,12 +144,16 @@ export default function CostComparison() {
                 <div className="flex-1 h-8 sm:h-10 bg-brasa-bg rounded-lg overflow-hidden relative">
                   <div
                     data-bar={item.percent}
-                    className="h-full rounded-lg flex items-center justify-end pr-2 sm:pr-3"
+                    className="h-full rounded-lg flex items-center justify-end pr-2 sm:pr-3 group/bar relative"
                     style={{ backgroundColor: item.color, width: 0 }}
                   >
                     <span className="font-mono text-xs sm:text-sm text-white font-bold whitespace-nowrap">
                       R$ {item.monthly}/mês
                     </span>
+                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-brasa-bg-card border border-brasa-border rounded-lg px-3 py-1.5 text-xs font-mono text-brasa-white whitespace-nowrap opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
+                      R$ {(item.monthly * 12).toLocaleString("pt-BR")}/ano
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-brasa-border" />
+                    </div>
                   </div>
                   {item.highlight && (
                     <div className="absolute -right-2 -top-2 bg-brasa-green text-white text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 rounded-full animate-pulse">
@@ -170,7 +173,7 @@ export default function CostComparison() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-12 glass-card rounded-xl p-6 text-center border-brasa-green/20"
         >
-          <p className="font-bebas text-3xl">
+          <p className="font-bebas text-2xl xs:text-3xl">
             ECONOMIA ANUAL DE ATÉ{" "}
             <span className="text-brasa-green">R$ 12.600</span>
           </p>

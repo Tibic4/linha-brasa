@@ -1,0 +1,10 @@
+[
+  {"id": "m1", "icon": "🔥", "title": "Limpeza do Cinzeiro", "description": "Remova as cinzas acumuladas após cada uso. Use uma pá e descarte em local seguro.", "frequency": "Após cada uso", "order": 1, "active": true},
+  {"id": "m2", "icon": "🔧", "title": "Verificação da Serpentina", "description": "Inspecione a serpentina visualmente em busca de depósitos de calcário ou corrosão.", "frequency": "Mensal", "order": 2, "active": true},
+  {"id": "m3", "icon": "🪟", "title": "Limpeza do Vidro Cerâmico", "description": "Limpe o vidro com pano úmido e produto específico para vidro cerâmico. Nunca use abrasivos.", "frequency": "Semanal", "order": 3, "active": true},
+  {"id": "m4", "icon": "🏗️", "title": "Inspeção da Chaminé", "description": "Verifique se há obstruções ou acúmulo de fuligem. Limpe com escova própria se necessário.", "frequency": "Trimestral", "order": 4, "active": true},
+  {"id": "m5", "icon": "💧", "title": "Teste de Pressão Hidráulica", "description": "Verifique se há vazamentos nas conexões e na serpentina. Aperte conexões se necessário.", "frequency": "Semestral", "order": 5, "active": true},
+  {"id": "m6", "icon": "🛡️", "title": "Pintura e Proteção Externa", "description": "Retoque a pintura eletrostática em áreas com desgaste. Use tinta resistente a alta temperatura.", "frequency": "Anual", "order": 6, "active": true},
+  {"id": "m7", "icon": "⚙️", "title": "Verificação da Grelha", "description": "Inspecione a grelha de ferro fundido ou inox. Substitua se apresentar trincas ou deformação.", "frequency": "Semestral", "order": 7, "active": true},
+  {"id": "m8", "icon": "🌡️", "title": "Calibração do Termostato", "description": "Se possui termostato digital, verifique a precisão comparando com termômetro externo.", "frequency": "Anual", "order": 8, "active": true}
+]

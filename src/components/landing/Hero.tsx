@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { products } from "@/data/products";
-import ColorMorph from "@/components/shared/ColorMorph";
 import HeroVideoPlaceholder from "@/components/shared/HeroVideo";
 import ProductImage from "@/components/shared/ProductImage";
 
@@ -113,8 +112,13 @@ export default function Hero() {
         <HeroVideoPlaceholder />
       )}
 
-      {/* Layer 1: COLOR MORPHING */}
-      <ColorMorph activeModel={activeModel} variant="hero" />
+      {/* Layer 1: COLOR MORPHING — gradiente de fundo dissolve ao trocar modelo (Briefing Seção 01+05) */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{ background: products[activeModel].gradient }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        style={{ opacity: 0.35, mixBlendMode: "screen" }}
+      />
 
       {/* Layer 2: Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-brasa-bg via-brasa-bg/40 to-brasa-bg/20" />
@@ -122,23 +126,23 @@ export default function Hero() {
 
       {/* Layer 3: Watermark Typography (pulsing scale) */}
       <span className="watermark font-bebas top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-watermark-pulse">
-        LINHA BRASA
+        BRASA
       </span>
 
-      {/* Layer 4: Embers — react to mouse */}
-      <div ref={embersRef} className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
-        {Array.from({ length: 12 }).map((_, i) => (
+      {/* Layer 4a: Embers DESFOCADAS — atrás do produto (briefing: partículas desfocadas → produto) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform z-[0]" style={{ filter: "blur(3px)" }}>
+        {Array.from({ length: 6 }).map((_, i) => (
           <motion.div
-            key={i}
-            className={`absolute rounded-full bg-brasa-orange/60 ${i % 3 === 0 ? "w-1.5 h-1.5" : "w-1 h-1"} hidden sm:block`}
+            key={`blur-${i}`}
+            className={`absolute rounded-full bg-brasa-orange/50 ${i % 2 === 0 ? "w-2 h-2" : "w-1.5 h-1.5"} hidden sm:block`}
             initial={{ x: `${Math.random() * 100}%`, y: "110%", opacity: 0 }}
-            animate={{ y: "-10%", opacity: [0, 0.8, 0], x: `${Math.random() * 100}%` }}
-            transition={{ duration: 4 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 5, ease: "linear" }}
+            animate={{ y: "-10%", opacity: [0, 0.6, 0], x: `${Math.random() * 100}%` }}
+            transition={{ duration: 5 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 5, ease: "linear" }}
           />
         ))}
       </div>
 
-      {/* Layer 5: Product Image — big, centered, reacts to mouse */}
+      {/* Layer 5: Product Image — 'O Produto é o Herói' (briefing: >60% da tela, colossal) */}
       <div
         ref={productRef}
         className="absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform z-[1]"
@@ -147,7 +151,7 @@ export default function Hero() {
           <motion.div
             key={activeModel}
             initial={{ opacity: 0, scale: 0.85, y: 40, rotate: -3 }}
-            animate={{ opacity: 0.3, scale: 1, y: 0, rotate: 0 }}
+            animate={{ opacity: 0.85, scale: 1, y: 0, rotate: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -30, rotate: 3 }}
             transition={{
               type: "spring",
@@ -156,12 +160,25 @@ export default function Hero() {
               mass: 1.2,
               opacity: { duration: 0.4 },
             }}
-            className="w-[65vw] h-[30vh] sm:w-[40vw] sm:h-[60vh] max-w-[500px] max-h-[600px] relative isolate perspective-container"
-            style={{ background: "radial-gradient(ellipse at center, rgba(20,20,20,0.8) 0%, transparent 70%)" }}
+            className="w-[70vw] h-[45vh] sm:w-[50vw] sm:h-[65vh] max-w-[650px] max-h-[700px] relative isolate perspective-container"
+            style={{ background: "radial-gradient(ellipse at center, rgba(20,20,20,0.6) 0%, transparent 70%)" }}
           >
             <ProductImage model={products[activeModel].id} size="lg" className="w-full h-full depth-layer depth-shadow" />
           </motion.div>
         </AnimatePresence>
+      </div>
+
+      {/* Layer 6a: Embers EM FOCO — na frente do produto (briefing: produto → partículas em foco → UI) */}
+      <div ref={embersRef} className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform z-[2]">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={`focus-${i}`}
+            className={`absolute rounded-full bg-brasa-orange/70 ${i % 3 === 0 ? "w-1.5 h-1.5" : "w-1 h-1"} hidden sm:block`}
+            initial={{ x: `${Math.random() * 100}%`, y: "110%", opacity: 0 }}
+            animate={{ y: "-10%", opacity: [0, 0.9, 0], x: `${Math.random() * 100}%` }}
+            transition={{ duration: 3 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 5, ease: "linear" }}
+          />
+        ))}
       </div>
 
       {/* Layer 6: UI Content */}
@@ -182,13 +199,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-bebas text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
+          className="font-bebas text-3xl xs:text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-6"
         >
           AQUEÇA SUA
           <br />
           <span className="text-brasa-orange glow-text">PISCINA</span>
           <br />
-          <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-brasa-gray leading-tight">
+          <span className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-brasa-gray leading-tight">
             POR <span className="text-brasa-gold">R$ 84</span>. COM LENHA. QUALQUER CLIMA.
           </span>
         </motion.h1>
@@ -209,13 +226,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex justify-center gap-2 md:gap-3 mb-6"
+          className="flex justify-center gap-1.5 xs:gap-2 md:gap-3 mb-6"
         >
           {products.map((product, i) => (
             <button
               key={product.id}
               onClick={() => setActiveModel(i)}
-              className={`relative px-4 md:px-5 py-2.5 min-h-[44px] rounded-full font-mono text-xs tracking-wider transition-all duration-500 overflow-hidden ${
+              className={`relative px-3 xs:px-4 md:px-5 py-2.5 min-h-[44px] rounded-full font-mono text-[10px] xs:text-xs tracking-wider transition-all duration-500 overflow-hidden ${
                 activeModel === i
                   ? "text-white"
                   : "bg-brasa-bg-card/80 text-brasa-gray border border-brasa-border hover:border-brasa-orange/50"
@@ -290,16 +307,22 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-6 sm:mt-8"
+          className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-6 sm:mt-8 px-2 xs:px-0"
         >
-          <a href="/configurador" className="btn-brasa text-base sm:text-xl w-full sm:w-auto text-center">
-            CONFIGURAR MINHA CALDEIRA
+          <a
+            href="https://wa.me/5543999999999?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Linha%20Brasa."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-brasa text-base sm:text-xl w-full sm:w-auto text-center gap-2"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.346 0-4.542-.658-6.413-1.797l-.448-.271-3.29 1.103 1.103-3.29-.271-.448A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+            FALAR COM ESPECIALISTA
           </a>
           <a
-            href="#calculadora"
+            href="#modelos"
             className="px-8 py-4 font-bebas text-lg tracking-wider text-brasa-orange border-2 border-brasa-orange/50 rounded-lg hover:bg-brasa-orange/10 hover:border-brasa-orange transition-all duration-300 text-center backdrop-blur-sm w-full sm:w-auto"
           >
-            CALCULAR ECONOMIA
+            VER MODELOS
           </a>
         </motion.div>
       </div>

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "faq-1",
+    "question": "Quanto tempo leva para aquecer a piscina?",
+    "answer": "Depende do volume da piscina e da temperatura inicial. Em média, uma piscina de 40.000L sobe de 18°C para 28°C em 6 a 8 horas com a BRASA 60. Depois de aquecida, a manutenção da temperatura consome muito menos lenha.",
+    "active": true
+  },
+  {
+    "id": "faq-2",
+    "question": "Qual o consumo de lenha por dia?",
+    "answer": "Para manutenção da temperatura (após o primeiro aquecimento), o consumo médio é de 8 a 15kg de lenha por dia, dependendo do modelo e das condições climáticas. Isso equivale a aproximadamente R$ 3 a R$ 8 por dia.",
+    "active": true
+  },
+  {
+    "id": "faq-3",
+    "question": "A caldeira funciona com qualquer tipo de lenha?",
+    "answer": "Sim, funciona com qualquer lenha seca. Recomendamos eucalipto por ter melhor poder calorífico e ser mais acessível. Evite lenha verde (úmida), pois reduz a eficiência e gera mais fumaça.",
+    "active": true
+  },
+  {
+    "id": "faq-4",
+    "question": "Precisa de instalação profissional?",
+    "answer": "Recomendamos instalação por profissional qualificado, mas o processo é simples: conexão na tubulação da piscina, posicionamento da caldeira e instalação da chaminé. Oferecemos o serviço de instalação + comissionamento como aditivo opcional (Sul/Sudeste).",
+    "active": true
+  },
+  {
+    "id": "faq-5",
+    "question": "Qual a garantia do produto?",
+    "answer": "Todos os modelos possuem 2 anos de garantia de fábrica contra defeitos de fabricação. Oferecemos garantia estendida para 5 anos (cobre serpentina e estrutura) como aditivo opcional.",
+    "active": true
+  },
+  {
+    "id": "faq-6",
+    "question": "A caldeira esquenta o ano todo, mesmo no inverno?",
+    "answer": "Sim! A caldeira a lenha é o método mais eficiente para aquecer piscinas no inverno. Diferente de aquecedores solares, funciona independente do clima. Mesmo em dias de 5°C, sua piscina estará na temperatura ideal.",
+    "active": true
+  },
+  {
+    "id": "faq-7",
+    "question": "Posso usar em piscina de vinil, fibra ou alvenaria?",
+    "answer": "Sim, nossas caldeiras são compatíveis com todos os tipos de piscina: vinil, fibra, alvenaria e até piscinas de concreto armado. A instalação se adapta ao sistema de filtragem existente.",
+    "active": true
+  },
+  {
+    "id": "faq-8",
+    "question": "Quanto economizo comparado ao aquecimento a gás?",
+    "answer": "Em média, a economia é de 60% a 80% comparado ao gás natural e até 90% comparado ao GLP (gás de botijão). Uma piscina de 60.000L custa apenas R$ 84 para aquecer com lenha. Use nossa calculadora de economia para ver o valor exato para sua piscina.",
+    "active": true
+  },
+  {
+    "id": "faq-9",
+    "question": "Funciona sem energia elétrica?",
+    "answer": "A caldeira em si funciona 100% sem energia elétrica — a combustão é natural. Porém, a bomba de circulação (que movimenta a água) precisa de energia. Isso significa que em caso de queda de luz, a caldeira mantém o calor, mas a circulação para até a energia voltar.",
+    "active": true
+  },
+  {
+    "id": "faq-10",
+    "question": "Qual o prazo de entrega?",
+    "answer": "O prazo médio de fabricação e entrega é de 15 a 25 dias úteis para a região Sul e Sudeste. Para demais regiões, consulte o prazo específico. Fabricamos sob demanda em Londrina/PR.",
+    "active": true
+  },
+  {
+    "id": "faq-11",
+    "question": "Como é feita a instalação?",
+    "answer": "A instalação envolve: posicionar a caldeira em base firme, conectar a tubulação de entrada e saída à filtragem da piscina, instalar a chaminé e fazer a queima de cura. Oferecemos serviço completo de instalação + comissionamento para Sul/Sudeste.",
+    "active": true
+  },
+  {
+    "id": "faq-12",
+    "question": "A piscina precisa ter casa de máquinas?",
+    "answer": "Não necessariamente. A caldeira pode ser instalada em área externa coberta, próxima à piscina. Recomendamos distância máxima de 15 metros da piscina para melhor eficiência. Oferecemos cobertura antigranizo como aditivo para instalações a céu aberto.",
+    "active": true
+  }
+]

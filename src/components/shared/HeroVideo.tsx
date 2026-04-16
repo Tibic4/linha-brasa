@@ -21,7 +21,7 @@ export default function HeroVideoPlaceholder() {
 
       {/* Fire glow — top center */}
       <motion.div
-        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full"
+        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] sm:w-[600px] h-[80vw] sm:h-[600px] rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(255,79,0,0.25) 0%, rgba(255,79,0,0) 70%)",
           filter: "blur(60px)",
@@ -35,7 +35,7 @@ export default function HeroVideoPlaceholder() {
 
       {/* Secondary warm glow */}
       <motion.div
-        className="absolute top-[30%] left-[30%] w-[400px] h-[400px] rounded-full"
+        className="absolute top-[30%] left-[30%] w-[60vw] sm:w-[400px] h-[60vw] sm:h-[400px] rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(255,209,102,0.15) 0%, transparent 70%)",
           filter: "blur(80px)",

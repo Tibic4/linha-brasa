@@ -202,14 +202,14 @@ export default function ProductColorPreview({ colorHex, modelName, className = "
         <text x="248" y="112" fill="#555" fontSize="7" fontFamily="monospace">ENTRADA</text>
         <text x="248" y="165" fill="#555" fontSize="7" fontFamily="monospace">SAÍDA</text>
 
-        {/* ========== COPPER SERPENTINE COIL (visible hint) ========== */}
+        {/* ========== INOX 304L SERPENTINE COIL (visible hint) ========== */}
         <path
           d="M95 140 Q105 135 115 140 Q125 145 135 140 Q145 135 155 140 Q165 145 175 140 Q185 135 190 140"
-          fill="none" stroke="#CD7F32" strokeWidth="2" strokeLinecap="round" opacity="0.35"
+          fill="none" stroke="#A8B2BD" strokeWidth="2" strokeLinecap="round" opacity="0.35"
         />
         <path
           d="M95 160 Q105 155 115 160 Q125 165 135 160 Q145 155 155 160 Q165 165 175 160 Q185 155 190 160"
-          fill="none" stroke="#CD7F32" strokeWidth="2" strokeLinecap="round" opacity="0.25"
+          fill="none" stroke="#A8B2BD" strokeWidth="2" strokeLinecap="round" opacity="0.25"
         />
 
         {/* ========== TEMPERATURE GAUGE — fixed ========== */}
@@ -224,8 +224,8 @@ export default function ProductColorPreview({ colorHex, modelName, className = "
           animate={{ fill: darken(colorHex, 25) }}
           transition={{ duration: 0.6 }}
         />
-        <text x="115" y="195" fill="rgba(255,255,255,0.7)" fontSize="8" fontFamily="monospace" fontWeight="bold" letterSpacing="2">
-          LINHA BRASA
+        <text x="120" y="195" fill="rgba(255,255,255,0.7)" fontSize="8" fontFamily="monospace" fontWeight="bold" letterSpacing="2">
+          BRASA
         </text>
       </svg>
     </div>

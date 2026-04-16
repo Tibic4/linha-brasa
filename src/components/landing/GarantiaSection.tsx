@@ -55,7 +55,7 @@ export default function GarantiaSection() {
           <p className="text-brasa-orange font-mono text-sm tracking-[0.3em] uppercase mb-4">
             Confiança e qualidade
           </p>
-          <h2 className="font-bebas text-4xl sm:text-5xl md:text-6xl">
+          <h2 className="font-bebas text-3xl xs:text-4xl sm:text-5xl md:text-6xl">
             GARANTIA & <span className="text-brasa-orange">QUALIDADE</span>
           </h2>
           <p className="text-brasa-gray mt-3 max-w-lg mx-auto">
@@ -71,7 +71,7 @@ export default function GarantiaSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="glass-card rounded-2xl p-6 text-center group hover:border-brasa-orange/50 transition-all duration-500"
+              className="glass-card rounded-2xl p-6 text-center group hover:border-brasa-orange/50 hover:shadow-[0_0_25px_rgba(255,79,0,0.15)] transition-all duration-500"
             >
               <div className="text-brasa-orange mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
                 {selo.icon}
