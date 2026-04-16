@@ -385,7 +385,7 @@ export default function AdminDashboard() {
 
         <div className="mt-4 p-3 rounded-lg bg-brasa-bg border border-brasa-border">
           <p className="font-mono text-[10px] text-brasa-gray">
-            <strong class="text-brasa-orange">TRACKING DE CONVERSAO:</strong> GA4 rastreia cada etapa automaticamente via eventos (page_view, add_to_cart, purchase). Configure o GTM_ID no <code>.env</code> para ativar. Meta Pixel rastreia PageView, AddToCart e Purchase para retargeting.
+            <strong className="text-brasa-orange">TRACKING DE CONVERSAO:</strong> GA4 rastreia cada etapa automaticamente via eventos (page_view, add_to_cart, purchase). Configure o GTM_ID no <code>.env</code> para ativar. Meta Pixel rastreia PageView, AddToCart e Purchase para retargeting.
           </p>
         </div>
       </div>
