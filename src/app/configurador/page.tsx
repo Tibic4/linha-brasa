@@ -11,7 +11,8 @@ import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
 import ScrollProgress from "@/components/shared/ScrollProgress";
 import { trackAddToCart, trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
 import ProductImage from "@/components/shared/ProductImage";
-import { products, addons, productColors, testimonials } from "@/data/products";
+import { products, addons, productColors } from "@/data/products";
+import testimonials from "@/../data/testimonials.json";
 import ProductColorPreview from "@/components/shared/ProductColorPreview";
 
 if (typeof window !== "undefined") {
@@ -215,7 +216,7 @@ export default function Configurador() {
 
   // Inline testimonials for selected model
   const modelTestimonials = testimonials.filter(
-    (t) => t.model === products[selectedModel].id
+    (t) => t.active !== false && t.model === products[selectedModel].id
   );
 
   return (
@@ -507,11 +508,19 @@ export default function Configurador() {
                       >
                         {modelTestimonials.slice(0, 2).map((t) => (
                           <div key={t.id} className="glass-card rounded-xl p-3 sm:p-4 flex gap-3 sm:gap-4">
-                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brasa-orange/20 flex items-center justify-center shrink-0">
-                              <span className="font-bebas text-brasa-orange text-lg">
-                                {t.name.charAt(0)}
-                              </span>
-                            </div>
+                            {t.image ? (
+                              <img
+                                src={t.image}
+                                alt={t.name}
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-brasa-orange/30 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brasa-orange/20 flex items-center justify-center shrink-0">
+                                <span className="font-bebas text-brasa-orange text-lg">
+                                  {t.name.charAt(0)}
+                                </span>
+                              </div>
+                            )}
                             <div>
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="font-bebas text-sm text-brasa-white">{t.name}</span>

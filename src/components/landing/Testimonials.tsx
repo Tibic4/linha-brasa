@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
-import { testimonials } from "@/data/products";
+import testimonials from "@/../data/testimonials.json";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -51,25 +51,31 @@ export default function Testimonials() {
           modules={[EffectCoverflow, Pagination, Autoplay]}
           className="pb-16"
         >
-          {testimonials.map((t) => (
+          {testimonials.filter((t) => t.active !== false).map((t) => (
             <SwiperSlide key={t.id} className="!w-[280px] sm:!w-[320px] md:!w-[400px]">
               <div className="glass-card rounded-2xl p-5 sm:p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
-                  <Image
-                    src={t.image}
-                    alt={t.name}
-                    width={48}
-                    height={48}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
-                    onError={(e) => {
-                      const el = e.currentTarget;
-                      el.style.display = "none";
-                      el.nextElementSibling?.classList.remove("hidden");
-                    }}
-                  />
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brasa-orange/20 flex items-center justify-center text-brasa-orange font-bebas text-lg sm:text-xl hidden">
-                    {t.name[0]}
-                  </div>
+                  {t.image ? (
+                    t.image.startsWith("data:") ? (
+                      <img
+                        src={t.image}
+                        alt={t.name}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
+                      />
+                    ) : (
+                      <Image
+                        src={t.image}
+                        alt={t.name}
+                        width={48}
+                        height={48}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
+                      />
+                    )
+                  ) : (
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brasa-orange/20 flex items-center justify-center text-brasa-orange font-bebas text-lg sm:text-xl">
+                      {t.name[0]}
+                    </div>
+                  )}
                   <div>
                     <p className="font-bebas text-base sm:text-lg">{t.name}</p>
                     <p className="text-brasa-gray text-xs font-mono">{t.location}</p>
