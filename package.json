@@ -11,7 +11,9 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@mercadopago/sdk-react": "^1.0.7",
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.3.3",
+    "@vercel/speed-insights": "^2.0.0",
     "canvas-confetti": "^1.9.4",
     "countup.js": "^2.10.0",
     "critters": "^0.0.23",
