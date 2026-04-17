@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"d:\\\\Frella\\\\Cadeiras\\\\linha-brasa\\\\src\\\\components\\\\landing\" -name \"*.tsx\" -exec wc -l {} +)",
+      "Bash(npx next *)",
+      "Bash(npm install *)",
+      "Bash(find public/images -type f \\\\\\( -name \"*.jpg\" -o -name \"*.jpeg\" -o -name \"*.png\" \\\\\\) -exec ls -lh {} \\\\;)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(find public/videos -type f -exec ls -lh {} \\\\;)",
+      "Bash(node -e \"try { require\\('sharp'\\); console.log\\('sharp available'\\) } catch\\(e\\) { console.log\\('sharp not available'\\) }\")",
+      "Bash(node scripts/compress-images.mjs)",
+      "Bash(npx --yes ffmpeg-static -version)",
+      "Bash(node -e \"console.log\\(require\\('ffmpeg-static'\\)\\)\")",
+      "Bash(awk '{print $5}')",
+      "Bash(rm public/videos/hero-fire-pool-original.mp4)",
+      "Bash(npm uninstall *)"
+    ]
+  }
+}
