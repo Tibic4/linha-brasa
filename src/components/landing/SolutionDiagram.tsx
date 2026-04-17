@@ -99,7 +99,6 @@ export default function SolutionDiagram() {
       dots.forEach((dot, i) => {
         const pathEl = paths[i] as SVGPathElement;
         if (!pathEl) return;
-        const length = pathEl.getTotalLength();
 
         gsap.to(dot, {
           motionPath: { path: pathEl, align: pathEl, alignOrigin: [0.5, 0.5] },
