@@ -189,7 +189,7 @@ export default function ModelsSection() {
                     </p>
                   </motion.div>
 
-                  <motion.div layout="position" className="mt-4 w-full text-center py-2.5 bg-brasa-orange/10 text-brasa-orange font-mono text-sm group-hover:bg-brasa-orange group-hover:text-white transition-all duration-300" style={{ borderRadius: 8 }}>
+                  <motion.div layout="position" className="mt-4 w-full text-center py-2.5 text-brasa-orange font-mono text-sm border border-brasa-orange/30 group-hover:bg-brasa-orange group-hover:border-brasa-orange group-hover:text-white transition-all duration-300" style={{ borderRadius: 8, background: "rgba(255,79,0,0.1)" }}>
                     Ver detalhes →
                   </motion.div>
                 </motion.div>
