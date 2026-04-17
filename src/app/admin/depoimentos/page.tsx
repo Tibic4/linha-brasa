@@ -15,7 +15,7 @@ interface Testimonial {
   active?: boolean;
 }
 
-function resizeImage(file: File, maxSize: number, quality: number): Promise<string> {
+function resizeImage(file: File, maxSize: number, quality: number): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -33,7 +33,11 @@ function resizeImage(file: File, maxSize: number, quality: number): Promise<stri
         canvas.height = h;
         const ctx = canvas.getContext("2d")!;
         ctx.drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL("image/jpeg", quality));
+        canvas.toBlob(
+          (blob) => blob ? resolve(blob) : reject(new Error("Falha ao converter imagem")),
+          "image/jpeg",
+          quality,
+        );
       };
       img.onerror = reject;
       img.src = e.target?.result as string;
@@ -41,6 +45,16 @@ function resizeImage(file: File, maxSize: number, quality: number): Promise<stri
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+async function uploadImage(file: File): Promise<string> {
+  const resized = await resizeImage(file, 200, 0.85);
+  const formData = new FormData();
+  formData.append("file", resized, `${Date.now()}.jpg`);
+  const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+  if (!res.ok) throw new Error("Erro ao enviar imagem");
+  const { url } = await res.json();
+  return url;
 }
 
 const MODELS = ["brasa-30", "brasa-60", "brasa-120", "brasa-200"];
@@ -107,6 +121,7 @@ export default function DepoimentosPage() {
   const [modalMode, setModalMode] = useState<"create" | "edit" | null>(null);
   const [form, setForm] = useState<Omit<Testimonial, "id"> & { id?: number | string; image?: string }>(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<number | string | null>(null);
   const [filterModel, setFilterModel] = useState<string>("all");
 
@@ -323,7 +338,7 @@ export default function DepoimentosPage() {
                 <div className="flex-1 space-y-2">
                   <label className="block cursor-pointer">
                     <span className="inline-block bg-brasa-orange/10 text-brasa-orange border border-brasa-orange/30 px-4 py-2 rounded-lg font-mono text-xs hover:bg-brasa-orange/20 transition-colors">
-                      {form.image ? "TROCAR FOTO" : "ENVIAR FOTO"}
+                      {uploading ? "ENVIANDO..." : form.image ? "TROCAR FOTO" : "ENVIAR FOTO"}
                     </span>
                     <input
                       type="file"
@@ -333,10 +348,13 @@ export default function DepoimentosPage() {
                         const file = e.target.files?.[0];
                         if (!file) return;
                         try {
-                          const base64 = await resizeImage(file, 200, 0.85);
-                          setForm({ ...form, image: base64 });
+                          setUploading(true);
+                          const url = await uploadImage(file);
+                          setForm({ ...form, image: url });
                         } catch {
-                          setToast("Erro ao processar imagem.");
+                          setToast("Erro ao enviar imagem.");
+                        } finally {
+                          setUploading(false);
                         }
                       }}
                     />

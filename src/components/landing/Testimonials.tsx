@@ -56,18 +56,18 @@ export default function Testimonials() {
               <div className="glass-card rounded-2xl p-5 sm:p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
                   {t.image ? (
-                    t.image.startsWith("data:") ? (
-                      <img
-                        src={t.image}
-                        alt={t.name}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
-                      />
-                    ) : (
+                    t.image.startsWith("/") ? (
                       <Image
                         src={t.image}
                         alt={t.name}
                         width={48}
                         height={48}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
+                      />
+                    ) : (
+                      <img
+                        src={t.image}
+                        alt={t.name}
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brasa-orange/30"
                       />
                     )
