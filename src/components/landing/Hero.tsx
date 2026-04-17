@@ -102,6 +102,7 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="none"
           onError={() => setVideoError(true)}
           className="absolute inset-0 w-full h-full object-cover opacity-30 will-change-transform"
           poster="/images/hero-poster.jpg"

@@ -34,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# briefing docs
+docs/briefing-linha-brasa.html
+public/briefing.html

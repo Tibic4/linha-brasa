@@ -31,6 +31,7 @@ export default function ProductImage({ model, className = "", size = "md", color
       width={width}
       height={height}
       className={`object-contain ${className}`}
+      sizes={size === "lg" ? "(max-width: 768px) 70vw, 650px" : size === "md" ? "(max-width: 768px) 50vw, 400px" : "200px"}
       style={colorFilter ? { filter: colorFilter, transition: "filter 0.7s ease" } : undefined}
       priority={size === "lg"}
     />
