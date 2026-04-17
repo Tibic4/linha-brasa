@@ -144,22 +144,22 @@ export default function CostComparison() {
                 <div className="flex-1 h-8 sm:h-10 bg-brasa-bg rounded-lg overflow-hidden relative">
                   <div
                     data-bar={item.percent}
-                    className="h-full rounded-lg flex items-center justify-end pr-2 sm:pr-3 group/bar relative"
+                    className="h-full rounded-lg flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 group/bar relative"
                     style={{ backgroundColor: item.color, width: 0 }}
                   >
                     <span className="font-mono text-xs sm:text-sm text-white font-bold whitespace-nowrap">
                       R$ {item.monthly}/mês
                     </span>
+                    {item.highlight && (
+                      <span className="bg-white/20 backdrop-blur-sm text-white text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded-full whitespace-nowrap animate-pulse">
+                        ✓ MENOR
+                      </span>
+                    )}
                     <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-brasa-bg-card border border-brasa-border rounded-lg px-3 py-1.5 text-xs font-mono text-brasa-white whitespace-nowrap opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
                       R$ {(item.monthly * 12).toLocaleString("pt-BR")}/ano
                       <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-brasa-border" />
                     </div>
                   </div>
-                  {item.highlight && (
-                    <div className="absolute -right-2 -top-2 bg-brasa-green text-white text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 rounded-full animate-pulse">
-                      MENOR CUSTO
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
