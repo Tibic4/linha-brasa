@@ -325,93 +325,102 @@ export default function Configurador() {
                           onClick={() => setExpandedModel(null)}
                         />
                         <div
-                          className="fixed inset-x-0 top-[72px] bottom-0 z-[60] flex items-end sm:items-center justify-center px-3 pb-3 sm:p-4"
+                          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-4"
                           onClick={() => setExpandedModel(null)}
                         >
                           <motion.div
                             ref={expandedRef}
-                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                            initial={{ opacity: 0, y: 100 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 100 }}
                             transition={{
                               type: "spring",
                               stiffness: 300,
-                              damping: 28,
+                              damping: 30,
                               opacity: { duration: 0.2 },
                             }}
-                            className="bg-brasa-bg-card border-0 sm:border border-brasa-border w-full sm:max-w-2xl max-h-[calc(100vh-90px)] sm:max-h-[85vh] overflow-y-auto relative rounded-t-2xl sm:rounded-2xl"
+                            className="bg-brasa-bg-card border-0 sm:border border-brasa-border w-full sm:max-w-2xl max-h-[90dvh] sm:max-h-[85vh] overflow-hidden relative rounded-t-2xl sm:rounded-2xl flex flex-col"
                             onClick={(e) => e.stopPropagation()}
                           >
+                            {/* Drag handle (mobile) */}
+                            <div className="sm:hidden flex justify-center pt-2 pb-1">
+                              <div className="w-10 h-1 rounded-full bg-brasa-gray/30" />
+                            </div>
+
                             <button
                               onClick={() => setExpandedModel(null)}
-                              className="absolute top-3 right-3 w-11 h-11 rounded-full bg-brasa-bg/80 border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors z-10"
+                              className="absolute top-3 right-3 w-10 h-10 rounded-full bg-brasa-bg/80 border border-brasa-border flex items-center justify-center text-brasa-gray hover:text-white transition-colors z-10"
                             >
                               ✕
                             </button>
 
-                            <div className="flex flex-col sm:flex-row">
-                              {/* Image */}
-                              <div
-                                className="w-full sm:w-56 shrink-0 relative overflow-hidden flex items-center justify-center p-6 max-h-[30vh] sm:max-h-none"
-                                style={{ background: products[expandedModel].gradient }}
-                              >
-                                <ProductImage model={products[expandedModel].id} size="md" className="max-h-[25vh] sm:max-h-none" />
-                              </div>
-
-                              {/* Info */}
-                              <div className="flex-1 p-5 sm:p-6">
-                                <h3 className="font-bebas text-3xl text-brasa-orange mb-0.5">
-                                  {products[expandedModel].name}
-                                </h3>
-                                <p className="font-mono text-[10px] text-brasa-gray mb-3">{products[expandedModel].subtitle}</p>
-                                <p className="text-brasa-gray text-sm leading-relaxed mb-4">
-                                  {products[expandedModel].description}
-                                </p>
-
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                  <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
-                                    {products[expandedModel].poolSize}
-                                  </span>
-                                  <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
-                                    {products[expandedModel].power}
-                                  </span>
+                            {/* Scrollable content */}
+                            <div className="flex-1 overflow-y-auto overscroll-contain">
+                              <div className="flex flex-col sm:flex-row">
+                                {/* Image */}
+                                <div
+                                  className="w-full sm:w-56 shrink-0 relative overflow-hidden flex items-center justify-center p-4 sm:p-6"
+                                  style={{ background: products[expandedModel].gradient, maxHeight: "35dvh" }}
+                                >
+                                  <ProductImage model={products[expandedModel].id} size="md" className="max-h-[28dvh] sm:max-h-none object-contain" />
                                 </div>
 
-                                <ul className="grid grid-cols-1 gap-1.5 mb-5">
-                                  {products[expandedModel].features.map((f, idx) => (
-                                    <motion.li
-                                      key={idx}
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: 0.1 + idx * 0.05 }}
-                                      className="flex items-start gap-2 text-brasa-gray text-xs"
-                                    >
-                                      <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full shrink-0 mt-1" />
-                                      {f}
-                                    </motion.li>
-                                  ))}
-                                </ul>
+                                {/* Info */}
+                                <div className="flex-1 p-5 sm:p-6 pb-2 sm:pb-6">
+                                  <h3 className="font-bebas text-2xl sm:text-3xl text-brasa-orange mb-0.5">
+                                    {products[expandedModel].name}
+                                  </h3>
+                                  <p className="font-mono text-[10px] text-brasa-gray mb-2">{products[expandedModel].subtitle}</p>
+                                  <p className="text-brasa-gray text-sm leading-relaxed mb-3">
+                                    {products[expandedModel].description}
+                                  </p>
 
-                                <div className="flex items-center justify-between border-t border-brasa-border pt-4">
-                                  <div>
-                                    <p className="font-bebas text-2xl sm:text-3xl text-brasa-white">
-                                      R$ {products[expandedModel].price.toLocaleString("pt-BR")}
-                                    </p>
-                                    <p className="text-brasa-gray text-[10px] font-mono">
-                                      12x R$ {Math.ceil(products[expandedModel].price / 12).toLocaleString("pt-BR")}
-                                    </p>
+                                  <div className="flex flex-wrap gap-2 mb-3">
+                                    <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
+                                      {products[expandedModel].poolSize}
+                                    </span>
+                                    <span className="font-mono text-[10px] text-brasa-gold bg-brasa-gold/10 px-2.5 py-1 rounded-full">
+                                      {products[expandedModel].power}
+                                    </span>
                                   </div>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      selectAndCollapse(expandedModel);
-                                    }}
-                                    className="btn-brasa !py-2.5 !px-5 !text-sm"
-                                  >
-                                    {selectedModel === expandedModel ? "SELECIONADO ✓" : "SELECIONAR"}
-                                  </button>
+
+                                  <ul className="grid grid-cols-1 gap-1.5 mb-4">
+                                    {products[expandedModel].features.map((f, idx) => (
+                                      <motion.li
+                                        key={idx}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.1 + idx * 0.05 }}
+                                        className="flex items-start gap-2 text-brasa-gray text-xs"
+                                      >
+                                        <span className="w-1.5 h-1.5 bg-brasa-orange rounded-full shrink-0 mt-1" />
+                                        {f}
+                                      </motion.li>
+                                    ))}
+                                  </ul>
                                 </div>
                               </div>
+                            </div>
+
+                            {/* Fixed bottom bar */}
+                            <div className="shrink-0 border-t border-brasa-border bg-brasa-bg-card px-5 py-3 flex items-center justify-between safe-bottom">
+                              <div>
+                                <p className="font-bebas text-2xl sm:text-3xl text-brasa-white leading-none">
+                                  R$ {products[expandedModel].price.toLocaleString("pt-BR")}
+                                </p>
+                                <p className="text-brasa-gray text-[10px] font-mono">
+                                  12x R$ {Math.ceil(products[expandedModel].price / 12).toLocaleString("pt-BR")}
+                                </p>
+                              </div>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  selectAndCollapse(expandedModel);
+                                }}
+                                className="btn-brasa !py-2.5 !px-5 !text-sm"
+                              >
+                                {selectedModel === expandedModel ? "SELECIONADO ✓" : "SELECIONAR"}
+                              </button>
                             </div>
                           </motion.div>
                         </div>
@@ -786,7 +795,8 @@ export default function Configurador() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 50, scale: 0.95 }}
                   transition={{ type: "spring", bounce: 0.15 }}
-                  className="fixed inset-0 sm:top-16 sm:inset-x-4 sm:bottom-4 lg:top-16 lg:inset-x-8 lg:bottom-8 lg:max-w-5xl lg:mx-auto bg-brasa-bg-card border-0 sm:border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto"
+                  className="fixed inset-0 sm:top-16 sm:inset-x-4 sm:bottom-4 lg:top-16 lg:inset-x-8 lg:bottom-8 lg:max-w-5xl lg:mx-auto bg-brasa-bg-card border-0 sm:border border-brasa-border sm:rounded-2xl z-50 overflow-y-auto overscroll-contain"
+                  style={{ maxHeight: "100dvh" }}
                 >
                   {/* Header */}
                   <div className="sticky top-0 bg-brasa-bg-card/95 backdrop-blur-lg border-b border-brasa-border px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between z-10">
