@@ -175,7 +175,7 @@ export default function Calculator() {
               <AnimatedValue value={savings.currentMonthly} prefix="R$ " className="font-bebas text-2xl xs:text-4xl text-red-400" />
             </div>
             <div className="bg-brasa-green/10 border border-brasa-green/20 rounded-xl p-6 text-center shadow-[0_0_30px_rgba(255,79,0,0.12)]">
-              <p className="font-mono text-xs text-brasa-green mb-1">Custo mensal com Linha Brasa</p>
+              <p className="font-mono text-xs text-brasa-green mb-1">Custo mensal com Brasa Forge</p>
               <AnimatedValue value={savings.brasaMonthly} prefix="R$ " className="font-bebas text-2xl xs:text-4xl text-brasa-green" />
             </div>
           </div>

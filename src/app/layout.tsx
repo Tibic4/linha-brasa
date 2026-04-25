@@ -25,6 +25,17 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+// Tracking — só carrega se IDs reais estiverem em env (evita scripts inválidos
+// em produção e poluição de console). Vazio = não renderiza scripts.
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID?.startsWith("GTM-")
+  ? process.env.NEXT_PUBLIC_GTM_ID
+  : null;
+const META_PIXEL_ID =
+  process.env.NEXT_PUBLIC_META_PIXEL_ID &&
+  process.env.NEXT_PUBLIC_META_PIXEL_ID !== "your_pixel_id"
+    ? process.env.NEXT_PUBLIC_META_PIXEL_ID
+    : null;
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -34,7 +45,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://linhabrasa.com.br"),
-  title: "BRASA Caldeiras — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
+  title: "Brasa Forge — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
   description:
     "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
   keywords: [
@@ -42,23 +53,23 @@ export const metadata: Metadata = {
     "aquecimento de piscina",
     "caldeira para piscina",
     "aquecedor de piscina a lenha",
-    "linha brasa",
+    "brasa forge",
     "aquecimento econômico piscina",
   ],
   openGraph: {
-    title: "BRASA Caldeiras — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
+    title: "Brasa Forge — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
     description:
       "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
     type: "website",
     locale: "pt_BR",
-    siteName: "Linha Brasa",
+    siteName: "Brasa Forge",
     images: [
       {
         url: "/images/og-image.jpg",
       // Real OG image generated — 1200x630
         width: 1200,
         height: 630,
-        alt: "Linha Brasa — Caldeira a Lenha para Piscinas",
+        alt: "Brasa Forge — Caldeira a Lenha para Piscinas",
       },
     ],
   },
@@ -91,24 +102,30 @@ export default function RootLayout({
       <body
         className={`${bebas.variable} ${dmSans.variable} ${jetbrains.variable} font-dm bg-brasa-bg text-brasa-white antialiased`}
       >
-        {/* GTM noscript */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
-        <Script id="gtm" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {/* GTM e Meta Pixel só carregam se variáveis de ambiente estiverem
+            configuradas. Sem isso, evita scripts inválidos em produção. */}
+        {GTM_ID && (
+          <>
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+            <Script id="gtm" strategy="lazyOnload">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXXXXX');`}
-        </Script>
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`!function(f,b,e,v,n,t,s)
+})(window,document,'script','dataLayer','${GTM_ID}');`}
+            </Script>
+          </>
+        )}
+        {META_PIXEL_ID && (
+          <Script id="meta-pixel" strategy="lazyOnload">
+            {`!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -116,9 +133,10 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'PIXEL_ID_HERE');
+fbq('init', '${META_PIXEL_ID}');
 fbq('track', 'PageView');`}
-        </Script>
+          </Script>
+        )}
         <SchemaMarkup />
         {children}
         <SpeedInsights />

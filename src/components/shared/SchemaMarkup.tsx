@@ -4,7 +4,7 @@ export default function SchemaMarkup() {
     "@graph": [
       {
         "@type": "Organization",
-        name: "Linha Brasa",
+        name: "Brasa Forge",
         url: "https://linhabrasa.com.br",
         logo: "https://linhabrasa.com.br/images/logo.png",
         description:
@@ -26,7 +26,7 @@ export default function SchemaMarkup() {
         name: "Caldeira a Lenha BRASA 60",
         description:
           "Caldeira a lenha para aquecimento de piscinas de até 40.000L. Economia de até 80% comparado ao gás. A mais vendida da linha.",
-        brand: { "@type": "Brand", name: "Linha Brasa" },
+        brand: { "@type": "Brand", name: "Brasa Forge" },
         offers: {
           "@type": "Offer",
           price: "14500",
@@ -42,9 +42,9 @@ export default function SchemaMarkup() {
       },
       {
         "@type": "VideoObject",
-        name: "Linha Brasa — Caldeira a Lenha para Piscinas",
+        name: "Brasa Forge — Caldeira a Lenha para Piscinas",
         description:
-          "Veja como a caldeira a lenha Linha Brasa aquece sua piscina com economia de até 80% comparado ao gás.",
+          "Veja como a caldeira a lenha Brasa Forge aquece sua piscina com economia de até 80% comparado ao gás.",
         thumbnailUrl: "https://linhabrasa.com.br/images/og-image.jpg",
         uploadDate: "2025-01-01",
         contentUrl: "https://linhabrasa.com.br/videos/hero-fire-pool.mp4",

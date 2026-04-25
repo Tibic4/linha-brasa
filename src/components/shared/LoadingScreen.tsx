@@ -1,14 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/**
+ * LoadingScreen — splash que cobre a tela ENQUANTO o documento ainda está
+ * carregando. Some assim que `document.readyState === "complete"`.
+ *
+ * Antes era um setTimeout(500) artificial que custava ~500ms de LCP no
+ * Lighthouse. Agora segue o sinal real do browser, e em conexões rápidas
+ * desaparece quase instantâneo.
+ */
 export default function LoadingScreen() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(timer);
+    if (typeof document === "undefined") return;
+
+    if (document.readyState === "complete") {
+      setLoading(false);
+      return;
+    }
+
+    const onReady = () => setLoading(false);
+    window.addEventListener("load", onReady, { once: true });
+
+    // Safety net: garante que o splash some mesmo se algum recurso travar.
+    const safety = setTimeout(() => setLoading(false), 3000);
+
+    return () => {
+      window.removeEventListener("load", onReady);
+      clearTimeout(safety);
+    };
   }, []);
 
   return (
@@ -17,36 +40,17 @@ export default function LoadingScreen() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-brasa-bg flex items-center justify-center"
+          aria-hidden="true"
         >
           <div className="text-center">
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6"
-            >
-              <div className="w-20 h-20 bg-brasa-orange rounded-2xl flex items-center justify-center mx-auto glow-orange">
-                <span className="font-bebas text-4xl text-white">B</span>
-              </div>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
-              className="font-bebas text-3xl tracking-[0.2em]"
-            >
-              LINHA <span className="text-brasa-orange">BRASA</span>
-            </motion.p>
-
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "120px" }}
-              transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
-              className="h-0.5 bg-brasa-orange mx-auto mt-4 rounded-full"
-            />
+            <div className="w-20 h-20 bg-brasa-orange rounded-2xl flex items-center justify-center mx-auto glow-orange">
+              <span className="font-bebas text-4xl text-white">B</span>
+            </div>
+            <p className="font-bebas text-3xl tracking-[0.2em] mt-6">
+              BRASA <span className="text-brasa-orange">FORGE</span>
+            </p>
           </div>
         </motion.div>
       )}

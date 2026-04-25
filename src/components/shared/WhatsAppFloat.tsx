@@ -2,13 +2,15 @@
 
 import { motion } from "framer-motion";
 import { trackWhatsAppClick } from "@/components/shared/AnalyticsEvents";
+import { SITE } from "@/data/site";
 
 export default function WhatsAppFloat() {
-  const msg = encodeURIComponent("Olá! Tenho interesse na Linha Brasa para minha piscina.");
+  const msg = encodeURIComponent(SITE.whatsappMessage);
 
   return (
     <motion.a
-      href={`https://wa.me/5543999999999?text=${msg}`}
+      href={`https://wa.me/${SITE.whatsappNumber}?text=${msg}`}
+      aria-label="Abrir conversa demo no WhatsApp"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-50 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform"

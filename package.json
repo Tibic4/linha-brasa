@@ -1,12 +1,13 @@
 {
-  "name": "linha-brasa",
+  "name": "brasa-forge",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -23,7 +24,6 @@
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18",
-    "react-intersection-observer": "^10.0.3",
     "sharp": "^0.34.5",
     "swiper": "^12.1.3",
     "vanilla-tilt": "^1.8.1"

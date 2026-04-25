@@ -13,7 +13,7 @@ const comparisons = [
   { method: "Elétrico", monthly: 523, color: "#EF4444", percent: 100 },
   { method: "GLP (Botijão)", monthly: 410, color: "#F97316", percent: 78 },
   { method: "Trocador de Calor", monthly: 87, color: "#EAB308", percent: 17 },
-  { method: "LINHA BRASA", monthly: 84, color: "#22C55E", percent: 16, highlight: true },
+  { method: "BRASA FORGE", monthly: 84, color: "#22C55E", percent: 16, highlight: true },
 ];
 
 export default function CostComparison() {

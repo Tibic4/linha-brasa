@@ -10,11 +10,11 @@ export default function Footer() {
               <span className="font-bebas text-white text-lg">B</span>
             </div>
             <span className="font-bebas text-xl tracking-wider">
-              LINHA <span className="text-brasa-orange">BRASA</span>
+              BRASA <span className="text-brasa-orange">FORGE</span>
             </span>
           </div>
           <p className="text-brasa-gray text-sm leading-relaxed">
-            Caldeiras a lenha para aquecimento de piscinas. Fabricação própria em Londrina/PR.
+            Caldeiras a lenha para aquecimento de piscinas. Projeto demonstrativo de portfolio.
           </p>
         </div>
 
@@ -40,19 +40,26 @@ export default function Footer() {
         <div>
           <h4 className="font-bebas text-lg mb-4 text-brasa-orange">CONTATO</h4>
           <ul className="space-y-2 text-sm text-brasa-gray">
-            <li>Londrina, PR — Brasil</li>
-            <li>(43) 99999-9999</li>
-            <li>contato@linhabrasa.com.br</li>
+            <li>Brasil</li>
+            <li>WhatsApp · DEMO</li>
+            <li>contato@brasaforge.demo</li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-brasa-border flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-brasa-gray-dark text-xs font-mono">
-          &copy; {new Date().getFullYear()} Linha Brasa. Todos os direitos reservados.
+          &copy; {new Date().getFullYear()} Brasa Forge. Projeto demonstrativo.
         </p>
         <p className="text-brasa-gray-dark text-xs font-mono">
-          CNPJ: XX.XXX.XXX/0001-XX
+          Portfolio · github.com/Tibic4
+        </p>
+      </div>
+
+      <div className="max-w-6xl mx-auto mt-4 px-4 pb-4">
+        <p className="text-brasa-gray-dark text-[10px] font-mono text-center opacity-60 leading-relaxed">
+          Brasa Forge é um projeto demonstrativo de portfólio. Marca, produtos, preços
+          e dados de contato são fictícios. Não representa empresa real ou produto comercializado.
         </p>
       </div>
     </footer>

@@ -130,7 +130,7 @@ export default function SolutionDiagram() {
             A Solução
           </p>
           <h2 className="font-bebas text-2xl xs:text-3xl sm:text-5xl md:text-7xl">
-            COMO A <span className="text-brasa-orange">LINHA BRASA</span> FUNCIONA
+            COMO A <span className="text-brasa-orange">BRASA FORGE</span> FUNCIONA
           </h2>
         </motion.div>
 

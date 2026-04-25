@@ -236,7 +236,7 @@ export const testimonials = [
     name: "Carlos A.",
     location: "Florianópolis, SC",
     rating: 5,
-    text: "Produto robusto, acabamento impecável. A equipe da Linha Brasa deu todo suporte na instalação.",
+    text: "Produto robusto, acabamento impecável. A equipe da Brasa Forge deu todo suporte na instalação.",
     image: "/images/testimonials/carlos.jpg",
     model: "brasa-120",
     poolSize: "60.000L",

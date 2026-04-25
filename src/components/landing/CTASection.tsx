@@ -38,7 +38,7 @@ export default function CTASection() {
   };
 
   const whatsappMessage = encodeURIComponent(
-    "Olá! Tenho interesse na Linha Brasa. Gostaria de saber mais sobre as caldeiras para piscina."
+    "Olá! Tenho interesse na Brasa Forge. Gostaria de saber mais sobre as caldeiras para piscina."
   );
 
   return (
@@ -162,7 +162,7 @@ export default function CTASection() {
             </a>
 
             <div className="glass-card rounded-2xl p-8 flex-1">
-              <h3 className="font-bebas text-2xl mb-4 text-brasa-orange">POR QUE A LINHA BRASA?</h3>
+              <h3 className="font-bebas text-2xl mb-4 text-brasa-orange">POR QUE A BRASA FORGE?</h3>
               <ul className="space-y-3">
                 {[
                   "Fabricação própria em Londrina/PR",
