@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin", "/checkout", "/obrigado"],
     },
-    sitemap: "https://linhabrasa.com.br/sitemap.xml",
+    sitemap: "https://caldeira-showcase.vercel.app/sitemap.xml",
   };
 }

@@ -5,8 +5,8 @@ export default function SchemaMarkup() {
       {
         "@type": "Organization",
         name: "Brasa Forge",
-        url: "https://linhabrasa.com.br",
-        logo: "https://linhabrasa.com.br/images/logo.png",
+        url: "https://caldeira-showcase.vercel.app",
+        logo: "https://caldeira-showcase.vercel.app/images/logo.png",
         description:
           "Fabricante de caldeiras a lenha para aquecimento de piscinas em Londrina/PR.",
         address: {
@@ -32,7 +32,7 @@ export default function SchemaMarkup() {
           price: "14500",
           priceCurrency: "BRL",
           availability: "https://schema.org/InStock",
-          url: "https://linhabrasa.com.br/configurador",
+          url: "https://caldeira-showcase.vercel.app/configurador",
         },
         aggregateRating: {
           "@type": "AggregateRating",
@@ -45,10 +45,10 @@ export default function SchemaMarkup() {
         name: "Brasa Forge — Caldeira a Lenha para Piscinas",
         description:
           "Veja como a caldeira a lenha Brasa Forge aquece sua piscina com economia de até 80% comparado ao gás.",
-        thumbnailUrl: "https://linhabrasa.com.br/images/og-image.jpg",
+        thumbnailUrl: "https://caldeira-showcase.vercel.app/images/og-image.jpg",
         uploadDate: "2025-01-01",
-        contentUrl: "https://linhabrasa.com.br/videos/hero-fire-pool.mp4",
-        embedUrl: "https://linhabrasa.com.br",
+        contentUrl: "https://caldeira-showcase.vercel.app/videos/hero-fire-pool.mp4",
+        embedUrl: "https://caldeira-showcase.vercel.app",
         duration: "PT0M30S",
       },
       {
@@ -159,13 +159,13 @@ export default function SchemaMarkup() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://linhabrasa.com.br",
+            item: "https://caldeira-showcase.vercel.app",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Configurador",
-            item: "https://linhabrasa.com.br/configurador",
+            item: "https://caldeira-showcase.vercel.app/configurador",
           },
         ],
       },

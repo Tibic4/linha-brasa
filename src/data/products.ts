@@ -73,7 +73,7 @@ export const products: Product[] = [
     power: "120.000 kcal/h",
     price: 21000,
     description:
-      "Para piscinas maiores que exigem alto desempenho. Aquece rapidamente mesmo em dias frios. Ticket médio da linha BRASA.",
+      "Para piscinas maiores que exigem alto desempenho. Aquece rapidamente mesmo em dias frios. Ticket médio da linha.",
     features: [
       "Corpo reforçado em aço carbono 6.3mm",
       "Serpentina tripla em inox 304L",

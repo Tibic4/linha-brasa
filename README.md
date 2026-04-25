@@ -157,8 +157,6 @@ Como projeto demonstrativo, identifiquei limitações conhecidas que ficariam pr
 - **Rate limiting ausente** nas API routes — em produção → @upstash/ratelimit em login e endpoints de write
 - **CSP/HSTS** não configurados — em produção → headers via `next.config.mjs` ou middleware
 
-Os achados estão documentados em [docs/AUDITORIA.md](docs/AUDITORIA.md).
-
 ---
 
 ## Licença

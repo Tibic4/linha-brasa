@@ -40,7 +40,7 @@ export default function Navbar() {
               <span className="font-bebas text-white text-lg">B</span>
             </div>
             <span className="font-bebas text-xl xs:text-2xl tracking-wider">
-              LINHA <span className="text-brasa-orange">BRASA</span>
+              BRASA <span className="text-brasa-orange">FORGE</span>
             </span>
           </a>
 

@@ -44,10 +44,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://linhabrasa.com.br"),
+  metadataBase: new URL("https://caldeira-showcase.vercel.app"),
   title: "Brasa Forge — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
   description:
-    "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
+    "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a Brasa Forge.",
   keywords: [
     "caldeira a lenha",
     "aquecimento de piscina",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Brasa Forge — Aquecedor de Piscina a Lenha | Fabricação Brasileira",
     description:
-      "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a linha BRASA.",
+      "Aqueça sua piscina de 60.000L por R$ 84. Caldeiras a lenha fabricadas no Brasil com garantia de 2 anos. 5× mais barato que GLP. Conheça a Brasa Forge.",
     type: "website",
     locale: "pt_BR",
     siteName: "Brasa Forge",

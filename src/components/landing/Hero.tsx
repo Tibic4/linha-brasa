@@ -311,7 +311,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-6 sm:mt-8 px-2 xs:px-0"
         >
           <a
-            href="https://wa.me/5543999999999?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Linha%20Brasa."
+            href="https://wa.me/5543999999999?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Brasa%20Forge."
             target="_blank"
             rel="noopener noreferrer"
             className="btn-brasa text-base sm:text-xl w-full sm:w-auto text-center gap-2"

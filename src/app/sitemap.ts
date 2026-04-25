@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://linhabrasa.com.br";
+  const baseUrl = "https://caldeira-showcase.vercel.app";
 
   return [
     {

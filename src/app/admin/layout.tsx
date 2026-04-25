@@ -48,7 +48,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         className="glass-card rounded-2xl p-8 xs:p-10 w-full max-w-sm space-y-6"
       >
         <h1 className="font-bebas text-4xl xs:text-5xl text-center tracking-wider text-brasa-white">
-          LINHA <span className="text-brasa-orange">BRASA</span>
+          BRASA <span className="text-brasa-orange">FORGE</span>
         </h1>
         <p className="font-mono text-xs text-brasa-gray text-center uppercase tracking-widest">
           Painel Administrativo
@@ -145,7 +145,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="p-6 border-b border-brasa-border">
           <h2 className="font-bebas text-2xl tracking-wider text-brasa-white">
-            LINHA <span className="text-brasa-orange">BRASA</span>
+            BRASA <span className="text-brasa-orange">FORGE</span>
           </h2>
           <p className="font-mono text-[10px] text-brasa-gray uppercase tracking-widest mt-1">
             Admin
@@ -214,7 +214,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </svg>
           </button>
           <span className="font-bebas text-xl tracking-wider text-brasa-white">
-            LINHA <span className="text-brasa-orange">BRASA</span>
+            BRASA <span className="text-brasa-orange">FORGE</span>
           </span>
         </header>
 
